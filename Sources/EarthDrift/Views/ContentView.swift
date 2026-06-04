@@ -7,12 +7,30 @@ struct ContentView: View {
     @State private var showingArtMode = false
 
     var body: some View {
+        let _ = logDebug("ContentView body re-evaluated")
         ZStack {
-            MapPlayerView(controller: engine.cameraController)
+            MapPlayerView(camera: engine.cameraController.camera, controller: engine.cameraController)
 
             NarrationCardView(point: engine.activeNarration)
 
             if !showingArtMode {
+                VStack {
+                    HStack {
+                        EarthInsetView(coordinate: engine.cameraController.currentCoordinate)
+                            .frame(width: 150, height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.white.opacity(0.15), lineWidth: 1)
+                            )
+                            .padding(.leading, 16)
+                            .padding(.top, 16)
+                        Spacer()
+                    }
+                    Spacer()
+                }
+                .allowsHitTesting(false)
+
                 ControlsOverlay(
                     engine: engine,
                     scheduler: scheduler,

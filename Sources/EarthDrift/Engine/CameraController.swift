@@ -5,12 +5,18 @@ import MapKit
 @MainActor
 @Observable
 final class CameraController {
-    var camera: MKMapCamera = MKMapCamera()
+    var camera: MKMapCamera = MKMapCamera() {
+        didSet {
+            mainMapView?.camera = camera
+        }
+    }
     var currentCoordinate: CLLocationCoordinate2D = .init(latitude: 0, longitude: 0)
     var currentBearing: Double = 0
     var currentAltitude: Double = 3000
     var pitch: Double = 0
     var altitudeMultiplier: Double = 1.0
+
+    weak var mainMapView: MKMapView?
 
     private var route: Route?
 
@@ -18,8 +24,22 @@ final class CameraController {
         self.route = route
         currentAltitude = route.altitude
 
+        if route.coordinates.count >= 4 {
+            currentCoordinate = splineInterpolatedCoordinate(coordinates: route.coordinates, progress: 0)
+            currentBearing = splineBearing(coordinates: route.coordinates, progress: 0)
+        } else {
+            currentCoordinate = route.coordinate(at: 0)
+            currentBearing = route.bearing(at: 0)
+        }
+        camera = MKMapCamera(
+            lookingAtCenter: currentCoordinate,
+            fromDistance: currentAltitude * altitudeMultiplier,
+            pitch: pitch,
+            heading: currentBearing
+        )
+
         let interpolationMode = route.coordinates.count >= 4 ? "Catmull-Rom spline" : "linear"
-        logInfo("Camera route set: title='\(route.title)' altitude=\(Int(route.altitude))m coordinateCount=\(route.coordinates.count) interpolation=\(interpolationMode)")
+        logInfo("Camera route set: title='\(route.title)' altitude=\(Int(route.altitude))m coordinateCount=\(route.coordinates.count) interpolation=\(interpolationMode) startCoord=(\(String(format: "%.3f", currentCoordinate.latitude)), \(String(format: "%.3f", currentCoordinate.longitude))) startBearing=\(String(format: "%.1f", currentBearing))")
     }
 
     func update(progress: Double, deltaTime: TimeInterval) {
