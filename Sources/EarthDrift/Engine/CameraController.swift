@@ -40,7 +40,7 @@ final class CameraController {
         let newCamera = MKMapCamera(
             lookingAtCenter: currentCoordinate,
             fromDistance: currentAltitude,
-            pitch: 60,
+            pitch: 0,
             heading: currentBearing
         )
 
