@@ -24,6 +24,8 @@ struct ContentView: View {
         .onAppear {
             logInfo("ContentView appeared: loading default channels")
             scheduler.channels = RouteData.defaultChannels
+            scheduler.restoreLastSession()
+            startCurrentRoute()
         }
         .onChange(of: scheduler.currentChannelIndex) { _, _ in
             startCurrentRoute()

@@ -1,5 +1,10 @@
 import Foundation
 
+private enum StorageKeys {
+    static let lastChannelIndex = "lastChannelIndex"
+    static let lastRouteIndex = "lastRouteIndex"
+}
+
 @MainActor
 @Observable
 final class ChannelScheduler {
@@ -9,8 +14,29 @@ final class ChannelScheduler {
         }
     }
 
-    var currentChannelIndex: Int = 0
-    var currentRouteIndex: Int = 0
+    var currentChannelIndex: Int = 0 {
+        didSet {
+            UserDefaults.standard.set(currentChannelIndex, forKey: StorageKeys.lastChannelIndex)
+        }
+    }
+    var currentRouteIndex: Int = 0 {
+        didSet {
+            UserDefaults.standard.set(currentRouteIndex, forKey: StorageKeys.lastRouteIndex)
+        }
+    }
+
+    func restoreLastSession() {
+        guard !channels.isEmpty else { return }
+
+        let savedChannelIndex = UserDefaults.standard.integer(forKey: StorageKeys.lastChannelIndex)
+        let savedRouteIndex = UserDefaults.standard.integer(forKey: StorageKeys.lastRouteIndex)
+
+        let clampedChannelIndex = max(0, min(savedChannelIndex, channels.count - 1))
+        currentChannelIndex = clampedChannelIndex
+
+        guard let channel = currentChannel, !channel.routes.isEmpty else { return }
+        currentRouteIndex = max(0, min(savedRouteIndex, channel.routes.count - 1))
+    }
 
     var currentChannel: Channel? {
         guard !channels.isEmpty else { return nil }
