@@ -18,6 +18,7 @@ final class PlaybackEngine {
     var cameraController = CameraController()
     var narrationEngine = NarrationEngine()
     var routeCompletionCount = 0
+    var isFeelingLucky = false
 
     var speedMultiplier: Double = {
         let saved = UserDefaults.standard.double(forKey: PlaybackKeys.speedMultiplier)
@@ -33,6 +34,7 @@ final class PlaybackEngine {
     private var logThrottle: Int = 0
 
     func startPlayback(route: Route, channel: Channel) {
+        isFeelingLucky = false
         logInfo("Starting playback: route='\(route.title)' category=\(route.category.rawValue) channel='\(channel.name)' duration=\(Int(route.duration))s altitude=\(Int(route.altitude))m segments=\(route.segments.count) narrationPoints=\(route.narrationPoints.count)")
 
         currentRoute = route
@@ -101,11 +103,12 @@ final class PlaybackEngine {
             subtitle: "Random discovery",
             category: .ancient,
             coordinates: orbitCoords,
-            duration: 60,
+            duration: 30,
             altitude: pick.altitude
         )
         let channel = Channel(name: pick.name, icon: "star.fill", routes: [route])
         startPlayback(route: route, channel: channel)
+        isFeelingLucky = true
         logInfo("Feeling Lucky: '\(pick.name)' orbit radius=\(Int(orbitRadius))m")
     }
 

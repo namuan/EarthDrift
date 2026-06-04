@@ -50,9 +50,13 @@ struct ContentView: View {
             startCurrentRoute()
         }
         .onChange(of: engine.routeCompletionCount) { _, _ in
-            logDebug("Route completion count changed: \(engine.routeCompletionCount)")
-            scheduler.advanceToNextRoute()
-            startCurrentRoute()
+            if engine.isFeelingLucky {
+                engine.feelingLucky()
+            } else {
+                logDebug("Route completion count changed: \(engine.routeCompletionCount)")
+                scheduler.advanceToNextRoute()
+                startCurrentRoute()
+            }
         }
         .sheet(isPresented: $showingBrowser) {
             logInfo("Channel browser opened: currentChannel='\(scheduler.currentChannel?.name ?? "none")'")
