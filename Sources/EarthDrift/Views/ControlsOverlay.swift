@@ -8,11 +8,24 @@ struct ControlsOverlay: View {
     @State private var isVisible = true
     @State private var fadeTask: Task<Void, Never>?
     @State private var isMaximized = false
+    @State private var showSettings = false
 
     var body: some View {
         VStack {
             HStack {
                 Spacer()
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showSettings.toggle()
+                    }
+                }) {
+                    Image(systemName: "gearshape.fill")
+                        .font(.system(size: 13))
+                        .foregroundStyle(showSettings ? .white : .white.opacity(0.6))
+                        .frame(width: 28, height: 28)
+                        .background(Circle().fill(showSettings ? .white.opacity(0.2) : .white.opacity(0.1)))
+                }
+                .buttonStyle(.plain)
                 Button(action: {
                     isMaximized.toggle()
                     AppDelegate.toggleMaximize()
@@ -29,6 +42,11 @@ struct ControlsOverlay: View {
             }
             .padding(.trailing, 16)
             .padding(.top, 16)
+
+            if showSettings {
+                settingsPanel
+                    .transition(.move(edge: .top).combined(with: .opacity))
+            }
 
             Spacer()
 
@@ -141,6 +159,76 @@ struct ControlsOverlay: View {
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
         .background(Capsule().fill(.white.opacity(0.1)))
+    }
+
+    private var settingsPanel: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            pitchSlider
+            speedSlider
+            zoomSlider
+        }
+        .padding(16)
+        .frame(width: 200)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .padding(.trailing, 12)
+        .padding(.top, 4)
+    }
+
+    private var pitchSlider: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Image(systemName: "viewfinder")
+                    .font(.system(size: 11))
+                Text("Pitch")
+                    .font(.caption)
+                Spacer()
+                Text("\(Int(engine.cameraController.pitch))°")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.5))
+                    .monospacedDigit()
+            }
+            .foregroundStyle(.white.opacity(0.8))
+            Slider(value: $engine.cameraController.pitch, in: 0...90, step: 5)
+                .tint(.white.opacity(0.7))
+        }
+    }
+
+    private var speedSlider: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Image(systemName: "hare.fill")
+                    .font(.system(size: 11))
+                Text("Speed")
+                    .font(.caption)
+                Spacer()
+                Text(String(format: "%.1f×", engine.speedMultiplier))
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.5))
+                    .monospacedDigit()
+            }
+            .foregroundStyle(.white.opacity(0.8))
+            Slider(value: $engine.speedMultiplier, in: 0.25...4.0, step: 0.25)
+                .tint(.white.opacity(0.7))
+        }
+    }
+
+    private var zoomSlider: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .font(.system(size: 11))
+                Text("Zoom")
+                    .font(.caption)
+                Spacer()
+                Text(String(format: "%.1f×", engine.cameraController.altitudeMultiplier))
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.5))
+                    .monospacedDigit()
+            }
+            .foregroundStyle(.white.opacity(0.8))
+            Slider(value: $engine.cameraController.altitudeMultiplier, in: 0.25...4.0, step: 0.25)
+                .tint(.white.opacity(0.7))
+        }
     }
 
     private func showControls() {

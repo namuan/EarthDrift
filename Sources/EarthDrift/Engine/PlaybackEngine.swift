@@ -13,6 +13,7 @@ final class PlaybackEngine {
     var cameraController = CameraController()
     var narrationEngine = NarrationEngine()
     var routeCompletionCount = 0
+    var speedMultiplier: Double = 1.0
 
     private var displayLink: Timer?
     private let frameRate: TimeInterval = 1.0 / 30.0
@@ -87,7 +88,7 @@ final class PlaybackEngine {
         lastUpdateTime = now
 
         let progressPerSecond = 1.0 / route.duration
-        progress += progressPerSecond * deltaTime
+        progress += progressPerSecond * deltaTime * speedMultiplier
 
         if progress >= 1.0 {
             logInfo("Route completed: route='\(route.title)' totalTicks=\(tickCount + 1) channel='\(currentChannel?.name ?? "?")' routeCompletionCount=\(routeCompletionCount + 1)")

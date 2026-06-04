@@ -9,6 +9,8 @@ final class CameraController {
     var currentCoordinate: CLLocationCoordinate2D = .init(latitude: 0, longitude: 0)
     var currentBearing: Double = 0
     var currentAltitude: Double = 3000
+    var pitch: Double = 0
+    var altitudeMultiplier: Double = 1.0
 
     private var route: Route?
 
@@ -39,8 +41,8 @@ final class CameraController {
 
         let newCamera = MKMapCamera(
             lookingAtCenter: currentCoordinate,
-            fromDistance: currentAltitude,
-            pitch: 0,
+            fromDistance: currentAltitude * altitudeMultiplier,
+            pitch: pitch,
             heading: currentBearing
         )
 
