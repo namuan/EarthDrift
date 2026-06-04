@@ -1,6 +1,10 @@
 import Foundation
 import Observation
 
+private enum PlaybackKeys {
+    static let speedMultiplier = "speedMultiplier"
+}
+
 @MainActor
 @Observable
 final class PlaybackEngine {
@@ -13,7 +17,13 @@ final class PlaybackEngine {
     var cameraController = CameraController()
     var narrationEngine = NarrationEngine()
     var routeCompletionCount = 0
-    var speedMultiplier: Double = 1.0
+
+    var speedMultiplier: Double = {
+        let saved = UserDefaults.standard.double(forKey: PlaybackKeys.speedMultiplier)
+        return saved > 0 ? saved : 1.0
+    }() {
+        didSet { UserDefaults.standard.set(speedMultiplier, forKey: PlaybackKeys.speedMultiplier) }
+    }
 
     private var displayLink: Timer?
     private let frameRate: TimeInterval = 1.0 / 30.0

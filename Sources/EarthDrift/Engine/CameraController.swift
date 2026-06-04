@@ -2,6 +2,11 @@ import Foundation
 import CoreLocation
 import MapKit
 
+private enum CameraKeys {
+    static let pitch = "cameraPitch"
+    static let altitudeMultiplier = "cameraAltitudeMultiplier"
+}
+
 @MainActor
 @Observable
 final class CameraController {
@@ -13,8 +18,17 @@ final class CameraController {
     var currentCoordinate: CLLocationCoordinate2D = .init(latitude: 0, longitude: 0)
     var currentBearing: Double = 0
     var currentAltitude: Double = 3000
-    var pitch: Double = 0
-    var altitudeMultiplier: Double = 1.0
+
+    var pitch: Double = UserDefaults.standard.double(forKey: CameraKeys.pitch) {
+        didSet { UserDefaults.standard.set(pitch, forKey: CameraKeys.pitch) }
+    }
+
+    var altitudeMultiplier: Double = {
+        let saved = UserDefaults.standard.double(forKey: CameraKeys.altitudeMultiplier)
+        return saved > 0 ? saved : 1.0
+    }() {
+        didSet { UserDefaults.standard.set(altitudeMultiplier, forKey: CameraKeys.altitudeMultiplier) }
+    }
 
     weak var mainMapView: MKMapView?
 
