@@ -74,7 +74,6 @@ struct ControlsOverlay: View {
                     }
                 }
                 Spacer()
-                liveBadge
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 16)
@@ -144,21 +143,6 @@ struct ControlsOverlay: View {
             .background(Capsule().fill(.white.opacity(0.1)))
         }
         .buttonStyle(.plain)
-    }
-
-    private var liveBadge: some View {
-        HStack(spacing: 4) {
-            Circle()
-                .fill(.red)
-                .frame(width: 6, height: 6)
-            Text("LIVE")
-                .font(.caption2)
-                .fontWeight(.bold)
-                .foregroundStyle(.white.opacity(0.8))
-        }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 5)
-        .background(Capsule().fill(.white.opacity(0.1)))
     }
 
     private var settingsPanel: some View {
