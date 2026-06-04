@@ -43,11 +43,6 @@ struct ControlsOverlay: View {
             .padding(.trailing, 16)
             .padding(.top, 16)
 
-            if showSettings {
-                settingsPanel
-                    .transition(.move(edge: .top).combined(with: .opacity))
-            }
-
             Spacer()
 
             HStack {
@@ -93,6 +88,18 @@ struct ControlsOverlay: View {
         .onTapGesture {
             showControls()
             scheduleFade()
+        }
+        .overlay {
+            if showSettings {
+                settingsBackdrop
+            }
+        }
+        .onKeyPress(.escape) {
+            if showSettings {
+                withAnimation(.easeInOut(duration: 0.2)) { showSettings = false }
+                return .handled
+            }
+            return .ignored
         }
     }
 
@@ -145,6 +152,20 @@ struct ControlsOverlay: View {
         .buttonStyle(.plain)
     }
 
+    private var settingsBackdrop: some View {
+        Color.clear
+            .contentShape(Rectangle())
+            .onTapGesture {
+                withAnimation(.easeInOut(duration: 0.2)) { showSettings = false }
+            }
+            .overlay(alignment: .topTrailing) {
+                settingsPanel
+                    .padding(.top, 52)
+                    .padding(.trailing, 16)
+                    .onTapGesture { }
+            }
+    }
+
     private var settingsPanel: some View {
         VStack(alignment: .leading, spacing: 14) {
             pitchSlider
@@ -154,8 +175,6 @@ struct ControlsOverlay: View {
         .padding(16)
         .frame(width: 200)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-        .padding(.trailing, 12)
-        .padding(.top, 4)
     }
 
     private var pitchSlider: some View {
