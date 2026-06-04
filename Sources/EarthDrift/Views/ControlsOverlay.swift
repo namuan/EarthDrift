@@ -14,6 +14,14 @@ struct ControlsOverlay: View {
         VStack {
             HStack {
                 Spacer()
+                Button(action: { engine.feelingLucky() }) {
+                    Image(systemName: "dice.fill")
+                        .font(.system(size: 13))
+                        .foregroundStyle(.white.opacity(0.6))
+                        .frame(width: 28, height: 28)
+                        .background(Circle().fill(.white.opacity(0.1)))
+                }
+                .buttonStyle(.plain)
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.2)) {
                         showSettings.toggle()

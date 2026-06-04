@@ -90,4 +90,18 @@ final class CameraController {
 
         camera = newCamera
     }
+
+    func teleportTo(coordinate: CLLocationCoordinate2D, altitude: Double? = nil) {
+        route = nil
+        if let altitude { currentAltitude = altitude }
+        currentCoordinate = coordinate
+        currentBearing = 0
+        camera = MKMapCamera(
+            lookingAtCenter: coordinate,
+            fromDistance: currentAltitude * altitudeMultiplier,
+            pitch: pitch,
+            heading: 0
+        )
+        logInfo("Teleported to: (\(String(format: "%.3f", coordinate.latitude)), \(String(format: "%.3f", coordinate.longitude))) altitude=\(Int(currentAltitude))m")
+    }
 }

@@ -1,4 +1,5 @@
 import Foundation
+import CoreLocation
 import Observation
 
 private enum PlaybackKeys {
@@ -88,6 +89,39 @@ final class PlaybackEngine {
         currentChannel = nil
         activeNarration = nil
         tickCount = 0
+    }
+
+    func feelingLucky() {
+        stopPlayback()
+        let pick = InterestingLocations.random()
+        let orbitRadius = max(pick.altitude * 0.3, 500)
+        let orbitCoords = generateOrbit(center: pick.coordinate, radiusMeters: orbitRadius, points: 36)
+        let route = Route(
+            title: pick.name,
+            subtitle: "Random discovery",
+            category: .ancient,
+            coordinates: orbitCoords,
+            duration: 60,
+            altitude: pick.altitude
+        )
+        let channel = Channel(name: pick.name, icon: "star.fill", routes: [route])
+        startPlayback(route: route, channel: channel)
+        logInfo("Feeling Lucky: '\(pick.name)' orbit radius=\(Int(orbitRadius))m")
+    }
+
+    private func generateOrbit(center: CLLocationCoordinate2D, radiusMeters: Double, points: Int) -> [CLLocationCoordinate2D] {
+        let latPerMeter = 1.0 / 111_320.0
+        let lngPerMeter = 1.0 / (111_320.0 * cos(center.latitude * .pi / 180.0))
+
+        return (0..<points).map { i in
+            let angle = 2.0 * .pi * Double(i) / Double(points)
+            let latOffset = radiusMeters * latPerMeter * sin(angle)
+            let lngOffset = radiusMeters * lngPerMeter * cos(angle)
+            return CLLocationCoordinate2D(
+                latitude: center.latitude + latOffset,
+                longitude: center.longitude + lngOffset
+            )
+        }
     }
 
     private func tick() {
