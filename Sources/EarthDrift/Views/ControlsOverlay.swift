@@ -7,9 +7,29 @@ struct ControlsOverlay: View {
 
     @State private var isVisible = true
     @State private var fadeTask: Task<Void, Never>?
+    @State private var isMaximized = false
 
     var body: some View {
         VStack {
+            HStack {
+                Spacer()
+                Button(action: {
+                    isMaximized.toggle()
+                    AppDelegate.toggleMaximize()
+                }) {
+                    Image(systemName: isMaximized
+                        ? "arrow.down.right.and.arrow.up.left"
+                        : "arrow.up.left.and.arrow.down.right")
+                        .font(.system(size: 13))
+                        .foregroundStyle(.white.opacity(0.6))
+                        .frame(width: 28, height: 28)
+                        .background(Circle().fill(.white.opacity(0.1)))
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.trailing, 16)
+            .padding(.top, 16)
+
             Spacer()
 
             HStack {
