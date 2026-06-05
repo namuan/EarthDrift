@@ -1,6 +1,6 @@
 # Earth Drift
 
-A living satellite journey for macOS.
+![](assets/intro.jpg)
 
 Earth Drift turns your desktop into a slow-moving geographic artwork. Unlike traditional map applications, the goal is not navigation — the app continuously glides across real satellite imagery following curated journeys: major rivers, historic railways, ancient trade routes, flight paths, and coastlines.
 

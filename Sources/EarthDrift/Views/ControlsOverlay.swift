@@ -179,6 +179,9 @@ struct ControlsOverlay: View {
             pitchSlider
             speedSlider
             zoomSlider
+            Divider()
+                .overlay(.white.opacity(0.15))
+            luckyDurationSlider
         }
         .padding(16)
         .frame(width: 200)
@@ -238,6 +241,25 @@ struct ControlsOverlay: View {
             }
             .foregroundStyle(.white.opacity(0.8))
             Slider(value: $engine.cameraController.altitudeMultiplier, in: 0.25...4.0, step: 0.25)
+                .tint(.white.opacity(0.7))
+        }
+    }
+
+    private var luckyDurationSlider: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Image(systemName: "dice.fill")
+                    .font(.system(size: 11))
+                Text("Lucky")
+                    .font(.caption)
+                Spacer()
+                Text("\(Int(engine.luckyDuration))s")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.5))
+                    .monospacedDigit()
+            }
+            .foregroundStyle(.white.opacity(0.8))
+            Slider(value: $engine.luckyDuration, in: 10...120, step: 10)
                 .tint(.white.opacity(0.7))
         }
     }

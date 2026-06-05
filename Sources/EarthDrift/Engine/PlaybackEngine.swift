@@ -4,6 +4,7 @@ import Observation
 
 private enum PlaybackKeys {
     static let speedMultiplier = "speedMultiplier"
+    static let luckyDuration = "luckyDuration"
 }
 
 @MainActor
@@ -25,6 +26,13 @@ final class PlaybackEngine {
         return saved > 0 ? saved : 1.0
     }() {
         didSet { UserDefaults.standard.set(speedMultiplier, forKey: PlaybackKeys.speedMultiplier) }
+    }
+
+    var luckyDuration: Double = {
+        let saved = UserDefaults.standard.double(forKey: PlaybackKeys.luckyDuration)
+        return saved > 0 ? saved : 30
+    }() {
+        didSet { UserDefaults.standard.set(luckyDuration, forKey: PlaybackKeys.luckyDuration) }
     }
 
     private var displayLink: Timer?
@@ -103,7 +111,7 @@ final class PlaybackEngine {
             subtitle: "Random discovery",
             category: .ancient,
             coordinates: orbitCoords,
-            duration: 30,
+            duration: luckyDuration,
             altitude: pick.altitude
         )
         let channel = Channel(name: pick.name, icon: "star.fill", routes: [route])
