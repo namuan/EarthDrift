@@ -9,6 +9,11 @@ struct ControlsOverlay: View {
     @State private var fadeTask: Task<Void, Never>?
     @State private var isMaximized = false
     @State private var showSettings = false
+    @FocusState private var focusedButton: FocusButton?
+
+    private enum FocusButton: Hashable {
+        case lucky, settings, maximize, previous, playPause, next, channels
+    }
 
     var body: some View {
         VStack {
@@ -17,11 +22,13 @@ struct ControlsOverlay: View {
                 Button(action: { engine.feelingLucky() }) {
                     Image(systemName: "dice.fill")
                         .font(.system(size: 13))
-                        .foregroundStyle(.white.opacity(0.6))
+                        .foregroundStyle(focusedButton == .lucky ? .white : .white.opacity(0.6))
                         .frame(width: 28, height: 28)
-                        .background(Circle().fill(.white.opacity(0.1)))
+                        .background(Circle().fill(focusedButton == .lucky ? .white.opacity(0.25) : .white.opacity(0.1)))
                 }
                 .buttonStyle(.plain)
+                .focusEffectDisabled()
+                .focused($focusedButton, equals: .lucky)
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.2)) {
                         showSettings.toggle()
@@ -29,11 +36,15 @@ struct ControlsOverlay: View {
                 }) {
                     Image(systemName: "gearshape.fill")
                         .font(.system(size: 13))
-                        .foregroundStyle(showSettings ? .white : .white.opacity(0.6))
+                        .foregroundStyle(showSettings ? .white : focusedButton == .settings ? .white : .white.opacity(0.6))
                         .frame(width: 28, height: 28)
-                        .background(Circle().fill(showSettings ? .white.opacity(0.2) : .white.opacity(0.1)))
+                        .background(Circle().fill(
+                            showSettings ? .white.opacity(0.2) : focusedButton == .settings ? .white.opacity(0.25) : .white.opacity(0.1)
+                        ))
                 }
                 .buttonStyle(.plain)
+                .focusEffectDisabled()
+                .focused($focusedButton, equals: .settings)
                 Button(action: {
                     isMaximized.toggle()
                     AppDelegate.toggleMaximize()
@@ -42,11 +53,13 @@ struct ControlsOverlay: View {
                         ? "arrow.down.right.and.arrow.up.left"
                         : "arrow.up.left.and.arrow.down.right")
                         .font(.system(size: 13))
-                        .foregroundStyle(.white.opacity(0.6))
+                        .foregroundStyle(focusedButton == .maximize ? .white : .white.opacity(0.6))
                         .frame(width: 28, height: 28)
-                        .background(Circle().fill(.white.opacity(0.1)))
+                        .background(Circle().fill(focusedButton == .maximize ? .white.opacity(0.25) : .white.opacity(0.1)))
                 }
                 .buttonStyle(.plain)
+                .focusEffectDisabled()
+                .focused($focusedButton, equals: .maximize)
             }
             .padding(.trailing, 16)
             .padding(.top, 16)
@@ -117,31 +130,37 @@ struct ControlsOverlay: View {
                 .font(.system(size: 28))
                 .foregroundStyle(.white)
                 .frame(width: 56, height: 56)
-                .background(Circle().fill(.white.opacity(0.15)))
+                .background(Circle().fill(focusedButton == .playPause ? .white.opacity(0.3) : .white.opacity(0.15)))
         }
         .buttonStyle(.plain)
+        .focusEffectDisabled()
+        .focused($focusedButton, equals: .playPause)
     }
 
     private var previousButton: some View {
         Button(action: { scheduler.previousChannel() }) {
             Image(systemName: "backward.fill")
                 .font(.system(size: 20))
-                .foregroundStyle(.white.opacity(0.7))
+                .foregroundStyle(focusedButton == .previous ? .white : .white.opacity(0.7))
                 .frame(width: 44, height: 44)
-                .background(Circle().fill(.white.opacity(0.1)))
+                .background(Circle().fill(focusedButton == .previous ? .white.opacity(0.25) : .white.opacity(0.1)))
         }
         .buttonStyle(.plain)
+        .focusEffectDisabled()
+        .focused($focusedButton, equals: .previous)
     }
 
     private var nextButton: some View {
         Button(action: { scheduler.nextChannel() }) {
             Image(systemName: "forward.fill")
                 .font(.system(size: 20))
-                .foregroundStyle(.white.opacity(0.7))
+                .foregroundStyle(focusedButton == .next ? .white : .white.opacity(0.7))
                 .frame(width: 44, height: 44)
-                .background(Circle().fill(.white.opacity(0.1)))
+                .background(Circle().fill(focusedButton == .next ? .white.opacity(0.25) : .white.opacity(0.1)))
         }
         .buttonStyle(.plain)
+        .focusEffectDisabled()
+        .focused($focusedButton, equals: .next)
     }
 
     private var channelButton: some View {
@@ -152,12 +171,14 @@ struct ControlsOverlay: View {
                 Text("Channels")
                     .font(.subheadline)
             }
-            .foregroundStyle(.white.opacity(0.7))
+            .foregroundStyle(focusedButton == .channels ? .white : .white.opacity(0.7))
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
-            .background(Capsule().fill(.white.opacity(0.1)))
+            .background(Capsule().fill(focusedButton == .channels ? .white.opacity(0.25) : .white.opacity(0.1)))
         }
         .buttonStyle(.plain)
+        .focusEffectDisabled()
+        .focused($focusedButton, equals: .channels)
     }
 
     private var settingsBackdrop: some View {
