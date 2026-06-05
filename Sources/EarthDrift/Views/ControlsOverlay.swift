@@ -22,9 +22,9 @@ struct ControlsOverlay: View {
                 Button(action: { engine.feelingLucky() }) {
                     Image(systemName: "dice.fill")
                         .font(.system(size: 13))
-                        .foregroundStyle(focusedButton == .lucky ? .white : .white.opacity(0.6))
+                        .foregroundStyle(focusedButton == .lucky ? .white : .white.opacity(0.7))
                         .frame(width: 28, height: 28)
-                        .background(Circle().fill(focusedButton == .lucky ? .white.opacity(0.25) : .white.opacity(0.1)))
+                        .background(Circle().fill(focusedButton == .lucky ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
                 }
                 .buttonStyle(.plain)
                 .focusEffectDisabled()
@@ -36,11 +36,11 @@ struct ControlsOverlay: View {
                 }) {
                     Image(systemName: "gearshape.fill")
                         .font(.system(size: 13))
-                        .foregroundStyle(showSettings ? .white : focusedButton == .settings ? .white : .white.opacity(0.6))
+                        .foregroundStyle(showSettings ? .white : focusedButton == .settings ? .white : .white.opacity(0.7))
                         .frame(width: 28, height: 28)
                         .background(Circle().fill(
-                            showSettings ? .white.opacity(0.2) : focusedButton == .settings ? .white.opacity(0.25) : .white.opacity(0.1)
-                        ))
+                            showSettings ? .white.opacity(0.25) : focusedButton == .settings ? .white.opacity(0.3) : .white.opacity(0.15)
+                        ).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
                 }
                 .buttonStyle(.plain)
                 .focusEffectDisabled()
@@ -53,9 +53,9 @@ struct ControlsOverlay: View {
                         ? "arrow.down.right.and.arrow.up.left"
                         : "arrow.up.left.and.arrow.down.right")
                         .font(.system(size: 13))
-                        .foregroundStyle(focusedButton == .maximize ? .white : .white.opacity(0.6))
+                        .foregroundStyle(focusedButton == .maximize ? .white : .white.opacity(0.7))
                         .frame(width: 28, height: 28)
-                        .background(Circle().fill(focusedButton == .maximize ? .white.opacity(0.25) : .white.opacity(0.1)))
+                        .background(Circle().fill(focusedButton == .maximize ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
                 }
                 .buttonStyle(.plain)
                 .focusEffectDisabled()
@@ -130,7 +130,7 @@ struct ControlsOverlay: View {
                 .font(.system(size: 28))
                 .foregroundStyle(.white)
                 .frame(width: 56, height: 56)
-                .background(Circle().fill(focusedButton == .playPause ? .white.opacity(0.3) : .white.opacity(0.15)))
+                .background(Circle().fill(focusedButton == .playPause ? .white.opacity(0.35) : .white.opacity(0.2)).shadow(color: .black.opacity(0.4), radius: 4, y: 2))
         }
         .buttonStyle(.plain)
         .focusEffectDisabled()
@@ -141,9 +141,9 @@ struct ControlsOverlay: View {
         Button(action: { scheduler.previousChannel() }) {
             Image(systemName: "backward.fill")
                 .font(.system(size: 20))
-                .foregroundStyle(focusedButton == .previous ? .white : .white.opacity(0.7))
+                .foregroundStyle(focusedButton == .previous ? .white : .white.opacity(0.8))
                 .frame(width: 44, height: 44)
-                .background(Circle().fill(focusedButton == .previous ? .white.opacity(0.25) : .white.opacity(0.1)))
+                .background(Circle().fill(focusedButton == .previous ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
         }
         .buttonStyle(.plain)
         .focusEffectDisabled()
@@ -154,9 +154,9 @@ struct ControlsOverlay: View {
         Button(action: { scheduler.nextChannel() }) {
             Image(systemName: "forward.fill")
                 .font(.system(size: 20))
-                .foregroundStyle(focusedButton == .next ? .white : .white.opacity(0.7))
+                .foregroundStyle(focusedButton == .next ? .white : .white.opacity(0.8))
                 .frame(width: 44, height: 44)
-                .background(Circle().fill(focusedButton == .next ? .white.opacity(0.25) : .white.opacity(0.1)))
+                .background(Circle().fill(focusedButton == .next ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
         }
         .buttonStyle(.plain)
         .focusEffectDisabled()
@@ -171,10 +171,10 @@ struct ControlsOverlay: View {
                 Text("Channels")
                     .font(.subheadline)
             }
-            .foregroundStyle(focusedButton == .channels ? .white : .white.opacity(0.7))
+            .foregroundStyle(focusedButton == .channels ? .white : .white.opacity(0.8))
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
-            .background(Capsule().fill(focusedButton == .channels ? .white.opacity(0.25) : .white.opacity(0.1)))
+            .background(Capsule().fill(focusedButton == .channels ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
         }
         .buttonStyle(.plain)
         .focusEffectDisabled()
