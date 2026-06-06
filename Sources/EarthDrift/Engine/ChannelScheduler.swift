@@ -63,12 +63,42 @@ final class ChannelScheduler {
         logInfo("Channel selected: '\(prevChannel)' → '\(newChannel)' (index: 0→\(index)) route: '\(prevRoute)' → '\(newRoute)'")
     }
 
+    func selectChannelAndRoute(channelIndex: Int, routeIndex: Int) {
+        guard channelIndex >= 0, channelIndex < channels.count else {
+            logWarning("Channel select out of bounds: index=\(channelIndex) count=\(channels.count)")
+            return
+        }
+        let channel = channels[channelIndex]
+        guard routeIndex >= 0, routeIndex < channel.routes.count else {
+            logWarning("Route select out of bounds: index=\(routeIndex) count=\(channel.routes.count)")
+            return
+        }
+        let prevChannel = currentChannel?.name ?? "none"
+        let prevRoute = currentRoute?.title ?? "none"
+        currentChannelIndex = channelIndex
+        currentRouteIndex = routeIndex
+        let newChannel = currentChannel?.name ?? "?"
+        let newRoute = currentRoute?.title ?? "?"
+        logInfo("Channel+route selected: '\(prevChannel)' → '\(newChannel)' route: '\(prevRoute)' → '\(newRoute)'")
+    }
+
     func selectChannel(id: UUID) {
         guard let index = channels.firstIndex(where: { $0.id == id }) else {
             logWarning("Channel select by ID failed: id=\(id) not found")
             return
         }
         selectChannel(index: index)
+    }
+
+    func selectRoute(index: Int) {
+        guard let channel = currentChannel, index >= 0, index < channel.routes.count else {
+            logWarning("Route select out of bounds: index=\(index)")
+            return
+        }
+        let prevRoute = currentRoute?.title ?? "?"
+        currentRouteIndex = index
+        let newRoute = currentRoute?.title ?? "?"
+        logInfo("Route selected: '\(prevRoute)' → '\(newRoute)' (index: \(index))")
     }
 
     func advanceToNextRoute() {

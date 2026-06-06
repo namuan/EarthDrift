@@ -2,17 +2,19 @@ import SwiftUI
 
 struct ChannelBrowser: View {
     let channels: [Channel]
-    let currentIndex: Int
-    var onSelect: (Int) -> Void
+    let currentChannelIndex: Int
+    let currentRouteIndex: Int
+    var onSelect: (Int, Int) -> Void
 
     @Environment(\.dismiss) private var dismiss
-    @State private var selectedIndex: Int
+    @State private var selectedChannelIndex: Int
 
-    init(channels: [Channel], currentIndex: Int, onSelect: @escaping (Int) -> Void) {
+    init(channels: [Channel], currentChannelIndex: Int, currentRouteIndex: Int, onSelect: @escaping (Int, Int) -> Void) {
         self.channels = channels
-        self.currentIndex = currentIndex
+        self.currentChannelIndex = currentChannelIndex
+        self.currentRouteIndex = currentRouteIndex
         self.onSelect = onSelect
-        self._selectedIndex = State(initialValue: currentIndex)
+        self._selectedChannelIndex = State(initialValue: currentChannelIndex)
     }
 
     var body: some View {
@@ -30,15 +32,11 @@ struct ChannelBrowser: View {
                     ForEach(Array(channels.enumerated()), id: \.element.id) { index, channel in
                         ChannelCard(
                             channel: channel,
-                            isSelected: index == selectedIndex
+                            isSelected: index == selectedChannelIndex
                         )
                         .onTapGesture {
                             withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-                                selectedIndex = index
-                            }
-                            onSelect(index)
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                dismiss()
+                                selectedChannelIndex = index
                             }
                         }
                     }
@@ -47,9 +45,41 @@ struct ChannelBrowser: View {
                 .padding(.vertical, 8)
             }
 
+            let channel = channels[selectedChannelIndex]
+            routeList(for: channel)
+
             Spacer()
         }
         .background(.black.opacity(0.6))
+    }
+
+    private func routeList(for channel: Channel) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(channel.name)
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(.white.opacity(0.6))
+                .padding(.horizontal, 40)
+                .padding(.top, 24)
+                .padding(.bottom, 8)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(Array(channel.routes.enumerated()), id: \.element.id) { index, route in
+                        RouteCard(
+                            route: route,
+                            isCurrentRoute: selectedChannelIndex == currentChannelIndex && index == currentRouteIndex
+                        )
+                        .onTapGesture {
+                            onSelect(selectedChannelIndex, index)
+                            dismiss()
+                        }
+                    }
+                }
+                .padding(.horizontal, 40)
+                .padding(.vertical, 4)
+            }
+        }
     }
 }
 
@@ -90,3 +120,42 @@ struct ChannelCard: View {
         .animation(.spring(response: 0.4, dampingFraction: 0.7), value: isSelected)
     }
 }
+
+struct RouteCard: View {
+    let route: Route
+    let isCurrentRoute: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 6) {
+                if isCurrentRoute {
+                    Image(systemName: "play.fill")
+                        .font(.caption2)
+                        .foregroundStyle(.green)
+                }
+                Text(route.title)
+                    .font(.callout)
+                    .fontWeight(.medium)
+                    .foregroundStyle(isCurrentRoute ? .green : .white)
+                    .lineLimit(1)
+            }
+
+            Text(route.subtitle)
+                .font(.caption)
+                .foregroundStyle(.white.opacity(0.5))
+                .lineLimit(1)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .frame(width: 200, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(isCurrentRoute ? .green.opacity(0.1) : .white.opacity(0.06))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(isCurrentRoute ? .green.opacity(0.4) : .white.opacity(0.1), lineWidth: 1)
+        )
+    }
+}
+
