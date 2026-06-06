@@ -49,6 +49,9 @@ struct ContentView: View {
         .onChange(of: scheduler.currentChannelIndex) { _, _ in
             startCurrentRoute()
         }
+        .onChange(of: scheduler.currentRouteIndex) { _, _ in
+            startCurrentRoute()
+        }
         .onChange(of: engine.routeCompletionCount) { _, _ in
             if engine.isFeelingLucky {
                 engine.feelingLucky()
@@ -63,10 +66,15 @@ struct ContentView: View {
         } content: {
             ChannelBrowser(
                 channels: scheduler.channels,
-                currentIndex: scheduler.currentChannelIndex,
-                onSelect: { index in
-                    logInfo("Channel browser: user selected index=\(index)")
+                currentChannelIndex: scheduler.currentChannelIndex,
+                currentRouteIndex: scheduler.currentRouteIndex,
+                onSelectChannel: { index in
+                    logInfo("Channel browser: user selected channel index=\(index)")
                     scheduler.selectChannel(index: index)
+                },
+                onSelectRoute: { index in
+                    logInfo("Channel browser: user selected route index=\(index)")
+                    scheduler.selectRoute(index: index)
                 }
             )
         }

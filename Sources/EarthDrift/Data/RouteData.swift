@@ -308,11 +308,165 @@ enum RouteData {
         altitude: 15000
     )
 
+    static let greekIslands = Route(
+        title: "Greek Islands",
+        subtitle: "Cyclades of the Aegean",
+        category: .islandHopping,
+        coordinates: [
+            .init(latitude: 37.97, longitude: 23.73),
+            .init(latitude: 37.45, longitude: 24.15),
+            .init(latitude: 37.45, longitude: 25.35),
+            .init(latitude: 36.42, longitude: 25.43),
+            .init(latitude: 36.20, longitude: 26.80),
+            .init(latitude: 36.15, longitude: 27.70),
+            .init(latitude: 36.45, longitude: 28.20),
+            .init(latitude: 36.90, longitude: 27.30),
+            .init(latitude: 37.40, longitude: 25.35),
+            .init(latitude: 37.50, longitude: 24.45),
+            .init(latitude: 37.97, longitude: 23.73),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: 37.97, longitude: 23.73, title: "Athens", subtitle: "Gateway to the Aegean."),
+            NarrationPoint(latitude: 37.45, longitude: 25.35, title: "Mykonos", subtitle: "The iconic Cycladic island."),
+            NarrationPoint(latitude: 36.42, longitude: 25.43, title: "Santorini", subtitle: "Caldera of a sleeping giant."),
+            NarrationPoint(latitude: 36.20, longitude: 26.80, title: "Nisyros", subtitle: "Volcanic crater rising from the sea."),
+            NarrationPoint(latitude: 36.45, longitude: 28.20, title: "Rhodes", subtitle: "Medieval fortress of the Knights."),
+            NarrationPoint(latitude: 36.90, longitude: 27.30, title: "Kos", subtitle: "Where Hippocrates walked."),
+        ]
+    )
+
+    static let hawaiianIslands = Route(
+        title: "Hawaiian Islands",
+        subtitle: "The Pacific emerald chain",
+        category: .islandHopping,
+        coordinates: [
+            .init(latitude: 19.50, longitude: -154.95),
+            .init(latitude: 19.60, longitude: -155.50),
+            .init(latitude: 19.75, longitude: -155.95),
+            .init(latitude: 19.60, longitude: -156.40),
+            .init(latitude: 20.20, longitude: -156.40),
+            .init(latitude: 20.45, longitude: -156.65),
+            .init(latitude: 20.55, longitude: -156.60),
+            .init(latitude: 20.75, longitude: -156.55),
+            .init(latitude: 20.90, longitude: -156.70),
+            .init(latitude: 21.00, longitude: -156.65),
+            .init(latitude: 21.25, longitude: -157.10),
+            .init(latitude: 21.30, longitude: -157.70),
+            .init(latitude: 21.40, longitude: -158.05),
+            .init(latitude: 21.46, longitude: -158.20),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: 19.50, longitude: -154.95, title: "Big Island", subtitle: "Hawaiʻi — volcano country."),
+            NarrationPoint(latitude: 20.20, longitude: -156.40, title: "Maui", subtitle: "The Valley Isle."),
+            NarrationPoint(latitude: 20.75, longitude: -156.55, title: "Molokai", subtitle: "The Friendly Isle."),
+            NarrationPoint(latitude: 21.00, longitude: -156.65, title: "Lanai", subtitle: "The Pineapple Isle."),
+            NarrationPoint(latitude: 21.30, longitude: -157.70, title: "Oʻahu", subtitle: "The Gathering Place."),
+            NarrationPoint(latitude: 22.05, longitude: -159.35, title: "Kauaʻi", subtitle: "The Garden Isle."),
+        ]
+    )
+
+    static let indonesianArchipelago = Route(
+        title: "Indonesian Archipelago",
+        subtitle: "From Sumatra to Flores",
+        category: .islandHopping,
+        coordinates: [
+            .init(latitude: -0.50, longitude: 101.50),
+            .init(latitude: -2.00, longitude: 104.50),
+            .init(latitude: -4.00, longitude: 105.50),
+            .init(latitude: -5.50, longitude: 107.00),
+            .init(latitude: -6.40, longitude: 108.50),
+            .init(latitude: -7.00, longitude: 110.40),
+            .init(latitude: -7.50, longitude: 112.00),
+            .init(latitude: -8.20, longitude: 114.40),
+            .init(latitude: -8.40, longitude: 115.60),
+            .init(latitude: -8.10, longitude: 116.00),
+            .init(latitude: -8.40, longitude: 117.00),
+            .init(latitude: -8.50, longitude: 119.00),
+            .init(latitude: -8.60, longitude: 120.50),
+            .init(latitude: -8.90, longitude: 121.30),
+        ],
+        duration: 2400,
+        narrationPoints: [
+            NarrationPoint(latitude: -0.50, longitude: 101.50, title: "Sumatra", subtitle: "The wild west of Indonesia."),
+            NarrationPoint(latitude: -6.40, longitude: 108.50, title: "Java", subtitle: "The cultural heartland."),
+            NarrationPoint(latitude: -8.40, longitude: 115.60, title: "Bali", subtitle: "Island of the Gods."),
+            NarrationPoint(latitude: -8.40, longitude: 117.00, title: "Komodo", subtitle: "Home of the dragons."),
+            NarrationPoint(latitude: -8.60, longitude: 120.50, title: "Flores", subtitle: "Volcanoes and ancient mysteries."),
+        ]
+    )
+
+    static let caribbeanChain = Route(
+        title: "Caribbean Chain",
+        subtitle: "Islands of the sun",
+        category: .islandHopping,
+        coordinates: [
+            .init(latitude: 18.50, longitude: -66.00),
+            .init(latitude: 18.40, longitude: -67.50),
+            .init(latitude: 18.60, longitude: -69.00),
+            .init(latitude: 18.90, longitude: -70.50),
+            .init(latitude: 19.00, longitude: -71.40),
+            .init(latitude: 18.50, longitude: -72.50),
+            .init(latitude: 18.80, longitude: -74.50),
+            .init(latitude: 19.50, longitude: -75.50),
+            .init(latitude: 20.00, longitude: -77.00),
+            .init(latitude: 20.50, longitude: -78.20),
+            .init(latitude: 21.50, longitude: -79.00),
+            .init(latitude: 22.50, longitude: -79.50),
+            .init(latitude: 23.50, longitude: -80.00),
+            .init(latitude: 23.80, longitude: -77.50),
+            .init(latitude: 24.50, longitude: -78.00),
+            .init(latitude: 25.00, longitude: -77.50),
+            .init(latitude: 25.50, longitude: -77.00),
+        ],
+        duration: 2000,
+        narrationPoints: [
+            NarrationPoint(latitude: 18.50, longitude: -66.00, title: "Puerto Rico", subtitle: "La Isla del Encanto."),
+            NarrationPoint(latitude: 18.90, longitude: -70.50, title: "Dominican Republic", subtitle: "The first European settlement in the Americas."),
+            NarrationPoint(latitude: 18.50, longitude: -72.50, title: "Haiti", subtitle: "The mountain republic."),
+            NarrationPoint(latitude: 20.00, longitude: -77.00, title: "Jamaica", subtitle: "Land of wood and water."),
+            NarrationPoint(latitude: 22.50, longitude: -79.50, title: "Cuba", subtitle: "The Pearl of the Antilles."),
+            NarrationPoint(latitude: 25.00, longitude: -77.50, title: "The Bahamas", subtitle: "Seven hundred islands of paradise."),
+        ]
+    )
+
+    static let galapagos = Route(
+        title: "Galápagos",
+        subtitle: "Darwin's living laboratory",
+        category: .islandHopping,
+        coordinates: [
+            .init(latitude: -0.75, longitude: -90.35),
+            .init(latitude: -0.85, longitude: -89.60),
+            .init(latitude: -0.50, longitude: -90.30),
+            .init(latitude: -0.20, longitude: -90.45),
+            .init(latitude: 0.00, longitude: -91.00),
+            .init(latitude: -0.30, longitude: -91.50),
+            .init(latitude: -0.80, longitude: -91.30),
+            .init(latitude: -1.00, longitude: -90.80),
+            .init(latitude: -1.30, longitude: -90.45),
+            .init(latitude: -1.25, longitude: -89.70),
+            .init(latitude: -1.20, longitude: -89.20),
+            .init(latitude: -0.50, longitude: -89.40),
+            .init(latitude: -0.75, longitude: -90.35),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: -0.75, longitude: -90.35, title: "Isabela", subtitle: "The largest island, still being forged by volcanoes."),
+            NarrationPoint(latitude: -0.50, longitude: -90.30, title: "Santiago", subtitle: "Where Darwin first set foot."),
+            NarrationPoint(latitude: 0.00, longitude: -91.00, title: "Fernandina", subtitle: "The youngest and most pristine island."),
+            NarrationPoint(latitude: -0.80, longitude: -91.30, title: "Santa Cruz", subtitle: "The research heart of the archipelago."),
+            NarrationPoint(latitude: -1.25, longitude: -89.70, title: "San Cristóbal", subtitle: "Where evolution reveals itself."),
+            NarrationPoint(latitude: -0.50, longitude: -89.40, title: "Genovesa", subtitle: "The bird sanctuary of the archipelago."),
+        ]
+    )
+
     static let allRoutes: [Route] = [
         nile, amazon, mississippi, danube,
         transSiberian, californiaZephyr,
         tokyoLA, londonSingapore,
         silkRoad, pacificCoast,
+        greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos,
     ]
 
     static let defaultChannels: [Channel] = [
@@ -321,5 +475,6 @@ enum RouteData {
         Channel(name: "Flights", icon: "airplane", routes: [tokyoLA, londonSingapore]),
         Channel(name: "Ancient Routes", icon: "scroll", routes: [silkRoad]),
         Channel(name: "Coastlines", icon: "beach.umbrella", routes: [pacificCoast]),
+        Channel(name: "Island Hopping", icon: "ferry", routes: [greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos]),
     ]
 }

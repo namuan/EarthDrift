@@ -71,6 +71,17 @@ final class ChannelScheduler {
         selectChannel(index: index)
     }
 
+    func selectRoute(index: Int) {
+        guard let channel = currentChannel, index >= 0, index < channel.routes.count else {
+            logWarning("Route select out of bounds: index=\(index)")
+            return
+        }
+        let prevRoute = currentRoute?.title ?? "?"
+        currentRouteIndex = index
+        let newRoute = currentRoute?.title ?? "?"
+        logInfo("Route selected: channel='\(channel.name)' routeIndex: \(index) route: '\(prevRoute)' → '\(newRoute)'")
+    }
+
     func advanceToNextRoute() {
         guard let channel = currentChannel, !channel.routes.isEmpty else {
             logWarning("Advance route failed: no channel or no routes")

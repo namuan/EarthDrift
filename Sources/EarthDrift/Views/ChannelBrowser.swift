@@ -2,54 +2,151 @@ import SwiftUI
 
 struct ChannelBrowser: View {
     let channels: [Channel]
-    let currentIndex: Int
-    var onSelect: (Int) -> Void
+    let currentChannelIndex: Int
+    let currentRouteIndex: Int
+    var onSelectChannel: (Int) -> Void
+    var onSelectRoute: (Int) -> Void
 
     @Environment(\.dismiss) private var dismiss
-    @State private var selectedIndex: Int
+    @State private var selectedChannelIndex: Int
+    @State private var selectedRouteIndex: Int
 
-    init(channels: [Channel], currentIndex: Int, onSelect: @escaping (Int) -> Void) {
+    init(
+        channels: [Channel],
+        currentChannelIndex: Int,
+        currentRouteIndex: Int,
+        onSelectChannel: @escaping (Int) -> Void,
+        onSelectRoute: @escaping (Int) -> Void
+    ) {
         self.channels = channels
-        self.currentIndex = currentIndex
-        self.onSelect = onSelect
-        self._selectedIndex = State(initialValue: currentIndex)
+        self.currentChannelIndex = currentChannelIndex
+        self.currentRouteIndex = currentRouteIndex
+        self.onSelectChannel = onSelectChannel
+        self.onSelectRoute = onSelectRoute
+        self._selectedChannelIndex = State(initialValue: currentChannelIndex)
+        self._selectedRouteIndex = State(initialValue: currentRouteIndex)
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            Spacer()
-
             Text("Choose a Channel")
                 .font(.title2)
                 .fontWeight(.medium)
                 .foregroundStyle(.white)
-                .padding(.bottom, 32)
+                .padding(.top, 32)
+                .padding(.bottom, 24)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
+                HStack(spacing: 16) {
                     ForEach(Array(channels.enumerated()), id: \.element.id) { index, channel in
                         ChannelCard(
                             channel: channel,
-                            isSelected: index == selectedIndex
+                            isSelected: index == selectedChannelIndex
                         )
                         .onTapGesture {
                             withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-                                selectedIndex = index
+                                selectedChannelIndex = index
+                                selectedRouteIndex = 0
                             }
-                            onSelect(index)
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                dismiss()
-                            }
+                            onSelectChannel(index)
                         }
                     }
                 }
                 .padding(.horizontal, 40)
-                .padding(.vertical, 8)
+            }
+
+            if let channel = selectedChannel {
+                Divider()
+                    .overlay(.white.opacity(0.15))
+                    .padding(.horizontal, 40)
+                    .padding(.vertical, 16)
+
+                Text(channel.name)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .padding(.bottom, 12)
+
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 6) {
+                        ForEach(Array(channel.routes.enumerated()), id: \.element.id) { index, route in
+                            RouteRow(
+                                route: route,
+                                isSelected: index == selectedRouteIndex,
+                                number: index + 1
+                            )
+                            .onTapGesture {
+                                withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                                    selectedRouteIndex = index
+                                }
+                                onSelectRoute(index)
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    dismiss()
+                                }
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 40)
+                    .padding(.bottom, 32)
+                }
+            }
+
+            Spacer(minLength: 0)
+        }
+        .frame(minWidth: 440, idealHeight: 500)
+        .background(.black.opacity(0.6))
+    }
+
+    private var selectedChannel: Channel? {
+        guard channels.indices.contains(selectedChannelIndex) else { return nil }
+        return channels[selectedChannelIndex]
+    }
+}
+
+struct RouteRow: View {
+    let route: Route
+    let isSelected: Bool
+    let number: Int
+
+    var body: some View {
+        HStack(spacing: 14) {
+            Text("\(number)")
+                .font(.caption)
+                .foregroundStyle(.white.opacity(0.4))
+                .frame(width: 24, alignment: .leading)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(route.title)
+                    .font(.body)
+                    .fontWeight(.medium)
+                    .foregroundStyle(isSelected ? .white : .white.opacity(0.7))
+                Text(route.subtitle)
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.4))
             }
 
             Spacer()
+
+            if isSelected {
+                Image(systemName: "play.fill")
+                    .font(.system(size: 10))
+                    .foregroundStyle(.white)
+                    .frame(width: 24, height: 24)
+                    .background(Circle().fill(.white.opacity(0.2)))
+            }
         }
-        .background(.black.opacity(0.6))
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(isSelected ? .white.opacity(0.1) : .clear)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(isSelected ? .white.opacity(0.2) : .clear, lineWidth: 1)
+        )
+        .contentShape(Rectangle())
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
     }
 }
 
@@ -58,11 +155,11 @@ struct ChannelCard: View {
     let isSelected: Bool
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 10) {
             Image(systemName: channel.icon)
-                .font(.system(size: 36))
+                .font(.system(size: 30))
                 .foregroundStyle(isSelected ? .white : .white.opacity(0.6))
-                .frame(width: 80, height: 80)
+                .frame(width: 64, height: 64)
                 .background(
                     Circle()
                         .fill(isSelected ? .white.opacity(0.2) : .white.opacity(0.08))
@@ -70,21 +167,22 @@ struct ChannelCard: View {
                 .scaleEffect(isSelected ? 1.1 : 1.0)
 
             Text(channel.name)
-                .font(.headline)
+                .font(.subheadline)
+                .fontWeight(.medium)
                 .foregroundStyle(isSelected ? .white : .white.opacity(0.5))
 
             Text("\(channel.routes.count) journeys")
-                .font(.caption)
+                .font(.caption2)
                 .foregroundStyle(.white.opacity(0.4))
         }
-        .frame(width: 140)
-        .padding(.vertical, 20)
+        .frame(width: 120)
+        .padding(.vertical, 16)
         .background(
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 16)
                 .fill(isSelected ? .white.opacity(0.12) : .clear)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 16)
                 .stroke(isSelected ? .white.opacity(0.3) : .white.opacity(0.1), lineWidth: 1)
         )
         .animation(.spring(response: 0.4, dampingFraction: 0.7), value: isSelected)
