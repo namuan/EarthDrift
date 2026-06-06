@@ -461,62 +461,183 @@ enum RouteData {
         ]
     )
 
-    static let ringOfFire = Route(
-        title: "Ring of Fire",
-        subtitle: "The Pacific volcanic rim",
+    static let japanVolcanoes = Route(
+        title: "Japan",
+        subtitle: "Volcanic arc of the rising sun",
         category: .volcanoes,
         coordinates: [
             .init(latitude: 35.36, longitude: 138.73),
-            .init(latitude: 38.00, longitude: 142.00),
-            .init(latitude: 44.00, longitude: 150.00),
-            .init(latitude: 50.00, longitude: 157.00),
-            .init(latitude: 56.06, longitude: 160.64),
-            .init(latitude: 55.00, longitude: 166.00),
-            .init(latitude: 54.00, longitude: 170.00),
-            .init(latitude: 53.00, longitude: -172.00),
-            .init(latitude: 52.50, longitude: -174.00),
-            .init(latitude: 52.00, longitude: -174.00),
-            .init(latitude: 51.00, longitude: -170.00),
-            .init(latitude: 50.00, longitude: -165.00),
-            .init(latitude: 48.00, longitude: -155.00),
-            .init(latitude: 46.85, longitude: -121.76),
-            .init(latitude: 44.00, longitude: -118.00),
-            .init(latitude: 40.00, longitude: -115.00),
-            .init(latitude: 35.00, longitude: -112.00),
-            .init(latitude: 30.00, longitude: -110.00),
-            .init(latitude: 25.00, longitude: -107.00),
-            .init(latitude: 19.02, longitude: -98.62),
-            .init(latitude: 15.00, longitude: -96.00),
-            .init(latitude: 10.00, longitude: -92.00),
-            .init(latitude: 5.00, longitude: -86.00),
-            .init(latitude: 0.68, longitude: -78.43),
-            .init(latitude: -5.00, longitude: -82.00),
-            .init(latitude: -10.00, longitude: -80.00),
-            .init(latitude: -15.00, longitude: -78.00),
-            .init(latitude: -20.00, longitude: -75.00),
-            .init(latitude: -25.00, longitude: -72.00),
-            .init(latitude: -30.00, longitude: -70.00),
-            .init(latitude: -35.00, longitude: -72.00),
-            .init(latitude: -40.00, longitude: -75.00),
-            .init(latitude: -45.00, longitude: -78.00),
-            .init(latitude: -50.00, longitude: -75.00),
-            .init(latitude: -55.00, longitude: -70.00),
-            .init(latitude: -55.00, longitude: -65.00),
-            .init(latitude: -50.00, longitude: -60.00),
-            .init(latitude: -45.00, longitude: 170.00),
-            .init(latitude: -39.28, longitude: 175.57),
+            .init(latitude: 35.00, longitude: 138.50),
+            .init(latitude: 34.50, longitude: 138.00),
+            .init(latitude: 34.00, longitude: 137.50),
+            .init(latitude: 33.50, longitude: 137.00),
+            .init(latitude: 33.00, longitude: 137.00),
+            .init(latitude: 32.50, longitude: 137.00),
+            .init(latitude: 32.00, longitude: 137.00),
+            .init(latitude: 31.50, longitude: 130.50),
         ],
-        duration: 4800,
+        duration: 600,
         narrationPoints: [
-            NarrationPoint(latitude: 35.36, longitude: 138.73, title: "Mount Fuji", subtitle: "Japan's sacred volcano."),
-            NarrationPoint(latitude: 56.06, longitude: 160.64, title: "Kamchatka", subtitle: "The land of fire and ice."),
-            NarrationPoint(latitude: 52.00, longitude: -174.00, title: "Aleutian Arc", subtitle: "A chain of volcanic islands."),
-            NarrationPoint(latitude: 46.85, longitude: -121.76, title: "Cascade Range", subtitle: "Mount Rainier and the Pacific Northwest."),
-            NarrationPoint(latitude: 19.02, longitude: -98.62, title: "Popocatépetl", subtitle: "Mexico's fiery peak."),
-            NarrationPoint(latitude: 0.68, longitude: -78.43, title: "Cotopaxi", subtitle: "The highest active volcano in the Andes."),
-            NarrationPoint(latitude: -39.28, longitude: 175.57, title: "Mount Ruapehu", subtitle: "New Zealand's volcanic heart."),
+            NarrationPoint(latitude: 35.36, longitude: 138.73, title: "Mount Fuji", subtitle: "Japan's sacred volcano and cultural icon."),
+            NarrationPoint(latitude: 34.50, longitude: 138.00, title: "Izu Peninsula", subtitle: "A volcanic landscape of hot springs."),
+            NarrationPoint(latitude: 32.50, longitude: 137.00, title: "Mount Aso", subtitle: "One of the world's largest calderas."),
+            NarrationPoint(latitude: 31.50, longitude: 130.50, title: "Sakurajima", subtitle: "An active stratovolcano in Kagoshima Bay."),
+        ]
+    )
+
+    static let kamchatka = Route(
+        title: "Kamchatka",
+        subtitle: "Land of fire and ice",
+        category: .volcanoes,
+        coordinates: [
+            .init(latitude: 56.06, longitude: 160.64),
+            .init(latitude: 56.00, longitude: 160.50),
+            .init(latitude: 55.80, longitude: 160.30),
+            .init(latitude: 55.60, longitude: 160.10),
+            .init(latitude: 55.40, longitude: 160.00),
+            .init(latitude: 55.20, longitude: 159.50),
+            .init(latitude: 55.00, longitude: 159.00),
+            .init(latitude: 54.80, longitude: 158.50),
+            .init(latitude: 54.50, longitude: 158.00),
         ],
-        altitude: 12000
+        duration: 480,
+        narrationPoints: [
+            NarrationPoint(latitude: 56.06, longitude: 160.64, title: "Klyuchevskaya Sopka", subtitle: "The tallest active volcano in Kamchatka."),
+            NarrationPoint(latitude: 55.60, longitude: 160.30, title: "Tolbachik", subtitle: "A massive volcanic complex."),
+            NarrationPoint(latitude: 55.00, longitude: 159.00, title: "Karymsky", subtitle: "Kamchatka's most active volcano."),
+            NarrationPoint(latitude: 54.50, longitude: 158.00, title: "Mutnovsky", subtitle: "A geothermal wonderland."),
+        ]
+    )
+
+    static let alaskaVolcanoes = Route(
+        title: "Alaska",
+        subtitle: "The Aleutian volcanic arc",
+        category: .volcanoes,
+        coordinates: [
+            .init(latitude: 54.00, longitude: -166.00),
+            .init(latitude: 53.50, longitude: -168.00),
+            .init(latitude: 53.00, longitude: -170.00),
+            .init(latitude: 52.50, longitude: -172.00),
+            .init(latitude: 52.00, longitude: -174.00),
+            .init(latitude: 52.00, longitude: -176.00),
+            .init(latitude: 52.50, longitude: -178.00),
+            .init(latitude: 53.00, longitude: 178.00),
+            .init(latitude: 53.50, longitude: 176.00),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: 54.00, longitude: -166.00, title: "Unalaska", subtitle: "Gateway to the Aleutian Islands."),
+            NarrationPoint(latitude: 52.50, longitude: -172.00, title: "Adak Island", subtitle: "Volcanic peaks in the mist."),
+            NarrationPoint(latitude: 52.00, longitude: -174.00, title: "Aleutian Arc", subtitle: "A chain of volcanoes stretching across the Pacific."),
+            NarrationPoint(latitude: 53.00, longitude: 178.00, title: "Buldir Island", subtitle: "Remote volcanic outpost."),
+        ]
+    )
+
+    static let cascades = Route(
+        title: "Cascades",
+        subtitle: "The Pacific Northwest volcanic range",
+        category: .volcanoes,
+        coordinates: [
+            .init(latitude: 48.50, longitude: -122.00),
+            .init(latitude: 48.00, longitude: -121.80),
+            .init(latitude: 47.50, longitude: -121.50),
+            .init(latitude: 46.85, longitude: -121.76),
+            .init(latitude: 46.20, longitude: -122.00),
+            .init(latitude: 45.50, longitude: -122.00),
+            .init(latitude: 44.50, longitude: -122.00),
+            .init(latitude: 44.00, longitude: -121.50),
+            .init(latitude: 43.50, longitude: -121.00),
+            .init(latitude: 42.50, longitude: -121.00),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: 48.50, longitude: -122.00, title: "Mount Baker", subtitle: "The northern sentinel of the Cascades."),
+            NarrationPoint(latitude: 48.00, longitude: -121.80, title: "Glacier Peak", subtitle: "One of Washington's most remote volcanoes."),
+            NarrationPoint(latitude: 46.85, longitude: -121.76, title: "Mount Rainier", subtitle: "14,410 feet — crown of the Cascades."),
+            NarrationPoint(latitude: 45.50, longitude: -122.00, title: "Mount St. Helens", subtitle: "Remembering the 1980 eruption."),
+            NarrationPoint(latitude: 44.00, longitude: -121.50, title: "Three Sisters", subtitle: "Three volcanic peaks in the Oregon Cascades."),
+            NarrationPoint(latitude: 42.50, longitude: -121.00, title: "Mount Shasta", subtitle: "California's volcanic giant."),
+        ]
+    )
+
+    static let mexicoVolcanoes = Route(
+        title: "Mexico",
+        subtitle: "The fiery heart of Mesoamerica",
+        category: .volcanoes,
+        coordinates: [
+            .init(latitude: 19.50, longitude: -98.70),
+            .init(latitude: 19.20, longitude: -98.50),
+            .init(latitude: 19.02, longitude: -98.62),
+            .init(latitude: 19.00, longitude: -98.80),
+            .init(latitude: 19.00, longitude: -99.00),
+            .init(latitude: 19.00, longitude: -99.20),
+            .init(latitude: 18.80, longitude: -99.40),
+            .init(latitude: 18.60, longitude: -99.50),
+            .init(latitude: 18.50, longitude: -99.60),
+            .init(latitude: 18.30, longitude: -100.00),
+        ],
+        duration: 480,
+        narrationPoints: [
+            NarrationPoint(latitude: 19.50, longitude: -98.70, title: "La Malinche", subtitle: "A dormant volcano overlooking Puebla."),
+            NarrationPoint(latitude: 19.02, longitude: -98.62, title: "Popocatépetl", subtitle: "Mexico's most active volcano."),
+            NarrationPoint(latitude: 19.00, longitude: -99.00, title: "Iztaccíhuatl", subtitle: "The sleeping woman of Aztec legend."),
+            NarrationPoint(latitude: 18.50, longitude: -99.60, title: "Nevado de Toluca", subtitle: "An ancient stratovolcano with crater lakes."),
+            NarrationPoint(latitude: 18.30, longitude: -100.00, title: "Colima", subtitle: "Mexico's most active — the Volcano of Fire."),
+        ]
+    )
+
+    static let andesVolcanoes = Route(
+        title: "Andes",
+        subtitle: "The volcanic spine of South America",
+        category: .volcanoes,
+        coordinates: [
+            .init(latitude: -0.50, longitude: -78.50),
+            .init(latitude: -0.68, longitude: -78.43),
+            .init(latitude: -1.00, longitude: -78.50),
+            .init(latitude: -1.50, longitude: -78.50),
+            .init(latitude: -2.00, longitude: -78.50),
+            .init(latitude: -2.50, longitude: -78.50),
+            .init(latitude: -3.00, longitude: -78.50),
+            .init(latitude: -3.50, longitude: -78.50),
+            .init(latitude: -4.00, longitude: -78.50),
+            .init(latitude: -4.50, longitude: -78.50),
+            .init(latitude: -5.00, longitude: -78.00),
+            .init(latitude: -6.00, longitude: -77.50),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: -0.50, longitude: -78.50, title: "Cayambe", subtitle: "The only peak on the equator with permanent snow."),
+            NarrationPoint(latitude: -0.68, longitude: -78.43, title: "Cotopaxi", subtitle: "19,347 feet — the highest active volcano in the Andes."),
+            NarrationPoint(latitude: -1.50, longitude: -78.50, title: "Tungurahua", subtitle: "The throat of fire."),
+            NarrationPoint(latitude: -3.00, longitude: -78.50, title: "Sangay", subtitle: "One of Ecuador's most active volcanoes."),
+            NarrationPoint(latitude: -6.00, longitude: -77.50, title: "Huascarán", subtitle: "Peru's highest peak — a volcanic giant."),
+        ]
+    )
+
+    static let newZealandVolcanoes = Route(
+        title: "New Zealand",
+        subtitle: "The volcanic North Island",
+        category: .volcanoes,
+        coordinates: [
+            .init(latitude: -38.50, longitude: 176.00),
+            .init(latitude: -38.80, longitude: 176.00),
+            .init(latitude: -39.00, longitude: 176.00),
+            .init(latitude: -39.20, longitude: 175.80),
+            .init(latitude: -39.28, longitude: 175.57),
+            .init(latitude: -39.40, longitude: 175.50),
+            .init(latitude: -39.50, longitude: 175.50),
+            .init(latitude: -39.80, longitude: 175.50),
+            .init(latitude: -40.00, longitude: 175.50),
+            .init(latitude: -40.20, longitude: 175.80),
+        ],
+        duration: 480,
+        narrationPoints: [
+            NarrationPoint(latitude: -38.50, longitude: 176.00, title: "Lake Rotorua", subtitle: "A caldera lake in a geothermal wonderland."),
+            NarrationPoint(latitude: -39.00, longitude: 176.00, title: "Taupō Volcanic Zone", subtitle: "One of the most active volcanic regions on Earth."),
+            NarrationPoint(latitude: -39.28, longitude: 175.57, title: "Mount Ruapehu", subtitle: "The North Island's highest peak and active volcano."),
+            NarrationPoint(latitude: -39.50, longitude: 175.50, title: "Mount Tongariro", subtitle: "A multi-vent volcanic complex."),
+            NarrationPoint(latitude: -40.20, longitude: 175.80, title: "Mount Taranaki", subtitle: "A near-perfect volcanic cone."),
+        ]
     )
 
     static let himalayas = Route(
@@ -687,7 +808,7 @@ enum RouteData {
         silkRoad, pacificCoast,
         greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos,
         himalayas, andes, alps, rockies, southernAlps,
-        ringOfFire,
+        japanVolcanoes, kamchatka, alaskaVolcanoes, cascades, mexicoVolcanoes, andesVolcanoes, newZealandVolcanoes,
     ]
 
     static let defaultChannels: [Channel] = [
@@ -698,6 +819,6 @@ enum RouteData {
         Channel(name: "Coastlines", icon: "beach.umbrella", routes: [pacificCoast]),
         Channel(name: "Mountains", icon: "mountain.2", routes: [himalayas, andes, alps, rockies, southernAlps]),
         Channel(name: "Island Hopping", icon: "ferry", routes: [greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos]),
-        Channel(name: "Volcanoes", icon: "mountain.2.fill", routes: [ringOfFire]),
+        Channel(name: "Ring of Fire", icon: "mountain.2.fill", routes: [japanVolcanoes, kamchatka, alaskaVolcanoes, cascades, mexicoVolcanoes, andesVolcanoes, newZealandVolcanoes]),
     ]
 }
