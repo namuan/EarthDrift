@@ -46,7 +46,7 @@ struct ContentView: View {
             scheduler.restoreLastSession()
             startCurrentRoute()
         }
-        .onChange(of: scheduler.currentChannelIndex) { _, _ in
+        .onChange(of: scheduler.currentRoute?.id) { _, _ in
             startCurrentRoute()
         }
         .onChange(of: engine.routeCompletionCount) { _, _ in
@@ -59,16 +59,18 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showingBrowser) {
-            logInfo("Channel browser opened: currentChannel='\(scheduler.currentChannel?.name ?? "none")'")
+            logInfo("Channel browser opened: currentChannel='\(scheduler.currentChannel?.name ?? "none")' currentRoute='\(scheduler.currentRoute?.title ?? "none")'")
         } content: {
             ChannelBrowser(
                 channels: scheduler.channels,
-                currentIndex: scheduler.currentChannelIndex,
-                onSelect: { index in
-                    logInfo("Channel browser: user selected index=\(index)")
-                    scheduler.selectChannel(index: index)
+                currentChannelIndex: scheduler.currentChannelIndex,
+                currentRouteIndex: scheduler.currentRouteIndex,
+                onSelect: { channelIndex, routeIndex in
+                    logInfo("Channel browser: user selected channelIndex=\(channelIndex) routeIndex=\(routeIndex)")
+                    scheduler.selectChannelAndRoute(channelIndex: channelIndex, routeIndex: routeIndex)
                 }
             )
+            .frame(minWidth: 640, idealWidth: 800, maxWidth: .infinity, minHeight: 400, idealHeight: 500, maxHeight: .infinity)
         }
         .onTapGesture(count: 2) {
             withAnimation {

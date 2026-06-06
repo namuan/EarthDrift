@@ -308,17 +308,180 @@ enum RouteData {
         altitude: 15000
     )
 
+    static let himalayas = Route(
+        title: "Himalayas",
+        subtitle: "The Roof of the World",
+        category: .mountains,
+        coordinates: [
+            .init(latitude: 35.2, longitude: 74.6),
+            .init(latitude: 34.6, longitude: 76.0),
+            .init(latitude: 34.0, longitude: 77.5),
+            .init(latitude: 33.2, longitude: 78.8),
+            .init(latitude: 32.0, longitude: 80.5),
+            .init(latitude: 31.0, longitude: 82.0),
+            .init(latitude: 30.5, longitude: 83.5),
+            .init(latitude: 29.5, longitude: 85.0),
+            .init(latitude: 28.5, longitude: 86.5),
+            .init(latitude: 27.9, longitude: 86.9),
+            .init(latitude: 27.7, longitude: 88.1),
+            .init(latitude: 28.5, longitude: 90.0),
+            .init(latitude: 29.0, longitude: 92.0),
+            .init(latitude: 29.6, longitude: 95.0),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: 35.2, longitude: 74.6, title: "Nanga Parbat", subtitle: "The western anchor of the Himalayas."),
+            NarrationPoint(latitude: 32.0, longitude: 80.5, title: "Tibetan Plateau", subtitle: "The highest plateau on Earth."),
+            NarrationPoint(latitude: 28.5, longitude: 86.5, title: "Mount Everest", subtitle: "29,032 feet — the summit of the world."),
+            NarrationPoint(latitude: 27.7, longitude: 88.1, title: "Kanchenjunga", subtitle: "The third highest peak on Earth."),
+            NarrationPoint(latitude: 29.6, longitude: 95.0, title: "Namche Barwa", subtitle: "The eastern terminus of the Himalayan arc."),
+        ]
+    )
+
+    static let andes = Route(
+        title: "Andes",
+        subtitle: "The spine of South America",
+        category: .mountains,
+        coordinates: [
+            .init(latitude: 10.8, longitude: -73.7),
+            .init(latitude: 8.5, longitude: -75.5),
+            .init(latitude: 6.0, longitude: -77.0),
+            .init(latitude: 3.0, longitude: -78.0),
+            .init(latitude: 0.2, longitude: -78.5),
+            .init(latitude: -3.0, longitude: -78.5),
+            .init(latitude: -6.0, longitude: -78.0),
+            .init(latitude: -9.0, longitude: -77.5),
+            .init(latitude: -12.0, longitude: -77.0),
+            .init(latitude: -15.0, longitude: -74.0),
+            .init(latitude: -18.0, longitude: -69.0),
+            .init(latitude: -22.0, longitude: -67.0),
+            .init(latitude: -26.0, longitude: -67.0),
+            .init(latitude: -30.0, longitude: -69.0),
+            .init(latitude: -32.7, longitude: -70.0),
+            .init(latitude: -35.0, longitude: -71.0),
+            .init(latitude: -38.0, longitude: -71.5),
+            .init(latitude: -41.0, longitude: -72.0),
+            .init(latitude: -44.0, longitude: -72.5),
+            .init(latitude: -47.0, longitude: -73.0),
+            .init(latitude: -50.0, longitude: -73.0),
+            .init(latitude: -54.9, longitude: -68.5),
+        ],
+        duration: 2400,
+        narrationPoints: [
+            NarrationPoint(latitude: 10.8, longitude: -73.7, title: "Sierra Nevada de Santa Marta", subtitle: "The northernmost range of the Andes."),
+            NarrationPoint(latitude: 0.2, longitude: -78.5, title: "Equator", subtitle: "Crossing the middle of the world."),
+            NarrationPoint(latitude: -9.1, longitude: -77.6, title: "Huascarán", subtitle: "Peru's highest peak at 22,205 feet."),
+            NarrationPoint(latitude: -18.1, longitude: -68.9, title: "Sajama", subtitle: "Bolivia's highest mountain."),
+            NarrationPoint(latitude: -32.7, longitude: -70.0, title: "Aconcagua", subtitle: "22,837 feet — the highest peak in the Americas."),
+            NarrationPoint(latitude: -50.0, longitude: -73.0, title: "Patagonia", subtitle: "Towering spires and immense glaciers."),
+            NarrationPoint(latitude: -54.9, longitude: -68.5, title: "Tierra del Fuego", subtitle: "Where the Andes meet the sea."),
+        ]
+    )
+
+    static let alps = Route(
+        title: "Alps",
+        subtitle: "Europe's great mountain range",
+        category: .mountains,
+        coordinates: [
+            .init(latitude: 45.8, longitude: 6.9),
+            .init(latitude: 46.0, longitude: 7.5),
+            .init(latitude: 46.0, longitude: 7.7),
+            .init(latitude: 46.2, longitude: 8.0),
+            .init(latitude: 46.5, longitude: 8.0),
+            .init(latitude: 46.6, longitude: 8.6),
+            .init(latitude: 46.8, longitude: 9.5),
+            .init(latitude: 46.4, longitude: 10.0),
+            .init(latitude: 46.4, longitude: 11.0),
+            .init(latitude: 46.4, longitude: 11.9),
+            .init(latitude: 46.8, longitude: 12.3),
+            .init(latitude: 47.1, longitude: 12.7),
+            .init(latitude: 47.3, longitude: 13.0),
+        ],
+        duration: 1200,
+        narrationPoints: [
+            NarrationPoint(latitude: 45.8, longitude: 6.9, title: "Mont Blanc", subtitle: "15,774 feet — western Europe's highest peak."),
+            NarrationPoint(latitude: 46.0, longitude: 7.7, title: "Matterhorn", subtitle: "The iconic pyramid of the Alps."),
+            NarrationPoint(latitude: 46.5, longitude: 8.0, title: "Jungfrau Region", subtitle: "A wonderland of glaciers and peaks."),
+            NarrationPoint(latitude: 46.4, longitude: 10.0, title: "Bernina Range", subtitle: "Switzerland's eastern alpine crown."),
+            NarrationPoint(latitude: 46.4, longitude: 11.9, title: "Dolomites", subtitle: "Pale peaks of the Italian Alps."),
+            NarrationPoint(latitude: 47.1, longitude: 12.7, title: "Grossglockner", subtitle: "Austria's highest mountain."),
+        ]
+    )
+
+    static let rockies = Route(
+        title: "Rocky Mountains",
+        subtitle: "The backbone of North America",
+        category: .mountains,
+        coordinates: [
+            .init(latitude: 53.0, longitude: -118.5),
+            .init(latitude: 52.0, longitude: -117.0),
+            .init(latitude: 51.2, longitude: -115.6),
+            .init(latitude: 50.0, longitude: -114.5),
+            .init(latitude: 49.0, longitude: -114.0),
+            .init(latitude: 48.7, longitude: -113.8),
+            .init(latitude: 47.5, longitude: -113.0),
+            .init(latitude: 46.0, longitude: -111.5),
+            .init(latitude: 44.6, longitude: -110.6),
+            .init(latitude: 43.7, longitude: -110.7),
+            .init(latitude: 42.0, longitude: -109.0),
+            .init(latitude: 41.0, longitude: -107.0),
+            .init(latitude: 40.3, longitude: -105.7),
+            .init(latitude: 39.0, longitude: -105.5),
+            .init(latitude: 37.5, longitude: -106.0),
+            .init(latitude: 35.7, longitude: -105.9),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: 52.9, longitude: -118.1, title: "Jasper", subtitle: "Crown of the Canadian Rockies."),
+            NarrationPoint(latitude: 51.2, longitude: -115.6, title: "Banff", subtitle: "Canada's first national park."),
+            NarrationPoint(latitude: 48.7, longitude: -113.8, title: "Glacier National Park", subtitle: "The Crown of the Continent."),
+            NarrationPoint(latitude: 44.6, longitude: -110.6, title: "Yellowstone", subtitle: "The world's first national park."),
+            NarrationPoint(latitude: 43.7, longitude: -110.7, title: "Grand Teton", subtitle: "A jagged spire rising from the valley."),
+            NarrationPoint(latitude: 40.3, longitude: -105.7, title: "Rocky Mountain National Park", subtitle: "The heart of the Colorado Rockies."),
+        ]
+    )
+
+    static let southernAlps = Route(
+        title: "Southern Alps",
+        subtitle: "New Zealand's alpine spine",
+        category: .mountains,
+        coordinates: [
+            .init(latitude: -41.1, longitude: 172.5),
+            .init(latitude: -41.5, longitude: 172.0),
+            .init(latitude: -42.0, longitude: 171.8),
+            .init(latitude: -42.5, longitude: 171.5),
+            .init(latitude: -43.0, longitude: 171.0),
+            .init(latitude: -43.5, longitude: 170.5),
+            .init(latitude: -43.6, longitude: 170.1),
+            .init(latitude: -44.0, longitude: 169.8),
+            .init(latitude: -44.5, longitude: 169.0),
+            .init(latitude: -45.0, longitude: 168.5),
+            .init(latitude: -45.4, longitude: 167.5),
+            .init(latitude: -45.8, longitude: 167.0),
+            .init(latitude: -46.7, longitude: 168.1),
+        ],
+        duration: 900,
+        narrationPoints: [
+            NarrationPoint(latitude: -41.1, longitude: 172.5, title: "Kahurangi", subtitle: "The northern gateway to the Southern Alps."),
+            NarrationPoint(latitude: -43.6, longitude: 170.1, title: "Aoraki / Mount Cook", subtitle: "12,218 feet — New Zealand's highest peak."),
+            NarrationPoint(latitude: -44.0, longitude: 169.8, title: "Westland Tai Poutini", subtitle: "Glaciers descending to rainforest."),
+            NarrationPoint(latitude: -45.4, longitude: 167.5, title: "Fiordland", subtitle: "Where mountains plunge into the sea."),
+        ]
+    )
+
     static let allRoutes: [Route] = [
         nile, amazon, mississippi, danube,
         transSiberian, californiaZephyr,
         tokyoLA, londonSingapore,
         silkRoad, pacificCoast,
+        himalayas, andes, alps, rockies, southernAlps,
     ]
 
     static let defaultChannels: [Channel] = [
         Channel(name: "Rivers", icon: "water.waves", routes: [nile, amazon, mississippi, danube]),
         Channel(name: "Railways", icon: "train.side.front.car", routes: [transSiberian, californiaZephyr]),
         Channel(name: "Flights", icon: "airplane", routes: [tokyoLA, londonSingapore]),
+        Channel(name: "Mountains", icon: "mountain.2", routes: [himalayas, andes, alps, rockies, southernAlps]),
         Channel(name: "Ancient Routes", icon: "scroll", routes: [silkRoad]),
         Channel(name: "Coastlines", icon: "beach.umbrella", routes: [pacificCoast]),
     ]
