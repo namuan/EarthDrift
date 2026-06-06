@@ -461,12 +461,71 @@ enum RouteData {
         ]
     )
 
+    static let ringOfFire = Route(
+        title: "Ring of Fire",
+        subtitle: "The Pacific volcanic rim",
+        category: .volcanoes,
+        coordinates: [
+            .init(latitude: 35.36, longitude: 138.73),
+            .init(latitude: 38.00, longitude: 142.00),
+            .init(latitude: 44.00, longitude: 150.00),
+            .init(latitude: 50.00, longitude: 157.00),
+            .init(latitude: 56.06, longitude: 160.64),
+            .init(latitude: 55.00, longitude: 166.00),
+            .init(latitude: 54.00, longitude: 170.00),
+            .init(latitude: 53.00, longitude: -172.00),
+            .init(latitude: 52.50, longitude: -174.00),
+            .init(latitude: 52.00, longitude: -174.00),
+            .init(latitude: 51.00, longitude: -170.00),
+            .init(latitude: 50.00, longitude: -165.00),
+            .init(latitude: 48.00, longitude: -155.00),
+            .init(latitude: 46.85, longitude: -121.76),
+            .init(latitude: 44.00, longitude: -118.00),
+            .init(latitude: 40.00, longitude: -115.00),
+            .init(latitude: 35.00, longitude: -112.00),
+            .init(latitude: 30.00, longitude: -110.00),
+            .init(latitude: 25.00, longitude: -107.00),
+            .init(latitude: 19.02, longitude: -98.62),
+            .init(latitude: 15.00, longitude: -96.00),
+            .init(latitude: 10.00, longitude: -92.00),
+            .init(latitude: 5.00, longitude: -86.00),
+            .init(latitude: 0.68, longitude: -78.43),
+            .init(latitude: -5.00, longitude: -82.00),
+            .init(latitude: -10.00, longitude: -80.00),
+            .init(latitude: -15.00, longitude: -78.00),
+            .init(latitude: -20.00, longitude: -75.00),
+            .init(latitude: -25.00, longitude: -72.00),
+            .init(latitude: -30.00, longitude: -70.00),
+            .init(latitude: -35.00, longitude: -72.00),
+            .init(latitude: -40.00, longitude: -75.00),
+            .init(latitude: -45.00, longitude: -78.00),
+            .init(latitude: -50.00, longitude: -75.00),
+            .init(latitude: -55.00, longitude: -70.00),
+            .init(latitude: -55.00, longitude: -65.00),
+            .init(latitude: -50.00, longitude: -60.00),
+            .init(latitude: -45.00, longitude: 170.00),
+            .init(latitude: -39.28, longitude: 175.57),
+        ],
+        duration: 4800,
+        narrationPoints: [
+            NarrationPoint(latitude: 35.36, longitude: 138.73, title: "Mount Fuji", subtitle: "Japan's sacred volcano."),
+            NarrationPoint(latitude: 56.06, longitude: 160.64, title: "Kamchatka", subtitle: "The land of fire and ice."),
+            NarrationPoint(latitude: 52.00, longitude: -174.00, title: "Aleutian Arc", subtitle: "A chain of volcanic islands."),
+            NarrationPoint(latitude: 46.85, longitude: -121.76, title: "Cascade Range", subtitle: "Mount Rainier and the Pacific Northwest."),
+            NarrationPoint(latitude: 19.02, longitude: -98.62, title: "Popocatépetl", subtitle: "Mexico's fiery peak."),
+            NarrationPoint(latitude: 0.68, longitude: -78.43, title: "Cotopaxi", subtitle: "The highest active volcano in the Andes."),
+            NarrationPoint(latitude: -39.28, longitude: 175.57, title: "Mount Ruapehu", subtitle: "New Zealand's volcanic heart."),
+        ],
+        altitude: 12000
+    )
+
     static let allRoutes: [Route] = [
         nile, amazon, mississippi, danube,
         transSiberian, californiaZephyr,
         tokyoLA, londonSingapore,
         silkRoad, pacificCoast,
         greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos,
+        ringOfFire,
     ]
 
     static let defaultChannels: [Channel] = [
@@ -476,5 +535,6 @@ enum RouteData {
         Channel(name: "Ancient Routes", icon: "scroll", routes: [silkRoad]),
         Channel(name: "Coastlines", icon: "beach.umbrella", routes: [pacificCoast]),
         Channel(name: "Island Hopping", icon: "ferry", routes: [greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos]),
+        Channel(name: "Volcanoes", icon: "mountain.2.fill", routes: [ringOfFire]),
     ]
 }

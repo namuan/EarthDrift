@@ -48,6 +48,7 @@ final class AudioEngine: ObservableObject {
         case .coastlines: fileName = "ocean_ambient"
         case .ancient: fileName = "wind_ambient"
         case .islandHopping: fileName = "ocean_ambient"
+        case .volcanoes: fileName = "volcano_ambient"
         }
 
         guard let url = Bundle.module.url(forResource: fileName, withExtension: "mp3", subdirectory: "audio") else {
