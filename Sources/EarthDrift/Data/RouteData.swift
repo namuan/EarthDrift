@@ -1080,6 +1080,310 @@ enum RouteData {
         ]
     )
 
+    static let london = Route(
+        title: "London",
+        subtitle: "The Thames from above",
+        category: .cities,
+        coordinates: [
+            .init(latitude: 51.48, longitude: -0.15),
+            .init(latitude: 51.49, longitude: -0.12),
+            .init(latitude: 51.50, longitude: -0.10),
+            .init(latitude: 51.50, longitude: -0.09),
+            .init(latitude: 51.50, longitude: -0.08),
+            .init(latitude: 51.50, longitude: -0.07),
+            .init(latitude: 51.50, longitude: -0.05),
+            .init(latitude: 51.50, longitude: -0.03),
+            .init(latitude: 51.50, longitude: 0.00),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: 51.48, longitude: -0.15, title: "Chelsea", subtitle: "The historic borough on the Thames."),
+            NarrationPoint(latitude: 51.50, longitude: -0.12, title: "Big Ben", subtitle: "Iconic clock tower of the Palace of Westminster."),
+            NarrationPoint(latitude: 51.50, longitude: -0.10, title: "London Eye", subtitle: "The soaring observation wheel."),
+            NarrationPoint(latitude: 51.50, longitude: -0.08, title: "Somerset House", subtitle: "A neoclassical masterpiece."),
+            NarrationPoint(latitude: 51.50, longitude: -0.05, title: "Tower Bridge", subtitle: "The defining bridge of London."),
+            NarrationPoint(latitude: 51.50, longitude: 0.00, title: "Canary Wharf", subtitle: "Modern London's financial skyline."),
+        ]
+    )
+
+    static let paris = Route(
+        title: "Paris",
+        subtitle: "The City of Light",
+        category: .cities,
+        coordinates: [
+            .init(latitude: 48.86, longitude: 2.30),
+            .init(latitude: 48.86, longitude: 2.32),
+            .init(latitude: 48.86, longitude: 2.34),
+            .init(latitude: 48.86, longitude: 2.35),
+            .init(latitude: 48.85, longitude: 2.35),
+            .init(latitude: 48.85, longitude: 2.34),
+            .init(latitude: 48.85, longitude: 2.33),
+            .init(latitude: 48.85, longitude: 2.30),
+            .init(latitude: 48.85, longitude: 2.28),
+            .init(latitude: 48.85, longitude: 2.25),
+            .init(latitude: 48.85, longitude: 2.22),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: 48.86, longitude: 2.30, title: "Arc de Triomphe", subtitle: "The grand arch at the center of Paris."),
+            NarrationPoint(latitude: 48.86, longitude: 2.34, title: "Opéra Garnier", subtitle: "A masterpiece of Beaux-Arts architecture."),
+            NarrationPoint(latitude: 48.85, longitude: 2.34, title: "Louvre Museum", subtitle: "The world's largest art museum."),
+            NarrationPoint(latitude: 48.85, longitude: 2.33, title: "Notre-Dame", subtitle: "The Gothic heart of Paris."),
+            NarrationPoint(latitude: 48.85, longitude: 2.28, title: "Eiffel Tower", subtitle: "Paris's iron lady."),
+        ]
+    )
+
+    static let rome = Route(
+        title: "Rome",
+        subtitle: "The Eternal City",
+        category: .cities,
+        coordinates: [
+            .init(latitude: 41.91, longitude: 12.48),
+            .init(latitude: 41.91, longitude: 12.47),
+            .init(latitude: 41.90, longitude: 12.47),
+            .init(latitude: 41.90, longitude: 12.48),
+            .init(latitude: 41.89, longitude: 12.48),
+            .init(latitude: 41.89, longitude: 12.49),
+            .init(latitude: 41.89, longitude: 12.50),
+            .init(latitude: 41.88, longitude: 12.50),
+            .init(latitude: 41.88, longitude: 12.49),
+            .init(latitude: 41.88, longitude: 12.48),
+            .init(latitude: 41.88, longitude: 12.47),
+            .init(latitude: 41.88, longitude: 12.46),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: 41.91, longitude: 12.48, title: "Vatican City", subtitle: "The spiritual center of Catholicism."),
+            NarrationPoint(latitude: 41.90, longitude: 12.48, title: "Castel Sant'Angelo", subtitle: "The fortress of the popes."),
+            NarrationPoint(latitude: 41.89, longitude: 12.49, title: "Pantheon", subtitle: "An ancient architectural marvel."),
+            NarrationPoint(latitude: 41.88, longitude: 12.50, title: "Colosseum", subtitle: "The eternal symbol of ancient Rome."),
+            NarrationPoint(latitude: 41.88, longitude: 12.47, title: "Spanish Steps", subtitle: "Where beauty meets history."),
+        ]
+    )
+
+    static let istanbul = Route(
+        title: "Istanbul",
+        subtitle: "Where continents meet",
+        category: .cities,
+        coordinates: [
+            .init(latitude: 41.04, longitude: 28.95),
+            .init(latitude: 41.03, longitude: 28.96),
+            .init(latitude: 41.02, longitude: 28.97),
+            .init(latitude: 41.01, longitude: 28.97),
+            .init(latitude: 41.01, longitude: 28.98),
+            .init(latitude: 41.01, longitude: 28.99),
+            .init(latitude: 41.01, longitude: 29.00),
+            .init(latitude: 41.02, longitude: 29.01),
+            .init(latitude: 41.03, longitude: 29.01),
+            .init(latitude: 41.04, longitude: 29.00),
+            .init(latitude: 41.05, longitude: 29.00),
+            .init(latitude: 41.06, longitude: 29.00),
+            .init(latitude: 41.07, longitude: 29.00),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: 41.04, longitude: 28.95, title: "Galata Tower", subtitle: "Medieval tower overlooking the Golden Horn."),
+            NarrationPoint(latitude: 41.02, longitude: 28.97, title: "Hagia Sophia", subtitle: "Byzantine masterpiece and cultural icon."),
+            NarrationPoint(latitude: 41.01, longitude: 28.98, title: "Blue Mosque", subtitle: "Sultan Ahmed's imperial mosque."),
+            NarrationPoint(latitude: 41.01, longitude: 29.00, title: "Topkapi Palace", subtitle: "The heart of the Ottoman Empire."),
+            NarrationPoint(latitude: 41.04, longitude: 29.00, title: "Bosphorus Bridge", subtitle: "Connecting Europe and Asia."),
+        ]
+    )
+
+    static let cairo = Route(
+        title: "Cairo",
+        subtitle: "The city of a thousand minarets",
+        category: .cities,
+        coordinates: [
+            .init(latitude: 30.05, longitude: 31.22),
+            .init(latitude: 30.05, longitude: 31.24),
+            .init(latitude: 30.05, longitude: 31.26),
+            .init(latitude: 30.04, longitude: 31.27),
+            .init(latitude: 30.03, longitude: 31.27),
+            .init(latitude: 30.02, longitude: 31.26),
+            .init(latitude: 30.02, longitude: 31.25),
+            .init(latitude: 30.01, longitude: 31.24),
+            .init(latitude: 30.00, longitude: 31.23),
+            .init(latitude: 30.00, longitude: 31.22),
+            .init(latitude: 30.00, longitude: 31.20),
+            .init(latitude: 30.00, longitude: 31.18),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: 30.05, longitude: 31.22, title: "Zamalek", subtitle: "The island district on the Nile."),
+            NarrationPoint(latitude: 30.04, longitude: 31.27, title: "Cairo Tower", subtitle: "The modern sentinel of Cairo."),
+            NarrationPoint(latitude: 30.03, longitude: 31.27, title: "Tahrir Square", subtitle: "The beating heart of modern Egypt."),
+            NarrationPoint(latitude: 30.01, longitude: 31.25, title: "Islamic Cairo", subtitle: "A thousand minarets against the sky."),
+            NarrationPoint(latitude: 30.00, longitude: 31.18, title: "Pyramids of Giza", subtitle: "The last surviving wonder of the ancient world."),
+        ]
+    )
+
+    static let newYork = Route(
+        title: "New York City",
+        subtitle: "The concrete jungle",
+        category: .cities,
+        coordinates: [
+            .init(latitude: 40.76, longitude: -73.98),
+            .init(latitude: 40.76, longitude: -73.97),
+            .init(latitude: 40.76, longitude: -73.96),
+            .init(latitude: 40.76, longitude: -73.95),
+            .init(latitude: 40.75, longitude: -73.95),
+            .init(latitude: 40.75, longitude: -73.96),
+            .init(latitude: 40.74, longitude: -73.96),
+            .init(latitude: 40.74, longitude: -73.97),
+            .init(latitude: 40.73, longitude: -73.97),
+            .init(latitude: 40.72, longitude: -73.97),
+            .init(latitude: 40.71, longitude: -73.97),
+            .init(latitude: 40.70, longitude: -73.97),
+            .init(latitude: 40.69, longitude: -73.97),
+            .init(latitude: 40.68, longitude: -73.97),
+        ],
+        duration: 900,
+        narrationPoints: [
+            NarrationPoint(latitude: 40.76, longitude: -73.98, title: "Central Park", subtitle: "The green lungs of Manhattan."),
+            NarrationPoint(latitude: 40.76, longitude: -73.96, title: "Rockefeller Center", subtitle: "The art deco heart of Midtown."),
+            NarrationPoint(latitude: 40.75, longitude: -73.96, title: "Times Square", subtitle: "The crossroads of the world."),
+            NarrationPoint(latitude: 40.74, longitude: -73.97, title: "Empire State Building", subtitle: "The iconic skyscraper of New York."),
+            NarrationPoint(latitude: 40.71, longitude: -73.97, title: "Brooklyn Bridge", subtitle: "A masterpiece of 19th-century engineering."),
+            NarrationPoint(latitude: 40.69, longitude: -73.97, title: "Statue of Liberty", subtitle: "Lady Liberty welcoming the world."),
+        ]
+    )
+
+    static let tokyo = Route(
+        title: "Tokyo",
+        subtitle: "The neon metropolis",
+        category: .cities,
+        coordinates: [
+            .init(latitude: 35.69, longitude: 139.70),
+            .init(latitude: 35.69, longitude: 139.71),
+            .init(latitude: 35.68, longitude: 139.72),
+            .init(latitude: 35.67, longitude: 139.73),
+            .init(latitude: 35.66, longitude: 139.74),
+            .init(latitude: 35.65, longitude: 139.74),
+            .init(latitude: 35.64, longitude: 139.74),
+            .init(latitude: 35.64, longitude: 139.75),
+            .init(latitude: 35.63, longitude: 139.76),
+            .init(latitude: 35.63, longitude: 139.77),
+            .init(latitude: 35.63, longitude: 139.78),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: 35.69, longitude: 139.70, title: "Shinjuku", subtitle: "The neon heart of Tokyo."),
+            NarrationPoint(latitude: 35.68, longitude: 139.72, title: "Shibuya", subtitle: "The world's busiest crossing."),
+            NarrationPoint(latitude: 35.66, longitude: 139.74, title: "Tokyo Tower", subtitle: "The red and white icon of the city."),
+            NarrationPoint(latitude: 35.64, longitude: 139.75, title: "Imperial Palace", subtitle: "The serene heart of old Edo."),
+            NarrationPoint(latitude: 35.63, longitude: 139.78, title: "Rainbow Bridge", subtitle: "The gateway to Tokyo Bay."),
+        ]
+    )
+
+    static let dubai = Route(
+        title: "Dubai",
+        subtitle: "The city of superlatives",
+        category: .cities,
+        coordinates: [
+            .init(latitude: 25.20, longitude: 55.26),
+            .init(latitude: 25.20, longitude: 55.27),
+            .init(latitude: 25.19, longitude: 55.27),
+            .init(latitude: 25.18, longitude: 55.27),
+            .init(latitude: 25.17, longitude: 55.27),
+            .init(latitude: 25.16, longitude: 55.27),
+            .init(latitude: 25.15, longitude: 55.26),
+            .init(latitude: 25.14, longitude: 55.25),
+            .init(latitude: 25.13, longitude: 55.24),
+            .init(latitude: 25.12, longitude: 55.23),
+            .init(latitude: 25.11, longitude: 55.22),
+            .init(latitude: 25.10, longitude: 55.21),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: 25.20, longitude: 55.27, title: "Burj Khalifa", subtitle: "The tallest building on Earth."),
+            NarrationPoint(latitude: 25.18, longitude: 55.27, title: "Dubai Mall", subtitle: "A retail city beneath a single roof."),
+            NarrationPoint(latitude: 25.16, longitude: 55.27, title: "Dubai Marina", subtitle: "A glittering waterfront district."),
+            NarrationPoint(latitude: 25.13, longitude: 55.24, title: "Palm Jumeirah", subtitle: "The iconic artificial archipelago."),
+            NarrationPoint(latitude: 25.10, longitude: 55.21, title: "Burj Al Arab", subtitle: "The sail-shaped silhouette of Dubai."),
+        ]
+    )
+
+    static let hongKong = Route(
+        title: "Hong Kong",
+        subtitle: "Where East meets West",
+        category: .cities,
+        coordinates: [
+            .init(latitude: 22.30, longitude: 114.15),
+            .init(latitude: 22.30, longitude: 114.16),
+            .init(latitude: 22.29, longitude: 114.17),
+            .init(latitude: 22.28, longitude: 114.17),
+            .init(latitude: 22.28, longitude: 114.16),
+            .init(latitude: 22.27, longitude: 114.16),
+            .init(latitude: 22.27, longitude: 114.17),
+            .init(latitude: 22.27, longitude: 114.18),
+            .init(latitude: 22.27, longitude: 114.19),
+            .init(latitude: 22.27, longitude: 114.20),
+            .init(latitude: 22.27, longitude: 114.21),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: 22.30, longitude: 114.15, title: "Tsim Sha Tsui", subtitle: "Kowloon's vibrant waterfront."),
+            NarrationPoint(latitude: 22.29, longitude: 114.17, title: "Victoria Harbour", subtitle: "One of the world's finest harbors."),
+            NarrationPoint(latitude: 22.28, longitude: 114.16, title: "Central", subtitle: "The financial heart of Asia."),
+            NarrationPoint(latitude: 22.27, longitude: 114.18, title: "Wan Chai", subtitle: "A district of contrasts."),
+            NarrationPoint(latitude: 22.27, longitude: 114.20, title: "Happy Valley", subtitle: "A green oasis amid the skyscrapers."),
+        ]
+    )
+
+    static let sydney = Route(
+        title: "Sydney",
+        subtitle: "The harbour city",
+        category: .cities,
+        coordinates: [
+            .init(latitude: -33.85, longitude: 151.20),
+            .init(latitude: -33.85, longitude: 151.21),
+            .init(latitude: -33.84, longitude: 151.21),
+            .init(latitude: -33.84, longitude: 151.20),
+            .init(latitude: -33.84, longitude: 151.19),
+            .init(latitude: -33.84, longitude: 151.18),
+            .init(latitude: -33.85, longitude: 151.18),
+            .init(latitude: -33.86, longitude: 151.18),
+            .init(latitude: -33.87, longitude: 151.18),
+            .init(latitude: -33.88, longitude: 151.18),
+            .init(latitude: -33.89, longitude: 151.19),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: -33.85, longitude: 151.20, title: "Sydney Opera House", subtitle: "A UNESCO World Heritage masterpiece."),
+            NarrationPoint(latitude: -33.84, longitude: 151.21, title: "Royal Botanic Garden", subtitle: "A green haven by the harbour."),
+            NarrationPoint(latitude: -33.84, longitude: 151.19, title: "Sydney Harbour Bridge", subtitle: "The grand coat hanger of Sydney."),
+            NarrationPoint(latitude: -33.86, longitude: 151.18, title: "Darling Harbour", subtitle: "A vibrant waterfront precinct."),
+            NarrationPoint(latitude: -33.88, longitude: 151.18, title: "Chinatown", subtitle: "A cultural melting pot."),
+        ]
+    )
+
+    static let rio = Route(
+        title: "Rio de Janeiro",
+        subtitle: "The marvelous city",
+        category: .cities,
+        coordinates: [
+            .init(latitude: -22.90, longitude: -43.22),
+            .init(latitude: -22.91, longitude: -43.21),
+            .init(latitude: -22.92, longitude: -43.20),
+            .init(latitude: -22.93, longitude: -43.19),
+            .init(latitude: -22.94, longitude: -43.18),
+            .init(latitude: -22.95, longitude: -43.17),
+            .init(latitude: -22.96, longitude: -43.18),
+            .init(latitude: -22.97, longitude: -43.19),
+            .init(latitude: -22.98, longitude: -43.20),
+            .init(latitude: -22.99, longitude: -43.21),
+        ],
+        duration: 600,
+        narrationPoints: [
+            NarrationPoint(latitude: -22.90, longitude: -43.22, title: "Sugarloaf Mountain", subtitle: "A granite peak rising from the sea."),
+            NarrationPoint(latitude: -22.92, longitude: -43.20, title: "Copacabana", subtitle: "The world's most famous beach."),
+            NarrationPoint(latitude: -22.94, longitude: -43.18, title: "Ipanema", subtitle: "Where the mountains meet the sea."),
+            NarrationPoint(latitude: -22.97, longitude: -43.19, title: "Christ the Redeemer", subtitle: "Arms open wide over Rio."),
+            NarrationPoint(latitude: -22.99, longitude: -43.21, title: "Tijuca Forest", subtitle: "The largest urban rainforest in the world."),
+        ]
+    )
+
     static let allRoutes: [Route] = [
         nile, amazon, mississippi, danube,
         transSiberian, californiaZephyr,
@@ -1090,6 +1394,8 @@ enum RouteData {
         japanVolcanoes, kamchatka, alaskaVolcanoes, cascades, mexicoVolcanoes, andesVolcanoes, newZealandVolcanoes,
         sahara, namib, atacama, gobi, arabianDesert,
         greenland, antarcticPeninsula, northwestPassage, svalbard,
+        london, paris, rome, istanbul, cairo,
+        newYork, tokyo, dubai, hongKong, sydney, rio,
     ]
 
     static let defaultChannels: [Channel] = [
@@ -1103,5 +1409,6 @@ enum RouteData {
         Channel(name: "Ring of Fire", icon: "mountain.2.fill", routes: [japanVolcanoes, kamchatka, alaskaVolcanoes, cascades, mexicoVolcanoes, andesVolcanoes, newZealandVolcanoes]),
         Channel(name: "Deserts", icon: "sun.max", routes: [sahara, namib, atacama, gobi, arabianDesert]),
         Channel(name: "Polar Expeditions", icon: "snowflake", routes: [greenland, antarcticPeninsula, northwestPassage, svalbard]),
+        Channel(name: "Great Cities from Above", icon: "building.2", routes: [london, paris, rome, istanbul, cairo, newYork, tokyo, dubai, hongKong, sydney, rio]),
     ]
 }
