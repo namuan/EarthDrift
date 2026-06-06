@@ -801,6 +801,140 @@ enum RouteData {
         ]
     )
 
+    static let sahara = Route(
+        title: "Sahara",
+        subtitle: "The world's largest hot desert",
+        category: .deserts,
+        coordinates: [
+            .init(latitude: 20.0, longitude: -5.0),
+            .init(latitude: 21.0, longitude: -2.0),
+            .init(latitude: 22.5, longitude: 1.0),
+            .init(latitude: 24.0, longitude: 4.0),
+            .init(latitude: 25.0, longitude: 7.0),
+            .init(latitude: 26.0, longitude: 10.0),
+            .init(latitude: 26.5, longitude: 13.0),
+            .init(latitude: 26.0, longitude: 16.0),
+            .init(latitude: 25.5, longitude: 19.0),
+            .init(latitude: 25.0, longitude: 22.0),
+            .init(latitude: 24.5, longitude: 25.0),
+            .init(latitude: 24.0, longitude: 28.0),
+            .init(latitude: 24.5, longitude: 31.0),
+            .init(latitude: 25.0, longitude: 33.0),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: 20.0, longitude: -5.0, title: "Mali Dunes", subtitle: "The sea of sand begins here."),
+            NarrationPoint(latitude: 24.0, longitude: 4.0, title: "Tassili n'Ajjer", subtitle: "Ancient rock art in the Sahara."),
+            NarrationPoint(latitude: 26.5, longitude: 13.0, title: "Ubari Sand Sea", subtitle: "Vast dunes of the Libyan Sahara."),
+            NarrationPoint(latitude: 25.0, longitude: 22.0, title: "Erg Awbari", subtitle: "Where dunes meet oasis."),
+            NarrationPoint(latitude: 24.5, longitude: 31.0, title: "Great Sand Sea", subtitle: "Endless waves of sand."),
+            NarrationPoint(latitude: 25.0, longitude: 33.0, title: "Luxor", subtitle: "The eastern edge of the great desert."),
+        ]
+    )
+
+    static let namib = Route(
+        title: "Namib",
+        subtitle: "The oldest desert on Earth",
+        category: .deserts,
+        coordinates: [
+            .init(latitude: -22.0, longitude: 14.0),
+            .init(latitude: -22.5, longitude: 14.5),
+            .init(latitude: -23.0, longitude: 15.0),
+            .init(latitude: -23.5, longitude: 15.0),
+            .init(latitude: -24.0, longitude: 15.0),
+            .init(latitude: -24.5, longitude: 15.0),
+            .init(latitude: -25.0, longitude: 15.0),
+            .init(latitude: -25.5, longitude: 15.0),
+            .init(latitude: -26.0, longitude: 15.0),
+            .init(latitude: -26.5, longitude: 15.0),
+            .init(latitude: -27.0, longitude: 15.0),
+        ],
+        duration: 900,
+        narrationPoints: [
+            NarrationPoint(latitude: -22.0, longitude: 14.0, title: "Swakopmund", subtitle: "Where the desert meets the Atlantic."),
+            NarrationPoint(latitude: -23.5, longitude: 15.0, title: "Walvis Bay", subtitle: "A lagoon among the dunes."),
+            NarrationPoint(latitude: -24.7, longitude: 15.0, title: "Sossusvlei", subtitle: "The iconic red dunes of Namibia."),
+            NarrationPoint(latitude: -26.0, longitude: 15.0, title: "Namib Sand Sea", subtitle: "Millions of years of shifting sands."),
+        ]
+    )
+
+    static let atacama = Route(
+        title: "Atacama",
+        subtitle: "The driest place on Earth",
+        category: .deserts,
+        coordinates: [
+            .init(latitude: -20.0, longitude: -70.0),
+            .init(latitude: -20.5, longitude: -70.0),
+            .init(latitude: -21.0, longitude: -69.5),
+            .init(latitude: -21.5, longitude: -69.0),
+            .init(latitude: -22.0, longitude: -69.0),
+            .init(latitude: -22.5, longitude: -68.5),
+            .init(latitude: -23.0, longitude: -68.5),
+            .init(latitude: -23.5, longitude: -68.5),
+            .init(latitude: -24.0, longitude: -68.5),
+            .init(latitude: -24.5, longitude: -68.5),
+            .init(latitude: -25.0, longitude: -68.5),
+        ],
+        duration: 900,
+        narrationPoints: [
+            NarrationPoint(latitude: -20.0, longitude: -70.0, title: "Iquique", subtitle: "Coastal gateway to the Atacama."),
+            NarrationPoint(latitude: -21.5, longitude: -69.0, title: "Calama", subtitle: "Heart of the driest desert."),
+            NarrationPoint(latitude: -22.5, longitude: -68.5, title: "San Pedro de Atacama", subtitle: "An oasis in the high desert."),
+            NarrationPoint(latitude: -24.0, longitude: -68.5, title: "Salar de Atacama", subtitle: "A salt flat beneath volcanic peaks."),
+        ]
+    )
+
+    static let gobi = Route(
+        title: "Gobi",
+        subtitle: "Asia's vast cold desert",
+        category: .deserts,
+        coordinates: [
+            .init(latitude: 45.0, longitude: 105.0),
+            .init(latitude: 44.5, longitude: 104.0),
+            .init(latitude: 44.0, longitude: 103.0),
+            .init(latitude: 43.5, longitude: 102.0),
+            .init(latitude: 43.0, longitude: 101.0),
+            .init(latitude: 42.5, longitude: 100.0),
+            .init(latitude: 42.0, longitude: 99.0),
+            .init(latitude: 41.5, longitude: 98.0),
+            .init(latitude: 41.0, longitude: 97.0),
+            .init(latitude: 40.5, longitude: 96.0),
+        ],
+        duration: 900,
+        narrationPoints: [
+            NarrationPoint(latitude: 45.0, longitude: 105.0, title: "Eastern Gobi", subtitle: "Vast steppe and desert meet."),
+            NarrationPoint(latitude: 44.0, longitude: 103.0, title: "Gobi Gurvansaikhan", subtitle: "The beautiful landscape of the Gobi."),
+            NarrationPoint(latitude: 43.0, longitude: 101.0, title: "Khongoryn Els", subtitle: "The singing sands of the Gobi."),
+            NarrationPoint(latitude: 41.5, longitude: 98.0, title: "Gobi Desert", subtitle: "Fossil treasures in the sands."),
+        ]
+    )
+
+    static let arabianDesert = Route(
+        title: "Arabian Desert",
+        subtitle: "The Empty Quarter",
+        category: .deserts,
+        coordinates: [
+            .init(latitude: 24.0, longitude: 50.0),
+            .init(latitude: 23.5, longitude: 49.0),
+            .init(latitude: 23.0, longitude: 48.0),
+            .init(latitude: 22.5, longitude: 47.0),
+            .init(latitude: 22.0, longitude: 46.0),
+            .init(latitude: 21.5, longitude: 45.0),
+            .init(latitude: 21.0, longitude: 44.0),
+            .init(latitude: 20.5, longitude: 43.0),
+            .init(latitude: 20.0, longitude: 42.0),
+            .init(latitude: 19.5, longitude: 41.0),
+            .init(latitude: 19.0, longitude: 40.0),
+        ],
+        duration: 900,
+        narrationPoints: [
+            NarrationPoint(latitude: 24.0, longitude: 50.0, title: "Jubail", subtitle: "Where the desert meets the Gulf."),
+            NarrationPoint(latitude: 23.0, longitude: 48.0, title: "Rub' al Khali", subtitle: "The Empty Quarter — the largest continuous sand desert."),
+            NarrationPoint(latitude: 21.5, longitude: 45.0, title: "Empty Quarter", subtitle: "Unbroken dunes stretching to the horizon."),
+            NarrationPoint(latitude: 20.0, longitude: 42.0, title: "Asir Mountains", subtitle: "Where the desert rises into highlands."),
+        ]
+    )
+
     static let allRoutes: [Route] = [
         nile, amazon, mississippi, danube,
         transSiberian, californiaZephyr,
@@ -809,17 +943,18 @@ enum RouteData {
         greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos,
         himalayas, andes, alps, rockies, southernAlps,
         japanVolcanoes, kamchatka, alaskaVolcanoes, cascades, mexicoVolcanoes, andesVolcanoes, newZealandVolcanoes,
+        sahara, namib, atacama, gobi, arabianDesert,
     ]
 
     static let defaultChannels: [Channel] = [
         Channel(name: "Rivers", icon: "water.waves", routes: [nile, amazon, mississippi, danube]),
         Channel(name: "Railways", icon: "train.side.front.car", routes: [transSiberian, californiaZephyr]),
         Channel(name: "Flights", icon: "airplane", routes: [tokyoLA, londonSingapore]),
-        Channel(name: "Mountains", icon: "mountain.2", routes: [himalayas, andes, alps, rockies, southernAlps]),
         Channel(name: "Ancient Routes", icon: "scroll", routes: [silkRoad]),
         Channel(name: "Coastlines", icon: "beach.umbrella", routes: [pacificCoast]),
         Channel(name: "Mountains", icon: "mountain.2", routes: [himalayas, andes, alps, rockies, southernAlps]),
         Channel(name: "Island Hopping", icon: "ferry", routes: [greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos]),
         Channel(name: "Ring of Fire", icon: "mountain.2.fill", routes: [japanVolcanoes, kamchatka, alaskaVolcanoes, cascades, mexicoVolcanoes, andesVolcanoes, newZealandVolcanoes]),
+        Channel(name: "Deserts", icon: "sun.max", routes: [sahara, namib, atacama, gobi, arabianDesert]),
     ]
 }

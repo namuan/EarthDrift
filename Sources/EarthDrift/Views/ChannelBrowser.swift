@@ -113,9 +113,6 @@ struct RouteRow: View {
                     .foregroundStyle(.white.opacity(0.4))
             }
 
-            let channel = channels[selectedChannelIndex]
-            routeList(for: channel)
-
             Spacer()
 
             if isCurrent {
@@ -140,34 +137,6 @@ struct RouteRow: View {
         .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCurrent)
     }
 
-    private func routeList(for channel: Channel) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(channel.name)
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(.white.opacity(0.6))
-                .padding(.horizontal, 40)
-                .padding(.top, 24)
-                .padding(.bottom, 8)
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(Array(channel.routes.enumerated()), id: \.element.id) { index, route in
-                        RouteCard(
-                            route: route,
-                            isCurrentRoute: selectedChannelIndex == currentChannelIndex && index == currentRouteIndex
-                        )
-                        .onTapGesture {
-                            onSelect(selectedChannelIndex, index)
-                            dismiss()
-                        }
-                    }
-                }
-                .padding(.horizontal, 40)
-                .padding(.vertical, 4)
-            }
-        }
-    }
 }
 
 struct ChannelCard: View {
@@ -208,42 +177,3 @@ struct ChannelCard: View {
         .animation(.spring(response: 0.4, dampingFraction: 0.7), value: isSelected)
     }
 }
-
-struct RouteCard: View {
-    let route: Route
-    let isCurrentRoute: Bool
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 6) {
-                if isCurrentRoute {
-                    Image(systemName: "play.fill")
-                        .font(.caption2)
-                        .foregroundStyle(.green)
-                }
-                Text(route.title)
-                    .font(.callout)
-                    .fontWeight(.medium)
-                    .foregroundStyle(isCurrentRoute ? .green : .white)
-                    .lineLimit(1)
-            }
-
-            Text(route.subtitle)
-                .font(.caption)
-                .foregroundStyle(.white.opacity(0.5))
-                .lineLimit(1)
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .frame(width: 200, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(isCurrentRoute ? .green.opacity(0.1) : .white.opacity(0.06))
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(isCurrentRoute ? .green.opacity(0.4) : .white.opacity(0.1), lineWidth: 1)
-        )
-    }
-}
-

@@ -11,6 +11,7 @@ enum RouteCategory: String, Codable, CaseIterable {
     case islandHopping = "Island Hopping"
     case mountains = "Mountains"
     case volcanoes = "Volcanoes"
+    case deserts = "Deserts"
 
     var defaultAltitude: Double {
         switch self {
@@ -23,6 +24,7 @@ enum RouteCategory: String, Codable, CaseIterable {
         case .islandHopping: return 5000
         case .mountains: return 8000
         case .volcanoes: return 12000
+        case .deserts: return 4000
         }
     }
 
@@ -37,6 +39,7 @@ enum RouteCategory: String, Codable, CaseIterable {
         case .islandHopping: return "ferry"
         case .mountains: return "mountain.2"
         case .volcanoes: return "mountain.2.fill"
+        case .deserts: return "sun.max"
         }
     }
 
@@ -50,6 +53,7 @@ enum RouteCategory: String, Codable, CaseIterable {
         case .ancient, .mountains: return "wind_ambient"
         case .islandHopping: return "ocean_ambient"
         case .volcanoes: return "volcano_ambient"
+        case .deserts: return "wind_ambient"
         }
     }
 }
