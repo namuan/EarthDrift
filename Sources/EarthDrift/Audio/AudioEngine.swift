@@ -1,7 +1,7 @@
 @preconcurrency import AVFoundation
 
 @MainActor
-final class AudioEngine: ObservableObject {
+final class AudioEngine: ObservableObject, @unchecked Sendable {
     @Published var isEnabled = true
     @Published var volume: Float = 0.3 {
         didSet { applyMasterVolume() }
@@ -9,41 +9,37 @@ final class AudioEngine: ObservableObject {
 
     private let engine = AVAudioEngine()
     private var basePlayers: [String: AVAudioPlayerNode] = [:]
-    private var baseFiles: [String: AVAudioFile] = [:]
-    private var channelPlayer: AVAudioPlayerNode?
-    private var channelFile: AVAudioFile?
     private var currentProfile = SoundProfile.silent
-    private var currentBaseBiome: String?
-    private var currentChannelFile: String?
     private var crossfadeTimer: Timer?
     private var targetVolumes: [String: Float] = [:]
     private var currentVolumes: [String: Float] = [:]
+    private var channelPlayer: AVAudioPlayerNode?
+    private var isShuttingDown = false
+    private var pendingEventPlayers = Set<AVAudioPlayerNode>()
 
     private let crossfadeDuration: TimeInterval = 2.5
     private let crossfadeSteps = 50
     private var crossfadeStep = 0
 
     func updateSoundscape(profile: SoundProfile, channelFile: String?) {
-        guard isEnabled else {
-            logDebug("Audio soundscape skipped: audio disabled")
-            return
-        }
-        logInfo("Audio update: biomes=[\(profile.baseVolumes.keys.map(\.rawValue).joined(separator: ","))] channel=\(channelFile ?? "none") channelVol=\(String(format: "%.3f", profile.channelVolume))")
+        guard isEnabled else { return }
+        isShuttingDown = false
+        logInfo("Audio update: biomes=[\(profile.baseVolumes.keys.map(\.rawValue).joined(separator: ","))] channel=\(channelFile ?? "none")")
         currentProfile = profile
-        currentChannelFile = channelFile
-
         updateBaseLayers(profile: profile)
         updateChannelLayer(channelFile: channelFile, profile: profile)
     }
 
     func playEventSting(_ fileName: String) {
         guard isEnabled else { return }
+        isShuttingDown = false
         logInfo("Event sting requested: '\(fileName)'")
         guard let url = audioURL(for: fileName, subdirectory: "events") else {
             logError("Event sting URL not found: '\(fileName)'")
             return
         }
         ensureEngineRunning()
+        guard !isShuttingDown else { return }
         do {
             let file = try AVAudioFile(forReading: url)
             let fileDuration = Double(file.length) / file.processingFormat.sampleRate
@@ -52,20 +48,24 @@ final class AudioEngine: ObservableObject {
             engine.connect(player, to: engine.mainMixerNode, format: file.processingFormat)
             player.volume = volume * 0.8
 
-            Task {
+            Task { @MainActor in
                 await player.scheduleFile(file, at: nil)
                 player.play()
             }
 
-            let fadeDuration: TimeInterval = 0.5
-            Task { @MainActor [weak self, weak player] in
-                try? await Task.sleep(nanoseconds: UInt64((fileDuration - fadeDuration) * 1_000_000_000))
-                self?.fadeOutAndRemove(player: player)
+            pendingEventPlayers.insert(player)
+
+            let fadeStart = fileDuration - 0.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + fadeStart) { [weak self, weak player] in
+                guard let self else { return }
+                MainActor.assumeIsolated {
+                    self.fadeOutAndRemove(player: player)
+                }
             }
 
-            logInfo("Event sting playing: '\(fileName)' duration=\(String(format: "%.1f", fileDuration))s volume=\(String(format: "%.3f", player.volume)) engineRunning=\(engine.isRunning)")
+            logInfo("Event sting playing: '\(fileName)'")
         } catch {
-            logError("Event sting error: \(error.localizedDescription) file='\(fileName)'")
+            logError("Event sting error: \(error.localizedDescription)")
         }
     }
 
@@ -73,28 +73,27 @@ final class AudioEngine: ObservableObject {
         logInfo("=== Audio bundle verification ===")
         let rootUrls = Bundle.module.urls(forResourcesWithExtension: "mp3", subdirectory: nil) ?? []
         logInfo("  Bundle root: \(rootUrls.count) mp3 files — \(rootUrls.map(\.lastPathComponent).sorted().joined(separator: ", "))")
-        let subdirs = ["audio/base", "audio/channel", "audio/events"]
-        for sub in subdirs {
-            if let urls = Bundle.module.urls(forResourcesWithExtension: "mp3", subdirectory: sub), !urls.isEmpty {
-                logInfo("  \(sub): \(urls.count) files")
-            } else {
-                logDebug("  \(sub): empty (files at bundle root)")
-            }
-        }
         logInfo("=== End verification ===")
     }
 
     func stopAll() {
+        isShuttingDown = true
         crossfadeTimer?.invalidate()
         crossfadeTimer = nil
 
+        for player in pendingEventPlayers {
+            player.stop()
+        }
+        pendingEventPlayers.removeAll()
+
         for (_, player) in basePlayers {
             player.stop()
+        }
+        for (_, player) in basePlayers {
             engine.disconnectNodeOutput(player)
             engine.detach(player)
         }
         basePlayers.removeAll()
-        baseFiles.removeAll()
         currentVolumes.removeAll()
         targetVolumes.removeAll()
 
@@ -103,7 +102,6 @@ final class AudioEngine: ObservableObject {
             engine.disconnectNodeOutput(cp)
             engine.detach(cp)
             channelPlayer = nil
-            channelFile = nil
         }
 
         if engine.isRunning {
@@ -111,8 +109,6 @@ final class AudioEngine: ObservableObject {
         }
 
         currentProfile = .silent
-        currentChannelFile = nil
-        currentBaseBiome = nil
         logDebug("Audio stopped: all layers detached")
     }
 
@@ -123,12 +119,10 @@ final class AudioEngine: ObservableObject {
 
         for biome in desiredBiomes {
             let soundFile = biome.baseSoundFile
-            let targetVol = profile.baseVolumes[biome] ?? 0
-
             if basePlayers[soundFile] == nil {
-                startBaseLayer(soundFile: soundFile, volume: 0)
+                startBaseLayer(soundFile: soundFile)
             }
-            targetVolumes[soundFile] = max(targetVolumes[soundFile] ?? 0, targetVol)
+            targetVolumes[soundFile] = max(targetVolumes[soundFile] ?? 0, profile.baseVolumes[biome] ?? 0)
         }
 
         for (soundFile, _) in basePlayers where !desiredBiomes.contains(where: { $0.baseSoundFile == soundFile }) {
@@ -139,13 +133,17 @@ final class AudioEngine: ObservableObject {
     }
 
     private func updateChannelLayer(channelFile: String?, profile: SoundProfile) {
-        if channelFile != currentChannelFile {
+        var currentChannelKey: String?
+        if channelPlayer != nil {
+            currentChannelKey = channelFile
+        }
+
+        if channelFile != currentChannelKey {
             if let cp = channelPlayer {
                 cp.stop()
                 engine.disconnectNodeOutput(cp)
                 engine.detach(cp)
                 channelPlayer = nil
-                self.channelFile = nil
             }
 
             if let cf = channelFile, let url = audioURL(for: cf, subdirectory: "channel") {
@@ -158,10 +156,9 @@ final class AudioEngine: ObservableObject {
                     player.volume = 0
                     player.play()
                     channelPlayer = player
-                    self.channelFile = file
                     currentVolumes["__channel__"] = 0
                 } catch {
-                    logError("Channel audio error: \(error.localizedDescription) file='\(cf)'")
+                    logError("Channel audio error: \(error.localizedDescription)")
                 }
             }
         }
@@ -170,15 +167,13 @@ final class AudioEngine: ObservableObject {
         startCrossfade()
     }
 
-    private func startBaseLayer(soundFile: String, volume: Float) {
+    private func startBaseLayer(soundFile: String) {
         guard let url = audioURL(for: soundFile, subdirectory: "base") else {
-            logError("Base audio URL not found: '\(soundFile)' — check file exists in Resources/audio/base/")
+            logError("Base audio not found: '\(soundFile)'")
             return
         }
-        logInfo("Starting base layer: '\(soundFile)' url=\(url.lastPathComponent)")
         do {
             let file = try AVAudioFile(forReading: url)
-            logDebug("Base file loaded: '\(soundFile)' channels=\(file.fileFormat.channelCount) sampleRate=\(file.fileFormat.sampleRate) length=\(file.length)")
             let player = AVAudioPlayerNode()
             engine.attach(player)
             engine.connect(player, to: engine.mainMixerNode, format: file.processingFormat)
@@ -189,17 +184,17 @@ final class AudioEngine: ObservableObject {
             }
             player.play()
             basePlayers[soundFile] = player
-            baseFiles[soundFile] = file
             currentVolumes[soundFile] = 0.001
-            logInfo("Base layer active: '\(soundFile)' engineRunning=\(engine.isRunning)")
+            logInfo("Base layer active: '\(soundFile)'")
         } catch {
-            logError("Base audio error: \(error.localizedDescription) file='\(soundFile)'")
+            logError("Base audio error: \(error.localizedDescription)")
         }
     }
 
     private func ensureEngineRunning() {
         guard !engine.isRunning else { return }
         do {
+            engine.prepare()
             try engine.start()
             logInfo("Audio engine started successfully")
         } catch {
@@ -209,33 +204,31 @@ final class AudioEngine: ObservableObject {
 
     private func scheduleLooping(player: AVAudioPlayerNode, file: AVAudioFile) {
         guard let buffer = file.toBuffer() else {
-            logError("Failed to create buffer from audio file: format=\(file.processingFormat) length=\(file.length)")
+            logError("Failed to create buffer from audio file")
             return
         }
         player.scheduleBuffer(buffer, at: nil, options: .loops)
-        logDebug("Buffer scheduled: frames=\(buffer.frameLength) channels=\(buffer.format.channelCount) sampleRate=\(buffer.format.sampleRate)")
     }
 
     private func startCrossfade() {
-        if crossfadeTimer != nil { return }
-
+        guard crossfadeTimer == nil, !isShuttingDown else { return }
         crossfadeStep = 0
-        crossfadeTimer?.invalidate()
         crossfadeTimer = Timer.scheduledTimer(withTimeInterval: crossfadeDuration / Double(crossfadeSteps), repeats: true) { [weak self] _ in
-            Task { @MainActor [weak self] in
-                self?.applyCrossfadeStep()
+            guard let self else { return }
+            MainActor.assumeIsolated {
+                guard !self.isShuttingDown else { return }
+                self.applyCrossfadeStep()
             }
         }
     }
 
     private func applyCrossfadeStep() {
+        guard !isShuttingDown else { return }
         crossfadeStep += 1
         let progress = min(Float(crossfadeStep) / Float(crossfadeSteps), 1.0)
         let eased = easeInOutCubic(progress)
 
-        let allKeys = Set(currentVolumes.keys).union(targetVolumes.keys)
-
-        for key in allKeys {
+        for key in Set(currentVolumes.keys).union(targetVolumes.keys) {
             let current = currentVolumes[key] ?? 0
             let target = targetVolumes[key] ?? 0
             let newVol = current + (target - current) * eased
@@ -251,11 +244,6 @@ final class AudioEngine: ObservableObject {
         if crossfadeStep >= crossfadeSteps {
             crossfadeTimer?.invalidate()
             crossfadeTimer = nil
-            logInfo("Audio crossfade complete: base=\(basePlayers.keys.sorted().joined(separator: ",")) channel=\(channelPlayer != nil ? "yes" : "no") engineRunning=\(engine.isRunning)")
-            for (key, _) in basePlayers {
-                let v = basePlayers[key]?.volume ?? -1
-                logDebug("  volume[\(key)] = \(String(format: "%.4f", v))")
-            }
             cleanupSilentBasePlayers()
         }
     }
@@ -267,7 +255,6 @@ final class AudioEngine: ObservableObject {
                 engine.disconnectNodeOutput(player)
                 engine.detach(player)
                 basePlayers.removeValue(forKey: key)
-                baseFiles.removeValue(forKey: key)
                 currentVolumes.removeValue(forKey: key)
             }
         }
@@ -275,18 +262,33 @@ final class AudioEngine: ObservableObject {
     }
 
     private func fadeOutAndRemove(player: AVAudioPlayerNode?) {
-        guard let player else { return }
+        guard let player, !isShuttingDown else { return }
         let startVol = player.volume
-        let steps = 10
-        Task { @MainActor [weak self, weak player] in
-            for step in 1...steps {
-                player?.volume = startVol * (1.0 - Float(step) / Float(steps))
-                try? await Task.sleep(nanoseconds: 50_000_000)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self, weak player] in
+            guard let self else { return }
+            MainActor.assumeIsolated {
+                self.fadeStep(player: player, startVol: startVol, step: 1)
             }
-            guard let self, let player else { return }
+        }
+    }
+
+    private func fadeStep(player: AVAudioPlayerNode?, startVol: Float, step: Int) {
+        guard !isShuttingDown else { return }
+        let steps = 10
+        if step >= steps {
+            guard let player else { return }
             player.stop()
-            self.engine.disconnectNodeOutput(player)
-            self.engine.detach(player)
+            engine.disconnectNodeOutput(player)
+            engine.detach(player)
+            pendingEventPlayers.remove(player)
+        } else {
+            player?.volume = startVol * (1.0 - Float(step) / Float(steps))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self, weak player] in
+                guard let self else { return }
+                MainActor.assumeIsolated {
+                    self.fadeStep(player: player, startVol: startVol, step: step + 1)
+                }
+            }
         }
     }
 
@@ -304,7 +306,6 @@ final class AudioEngine: ObservableObject {
         if let url = Bundle.module.url(forResource: fileName, withExtension: "mp3", subdirectory: nil) {
             return url
         }
-        logError("Audio file not found in bundle: '\(fileName).mp3' (tried audio/\(subdirectory)/ and root)")
         return nil
     }
 
