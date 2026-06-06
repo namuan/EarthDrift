@@ -3,7 +3,6 @@ import SwiftUI
 struct ContentView: View {
     @State private var engine = PlaybackEngine()
     @State private var scheduler = ChannelScheduler()
-    @State private var weather = WeatherEngine()
     @State private var showingBrowser = false
     @State private var showingArtMode = false
 
@@ -11,8 +10,6 @@ struct ContentView: View {
         let _ = logDebug("ContentView body re-evaluated")
         ZStack {
             MapPlayerView(camera: engine.cameraController.camera, controller: engine.cameraController)
-
-            WeatherOverlayView(effect: weather.currentEffect, intensity: weather.intensity)
 
             NarrationCardView(point: engine.activeNarration)
 
@@ -38,7 +35,6 @@ struct ContentView: View {
                 ControlsOverlay(
                     engine: engine,
                     scheduler: scheduler,
-                    weather: weather,
                     onShowBrowser: { showingBrowser = true }
                 )
                 .transition(.opacity)
