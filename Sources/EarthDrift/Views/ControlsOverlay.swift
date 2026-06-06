@@ -3,6 +3,7 @@ import SwiftUI
 struct ControlsOverlay: View {
     @Bindable var engine: PlaybackEngine
     @Bindable var scheduler: ChannelScheduler
+    var weather: WeatherEngine
     var onShowBrowser: () -> Void
 
     @State private var isVisible = true
@@ -12,7 +13,7 @@ struct ControlsOverlay: View {
     @FocusState private var focusedButton: FocusButton?
 
     private enum FocusButton: Hashable {
-        case lucky, settings, maximize, previous, playPause, next, channels
+        case lucky, weather, settings, maximize, previous, playPause, next, channels
     }
 
     var body: some View {
@@ -29,6 +30,16 @@ struct ControlsOverlay: View {
                 .buttonStyle(.plain)
                 .focusEffectDisabled()
                 .focused($focusedButton, equals: .lucky)
+                Button(action: { weather.cycleForward() }) {
+                    Image(systemName: weather.currentEffect.icon)
+                        .font(.system(size: 13))
+                        .foregroundStyle(focusedButton == .weather ? .white : .white.opacity(0.7))
+                        .frame(width: 28, height: 28)
+                        .background(Circle().fill(focusedButton == .weather ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
+                }
+                .buttonStyle(.plain)
+                .focusEffectDisabled()
+                .focused($focusedButton, equals: .weather)
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.2)) {
                         showSettings.toggle()
