@@ -935,6 +935,151 @@ enum RouteData {
         ]
     )
 
+    static let greenland = Route(
+        title: "Greenland Coastline",
+        subtitle: "Ice fjords of the Arctic",
+        category: .polar,
+        coordinates: [
+            .init(latitude: 61.0, longitude: -45.0),
+            .init(latitude: 62.0, longitude: -46.0),
+            .init(latitude: 63.0, longitude: -47.0),
+            .init(latitude: 64.0, longitude: -48.0),
+            .init(latitude: 64.5, longitude: -49.0),
+            .init(latitude: 65.0, longitude: -50.0),
+            .init(latitude: 65.5, longitude: -51.0),
+            .init(latitude: 66.0, longitude: -52.0),
+            .init(latitude: 66.5, longitude: -52.5),
+            .init(latitude: 67.0, longitude: -53.0),
+            .init(latitude: 67.5, longitude: -53.0),
+            .init(latitude: 68.0, longitude: -53.0),
+            .init(latitude: 68.5, longitude: -53.0),
+            .init(latitude: 69.0, longitude: -52.0),
+            .init(latitude: 69.3, longitude: -51.0),
+        ],
+        duration: 1200,
+        narrationPoints: [
+            NarrationPoint(latitude: 61.0, longitude: -45.0, title: "Nanortalik", subtitle: "The southern gateway to Greenland."),
+            NarrationPoint(latitude: 64.0, longitude: -48.0, title: "Icefjord", subtitle: "Where glaciers calve into the sea."),
+            NarrationPoint(latitude: 66.5, longitude: -52.5, title: "Sermersuaq", subtitle: "The great Greenland ice sheet."),
+            NarrationPoint(latitude: 69.3, longitude: -51.0, title: "Ilulissat", subtitle: "The iceberg capital of the world."),
+        ]
+    )
+
+    static let antarcticPeninsula = Route(
+        title: "Antarctic Peninsula",
+        subtitle: "The frozen frontier",
+        category: .polar,
+        coordinates: [
+            .init(latitude: -63.0, longitude: -57.0),
+            .init(latitude: -63.5, longitude: -57.5),
+            .init(latitude: -64.0, longitude: -58.0),
+            .init(latitude: -64.5, longitude: -59.0),
+            .init(latitude: -65.0, longitude: -60.0),
+            .init(latitude: -65.5, longitude: -60.5),
+            .init(latitude: -66.0, longitude: -61.0),
+            .init(latitude: -66.5, longitude: -62.0),
+            .init(latitude: -67.0, longitude: -63.0),
+            .init(latitude: -67.5, longitude: -64.0),
+            .init(latitude: -68.0, longitude: -65.0),
+            .init(latitude: -68.5, longitude: -66.0),
+            .init(latitude: -69.0, longitude: -67.0),
+            .init(latitude: -69.5, longitude: -68.0),
+            .init(latitude: -70.0, longitude: -69.0),
+            .init(latitude: -70.5, longitude: -70.0),
+            .init(latitude: -71.0, longitude: -71.0),
+            .init(latitude: -71.5, longitude: -72.0),
+            .init(latitude: -72.0, longitude: -73.0),
+            .init(latitude: -72.5, longitude: -74.0),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: -63.0, longitude: -57.0, title: "Hope Bay", subtitle: "The tip of the Antarctic Peninsula."),
+            NarrationPoint(latitude: -64.5, longitude: -59.0, title: "Snow Hill Island", subtitle: "Home to emperor penguin colonies."),
+            NarrationPoint(latitude: -66.0, longitude: -61.0, title: "Jason Peninsula", subtitle: "Towering ice cliffs and glaciers."),
+            NarrationPoint(latitude: -68.5, longitude: -66.0, title: "Marguerite Bay", subtitle: "Where the ice meets the Southern Ocean."),
+            NarrationPoint(latitude: -71.0, longitude: -71.0, title: "Alexander Island", subtitle: "The frozen edge of the continent."),
+        ]
+    )
+
+    static let northwestPassage = Route(
+        title: "Northwest Passage",
+        subtitle: "Through the Arctic Archipelago",
+        category: .polar,
+        coordinates: [
+            .init(latitude: 74.0, longitude: -80.0),
+            .init(latitude: 74.0, longitude: -82.0),
+            .init(latitude: 73.5, longitude: -84.0),
+            .init(latitude: 73.0, longitude: -86.0),
+            .init(latitude: 73.0, longitude: -88.0),
+            .init(latitude: 72.5, longitude: -90.0),
+            .init(latitude: 72.0, longitude: -92.0),
+            .init(latitude: 72.0, longitude: -94.0),
+            .init(latitude: 71.5, longitude: -96.0),
+            .init(latitude: 71.0, longitude: -98.0),
+            .init(latitude: 71.0, longitude: -100.0),
+            .init(latitude: 70.5, longitude: -102.0),
+            .init(latitude: 70.0, longitude: -104.0),
+            .init(latitude: 70.0, longitude: -106.0),
+            .init(latitude: 69.5, longitude: -108.0),
+            .init(latitude: 69.0, longitude: -110.0),
+            .init(latitude: 69.0, longitude: -112.0),
+            .init(latitude: 69.0, longitude: -114.0),
+            .init(latitude: 69.0, longitude: -116.0),
+            .init(latitude: 69.0, longitude: -118.0),
+            .init(latitude: 69.5, longitude: -120.0),
+            .init(latitude: 70.0, longitude: -122.0),
+            .init(latitude: 70.5, longitude: -124.0),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: 74.0, longitude: -80.0, title: "Lancaster Sound", subtitle: "The eastern entrance to the passage."),
+            NarrationPoint(latitude: 73.0, longitude: -86.0, title: "Prince Regent Inlet", subtitle: "Ice-choked waters of the Arctic."),
+            NarrationPoint(latitude: 72.0, longitude: -94.0, title: "Bellot Strait", subtitle: "A narrow channel through the ice."),
+            NarrationPoint(latitude: 70.5, longitude: -102.0, title: "Victoria Strait", subtitle: "Where explorers sought a route west."),
+            NarrationPoint(latitude: 69.0, longitude: -112.0, title: "Dease Strait", subtitle: "Navigating the heart of the passage."),
+            NarrationPoint(latitude: 70.0, longitude: -122.0, title: "Amundsen Gulf", subtitle: "The western gateway to the Beaufort Sea."),
+        ]
+    )
+
+    static let svalbard = Route(
+        title: "Svalbard",
+        subtitle: "The Arctic archipelago",
+        category: .polar,
+        coordinates: [
+            .init(latitude: 78.2, longitude: 15.0),
+            .init(latitude: 78.5, longitude: 14.0),
+            .init(latitude: 78.8, longitude: 13.0),
+            .init(latitude: 79.0, longitude: 12.0),
+            .init(latitude: 79.2, longitude: 11.0),
+            .init(latitude: 79.0, longitude: 10.0),
+            .init(latitude: 78.8, longitude: 10.5),
+            .init(latitude: 78.5, longitude: 11.0),
+            .init(latitude: 78.2, longitude: 12.0),
+            .init(latitude: 78.0, longitude: 13.0),
+            .init(latitude: 77.8, longitude: 14.0),
+            .init(latitude: 77.5, longitude: 15.0),
+            .init(latitude: 77.5, longitude: 16.0),
+            .init(latitude: 77.8, longitude: 17.0),
+            .init(latitude: 78.0, longitude: 18.0),
+            .init(latitude: 78.2, longitude: 19.0),
+            .init(latitude: 78.5, longitude: 20.0),
+            .init(latitude: 78.8, longitude: 21.0),
+            .init(latitude: 79.0, longitude: 20.0),
+            .init(latitude: 79.0, longitude: 18.0),
+            .init(latitude: 78.8, longitude: 16.0),
+            .init(latitude: 78.5, longitude: 15.0),
+            .init(latitude: 78.2, longitude: 15.0),
+        ],
+        duration: 1200,
+        narrationPoints: [
+            NarrationPoint(latitude: 78.2, longitude: 15.0, title: "Longyearbyen", subtitle: "The northernmost settlement on Earth."),
+            NarrationPoint(latitude: 79.0, longitude: 12.0, title: "Ny-Ålesund", subtitle: "Research outpost at the edge of the ice."),
+            NarrationPoint(latitude: 78.0, longitude: 13.0, title: "Isfjorden", subtitle: "A majestic Arctic fjord system."),
+            NarrationPoint(latitude: 78.5, longitude: 20.0, title: "Edgeøya", subtitle: "Remote wilderness of the eastern archipelago."),
+            NarrationPoint(latitude: 78.8, longitude: 15.0, title: "Adventfjorden", subtitle: "Glaciers cascading into the sea."),
+        ]
+    )
+
     static let allRoutes: [Route] = [
         nile, amazon, mississippi, danube,
         transSiberian, californiaZephyr,
@@ -944,6 +1089,7 @@ enum RouteData {
         himalayas, andes, alps, rockies, southernAlps,
         japanVolcanoes, kamchatka, alaskaVolcanoes, cascades, mexicoVolcanoes, andesVolcanoes, newZealandVolcanoes,
         sahara, namib, atacama, gobi, arabianDesert,
+        greenland, antarcticPeninsula, northwestPassage, svalbard,
     ]
 
     static let defaultChannels: [Channel] = [
@@ -956,5 +1102,6 @@ enum RouteData {
         Channel(name: "Island Hopping", icon: "ferry", routes: [greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos]),
         Channel(name: "Ring of Fire", icon: "mountain.2.fill", routes: [japanVolcanoes, kamchatka, alaskaVolcanoes, cascades, mexicoVolcanoes, andesVolcanoes, newZealandVolcanoes]),
         Channel(name: "Deserts", icon: "sun.max", routes: [sahara, namib, atacama, gobi, arabianDesert]),
+        Channel(name: "Polar Expeditions", icon: "snowflake", routes: [greenland, antarcticPeninsula, northwestPassage, svalbard]),
     ]
 }
