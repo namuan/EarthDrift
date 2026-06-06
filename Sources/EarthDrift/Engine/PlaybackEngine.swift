@@ -5,6 +5,7 @@ import Observation
 private enum PlaybackKeys {
     static let speedMultiplier = "speedMultiplier"
     static let luckyDuration = "luckyDuration"
+    static let isReversed = "isReversed"
 }
 
 @MainActor
@@ -32,6 +33,10 @@ final class PlaybackEngine {
         return saved > 0 ? saved : 1.0
     }() {
         didSet { UserDefaults.standard.set(speedMultiplier, forKey: PlaybackKeys.speedMultiplier) }
+    }
+
+    var isReversed: Bool = UserDefaults.standard.bool(forKey: PlaybackKeys.isReversed) {
+        didSet { UserDefaults.standard.set(isReversed, forKey: PlaybackKeys.isReversed) }
     }
 
     var luckyDuration: Double = {
@@ -173,7 +178,8 @@ final class PlaybackEngine {
             return
         }
 
-        cameraController.update(progress: progress, deltaTime: deltaTime)
+        let effectiveProgress = isReversed ? (1.0 - progress) : progress
+        cameraController.update(progress: effectiveProgress, deltaTime: deltaTime)
         tickCount += 1
 
         if now.timeIntervalSince(lastSoundscapeUpdate) >= soundscapeUpdateInterval {
@@ -181,10 +187,10 @@ final class PlaybackEngine {
             lastSoundscapeUpdate = now
         }
 
-        let narration = narrationEngine.checkNarration(at: progress, coordinate: cameraController.currentCoordinate)
+        let narration = narrationEngine.checkNarration(at: effectiveProgress, coordinate: cameraController.currentCoordinate)
         if narration?.id != previousNarrationID {
             if let narration {
-                logInfo("Narration triggered: title='\(narration.title)' distance=\(Int(cameraController.currentCoordinate.distance(to: narration.coordinate)))m progress=\(String(format: "%.3f", progress))")
+                logInfo("Narration triggered: title='\(narration.title)' distance=\(Int(cameraController.currentCoordinate.distance(to: narration.coordinate)))m progress=\(String(format: "%.3f", effectiveProgress))")
                 let sting = narration.eventSting ?? route.category.narrationEventSting
                 if let sting {
                     audioEngine.playEventSting(sting)
@@ -196,7 +202,7 @@ final class PlaybackEngine {
 
         logThrottle += 1
         if logThrottle >= 90 {
-            logDebug("Tick #\(tickCount): progress=\(String(format: "%.4f", progress)) coords=(\(String(format: "%.4f", cameraController.currentCoordinate.latitude)),\(String(format: "%.4f", cameraController.currentCoordinate.longitude))) bearing=\(String(format: "%.1f", cameraController.currentBearing)) altitude=\(String(format: "%.0f", cameraController.currentAltitude))")
+            logDebug("Tick #\(tickCount): progress=\(String(format: "%.4f", effectiveProgress)) coords=(\(String(format: "%.4f", cameraController.currentCoordinate.latitude)),\(String(format: "%.4f", cameraController.currentCoordinate.longitude))) bearing=\(String(format: "%.1f", cameraController.currentBearing)) altitude=\(String(format: "%.0f", cameraController.currentAltitude))")
             logThrottle = 0
         }
     }

@@ -23,6 +23,13 @@ final class CameraController {
         didSet { UserDefaults.standard.set(pitch, forKey: CameraKeys.pitch) }
     }
 
+    var bearingOffset: Double = 0
+
+    private var effectiveHeading: Double {
+        let raw = currentBearing + bearingOffset
+        return raw.truncatingRemainder(dividingBy: 360)
+    }
+
     var altitudeMultiplier: Double = {
         let saved = UserDefaults.standard.double(forKey: CameraKeys.altitudeMultiplier)
         return saved > 0 ? saved : 1.0
@@ -49,7 +56,7 @@ final class CameraController {
             lookingAtCenter: currentCoordinate,
             fromDistance: currentAltitude * altitudeMultiplier,
             pitch: pitch,
-            heading: currentBearing
+            heading: effectiveHeading
         )
 
         let interpolationMode = route.coordinates.count >= 4 ? "Catmull-Rom spline" : "linear"
@@ -77,7 +84,7 @@ final class CameraController {
             lookingAtCenter: currentCoordinate,
             fromDistance: currentAltitude * altitudeMultiplier,
             pitch: pitch,
-            heading: currentBearing
+            heading: effectiveHeading
         )
 
         let distanceMoved = prevCoordinate.distance(to: currentCoordinate)

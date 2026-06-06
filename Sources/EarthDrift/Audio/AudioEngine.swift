@@ -1,6 +1,5 @@
 @preconcurrency import AVFoundation
 
-@MainActor
 final class AudioEngine: ObservableObject, @unchecked Sendable {
     @Published var isEnabled = true
     @Published var volume: Float = 0.3 {
@@ -10,16 +9,15 @@ final class AudioEngine: ObservableObject, @unchecked Sendable {
     private let engine = AVAudioEngine()
     private var basePlayers: [String: AVAudioPlayerNode] = [:]
     private var currentProfile = SoundProfile.silent
-    private var crossfadeTimer: Timer?
     private var targetVolumes: [String: Float] = [:]
     private var currentVolumes: [String: Float] = [:]
     private var channelPlayer: AVAudioPlayerNode?
     private var isShuttingDown = false
     private var pendingEventPlayers = Set<AVAudioPlayerNode>()
+    private var crossfadeTask: Task<Void, Never>?
 
     private let crossfadeDuration: TimeInterval = 2.5
     private let crossfadeSteps = 50
-    private var crossfadeStep = 0
 
     func updateSoundscape(profile: SoundProfile, channelFile: String?) {
         guard isEnabled else { return }
@@ -56,11 +54,9 @@ final class AudioEngine: ObservableObject, @unchecked Sendable {
             pendingEventPlayers.insert(player)
 
             let fadeStart = fileDuration - 0.5
-            DispatchQueue.main.asyncAfter(deadline: .now() + fadeStart) { [weak self, weak player] in
-                guard let self else { return }
-                MainActor.assumeIsolated {
-                    self.fadeOutAndRemove(player: player)
-                }
+            Task { @MainActor [weak self, weak player] in
+                try? await Task.sleep(nanoseconds: UInt64(max(0, fadeStart) * 1_000_000_000))
+                self?.fadeOutAndRemove(player: player)
             }
 
             logInfo("Event sting playing: '\(fileName)'")
@@ -78,8 +74,8 @@ final class AudioEngine: ObservableObject, @unchecked Sendable {
 
     func stopAll() {
         isShuttingDown = true
-        crossfadeTimer?.invalidate()
-        crossfadeTimer = nil
+        crossfadeTask?.cancel()
+        crossfadeTask = nil
 
         for player in pendingEventPlayers {
             player.stop()
@@ -211,40 +207,34 @@ final class AudioEngine: ObservableObject, @unchecked Sendable {
     }
 
     private func startCrossfade() {
-        guard crossfadeTimer == nil, !isShuttingDown else { return }
-        crossfadeStep = 0
-        crossfadeTimer = Timer.scheduledTimer(withTimeInterval: crossfadeDuration / Double(crossfadeSteps), repeats: true) { [weak self] _ in
+        guard crossfadeTask == nil, !isShuttingDown else { return }
+        crossfadeTask = Task { @MainActor [weak self] in
             guard let self else { return }
-            MainActor.assumeIsolated {
-                guard !self.isShuttingDown else { return }
-                self.applyCrossfadeStep()
+            for step in 0..<self.crossfadeSteps {
+                guard !self.isShuttingDown, !Task.isCancelled else { return }
+                let progress = Float(step + 1) / Float(self.crossfadeSteps)
+                let eased = self.easeInOutCubic(progress)
+
+                for key in Set(self.currentVolumes.keys).union(self.targetVolumes.keys) {
+                    guard !self.isShuttingDown, !Task.isCancelled else { return }
+                    let current = self.currentVolumes[key] ?? 0
+                    let target = self.targetVolumes[key] ?? 0
+                    let newVol = current + (target - current) * eased
+                    self.currentVolumes[key] = newVol
+
+                    if key == "__channel__" {
+                        self.channelPlayer?.volume = self.volume * newVol
+                    } else if let player = self.basePlayers[key] {
+                        player.volume = self.volume * newVol
+                    }
+                }
+
+                try? await Task.sleep(nanoseconds: UInt64(self.crossfadeDuration / Double(self.crossfadeSteps) * 1_000_000_000))
             }
-        }
-    }
 
-    private func applyCrossfadeStep() {
-        guard !isShuttingDown else { return }
-        crossfadeStep += 1
-        let progress = min(Float(crossfadeStep) / Float(crossfadeSteps), 1.0)
-        let eased = easeInOutCubic(progress)
-
-        for key in Set(currentVolumes.keys).union(targetVolumes.keys) {
-            let current = currentVolumes[key] ?? 0
-            let target = targetVolumes[key] ?? 0
-            let newVol = current + (target - current) * eased
-            currentVolumes[key] = newVol
-
-            if key == "__channel__" {
-                channelPlayer?.volume = volume * newVol
-            } else if let player = basePlayers[key] {
-                player.volume = volume * newVol
-            }
-        }
-
-        if crossfadeStep >= crossfadeSteps {
-            crossfadeTimer?.invalidate()
-            crossfadeTimer = nil
-            cleanupSilentBasePlayers()
+            guard !self.isShuttingDown, !Task.isCancelled else { return }
+            self.crossfadeTask = nil
+            self.cleanupSilentBasePlayers()
         }
     }
 
@@ -264,31 +254,21 @@ final class AudioEngine: ObservableObject, @unchecked Sendable {
     private func fadeOutAndRemove(player: AVAudioPlayerNode?) {
         guard let player, !isShuttingDown else { return }
         let startVol = player.volume
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self, weak player] in
-            guard let self else { return }
-            MainActor.assumeIsolated {
-                self.fadeStep(player: player, startVol: startVol, step: 1)
-            }
-        }
-    }
-
-    private func fadeStep(player: AVAudioPlayerNode?, startVol: Float, step: Int) {
-        guard !isShuttingDown else { return }
+        let totalDuration = 0.5
         let steps = 10
-        if step >= steps {
-            guard let player else { return }
-            player.stop()
-            engine.disconnectNodeOutput(player)
-            engine.detach(player)
-            pendingEventPlayers.remove(player)
-        } else {
-            player?.volume = startVol * (1.0 - Float(step) / Float(steps))
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self, weak player] in
-                guard let self else { return }
-                MainActor.assumeIsolated {
-                    self.fadeStep(player: player, startVol: startVol, step: step + 1)
-                }
+
+        Task { @MainActor [weak self, weak player] in
+            guard let self, let player else { return }
+            for i in 1...steps {
+                guard !self.isShuttingDown else { return }
+                player.volume = startVol * (1.0 - Float(i) / Float(steps))
+                try? await Task.sleep(nanoseconds: UInt64(totalDuration / Double(steps) * 1_000_000_000))
             }
+            guard !self.isShuttingDown else { return }
+            player.stop()
+            self.engine.disconnectNodeOutput(player)
+            self.engine.detach(player)
+            self.pendingEventPlayers.remove(player)
         }
     }
 
