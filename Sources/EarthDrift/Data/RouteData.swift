@@ -815,6 +815,7 @@ enum RouteData {
         Channel(name: "Rivers", icon: "water.waves", routes: [nile, amazon, mississippi, danube]),
         Channel(name: "Railways", icon: "train.side.front.car", routes: [transSiberian, californiaZephyr]),
         Channel(name: "Flights", icon: "airplane", routes: [tokyoLA, londonSingapore]),
+        Channel(name: "Mountains", icon: "mountain.2", routes: [himalayas, andes, alps, rockies, southernAlps]),
         Channel(name: "Ancient Routes", icon: "scroll", routes: [silkRoad]),
         Channel(name: "Coastlines", icon: "beach.umbrella", routes: [pacificCoast]),
         Channel(name: "Mountains", icon: "mountain.2", routes: [himalayas, andes, alps, rockies, southernAlps]),
