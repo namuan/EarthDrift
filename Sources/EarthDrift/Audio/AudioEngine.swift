@@ -39,17 +39,7 @@ final class AudioEngine: ObservableObject {
     }
 
     private func playAmbient(for category: RouteCategory) {
-        let fileName: String
-        switch category {
-        case .rivers: fileName = "river_ambient"
-        case .railways: fileName = "train_ambient"
-        case .flights: fileName = "flight_ambient"
-        case .trails: fileName = "nature_ambient"
-        case .coastlines: fileName = "ocean_ambient"
-        case .ancient: fileName = "wind_ambient"
-        case .islandHopping: fileName = "ocean_ambient"
-        case .volcanoes: fileName = "volcano_ambient"
-        }
+        let fileName = category.ambientSoundFile
 
         guard let url = Bundle.module.url(forResource: fileName, withExtension: "mp3", subdirectory: "audio") else {
             logDebug("Audio file not found: '\(fileName).mp3' in bundle.audio — soundscape unavailable")

@@ -4,27 +4,17 @@ struct ChannelBrowser: View {
     let channels: [Channel]
     let currentChannelIndex: Int
     let currentRouteIndex: Int
-    var onSelectChannel: (Int) -> Void
-    var onSelectRoute: (Int) -> Void
+    var onSelect: (Int, Int) -> Void
 
     @Environment(\.dismiss) private var dismiss
     @State private var selectedChannelIndex: Int
-    @State private var selectedRouteIndex: Int
 
-    init(
-        channels: [Channel],
-        currentChannelIndex: Int,
-        currentRouteIndex: Int,
-        onSelectChannel: @escaping (Int) -> Void,
-        onSelectRoute: @escaping (Int) -> Void
-    ) {
+    init(channels: [Channel], currentChannelIndex: Int, currentRouteIndex: Int, onSelect: @escaping (Int, Int) -> Void) {
         self.channels = channels
         self.currentChannelIndex = currentChannelIndex
         self.currentRouteIndex = currentRouteIndex
-        self.onSelectChannel = onSelectChannel
-        self.onSelectRoute = onSelectRoute
+        self.onSelect = onSelect
         self._selectedChannelIndex = State(initialValue: currentChannelIndex)
-        self._selectedRouteIndex = State(initialValue: currentRouteIndex)
     }
 
     var body: some View {
@@ -46,9 +36,7 @@ struct ChannelBrowser: View {
                         .onTapGesture {
                             withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
                                 selectedChannelIndex = index
-                                selectedRouteIndex = 0
                             }
-                            onSelectChannel(index)
                         }
                     }
                 }
@@ -72,14 +60,14 @@ struct ChannelBrowser: View {
                         ForEach(Array(channel.routes.enumerated()), id: \.element.id) { index, route in
                             RouteRow(
                                 route: route,
-                                isSelected: index == selectedRouteIndex,
+                                isCurrent: selectedChannelIndex == currentChannelIndex && index == currentRouteIndex,
                                 number: index + 1
                             )
                             .onTapGesture {
                                 withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-                                    selectedRouteIndex = index
+                                    selectedChannelIndex = selectedChannelIndex
                                 }
-                                onSelectRoute(index)
+                                onSelect(selectedChannelIndex, index)
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                     dismiss()
                                 }
@@ -105,7 +93,7 @@ struct ChannelBrowser: View {
 
 struct RouteRow: View {
     let route: Route
-    let isSelected: Bool
+    let isCurrent: Bool
     let number: Int
 
     var body: some View {
@@ -119,7 +107,7 @@ struct RouteRow: View {
                 Text(route.title)
                     .font(.body)
                     .fontWeight(.medium)
-                    .foregroundStyle(isSelected ? .white : .white.opacity(0.7))
+                    .foregroundStyle(isCurrent ? .white : .white.opacity(0.7))
                 Text(route.subtitle)
                     .font(.caption)
                     .foregroundStyle(.white.opacity(0.4))
@@ -127,7 +115,7 @@ struct RouteRow: View {
 
             Spacer()
 
-            if isSelected {
+            if isCurrent {
                 Image(systemName: "play.fill")
                     .font(.system(size: 10))
                     .foregroundStyle(.white)
@@ -139,14 +127,14 @@ struct RouteRow: View {
         .padding(.vertical, 10)
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .fill(isSelected ? .white.opacity(0.1) : .clear)
+                .fill(isCurrent ? .white.opacity(0.1) : .clear)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(isSelected ? .white.opacity(0.2) : .clear, lineWidth: 1)
+                .stroke(isCurrent ? .white.opacity(0.2) : .clear, lineWidth: 1)
         )
         .contentShape(Rectangle())
-        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCurrent)
     }
 }
 

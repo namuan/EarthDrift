@@ -9,6 +9,7 @@ enum RouteCategory: String, Codable, CaseIterable {
     case coastlines = "Coastlines"
     case ancient = "Ancient Routes"
     case islandHopping = "Island Hopping"
+    case mountains = "Mountains"
     case volcanoes = "Volcanoes"
 
     var defaultAltitude: Double {
@@ -20,6 +21,7 @@ enum RouteCategory: String, Codable, CaseIterable {
         case .coastlines: return 5000
         case .ancient: return 6000
         case .islandHopping: return 5000
+        case .mountains: return 8000
         case .volcanoes: return 12000
         }
     }
@@ -33,7 +35,21 @@ enum RouteCategory: String, Codable, CaseIterable {
         case .coastlines: return "beach.umbrella"
         case .ancient: return "scroll"
         case .islandHopping: return "ferry"
+        case .mountains: return "mountain.2"
         case .volcanoes: return "mountain.2.fill"
+        }
+    }
+
+    var ambientSoundFile: String {
+        switch self {
+        case .rivers: return "river_ambient"
+        case .railways: return "train_ambient"
+        case .flights: return "flight_ambient"
+        case .trails: return "nature_ambient"
+        case .coastlines: return "ocean_ambient"
+        case .ancient, .mountains: return "wind_ambient"
+        case .islandHopping: return "ocean_ambient"
+        case .volcanoes: return "volcano_ambient"
         }
     }
 }
