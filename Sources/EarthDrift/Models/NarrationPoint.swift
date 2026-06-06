@@ -7,6 +7,7 @@ struct NarrationPoint: Identifiable, Codable {
     let title: String
     let subtitle: String
     let triggerDistance: Double
+    let eventSting: String?
 
     init(
         id: UUID = UUID(),
@@ -14,17 +15,19 @@ struct NarrationPoint: Identifiable, Codable {
         longitude: Double,
         title: String,
         subtitle: String,
-        triggerDistance: Double = 3000
+        triggerDistance: Double = 3000,
+        eventSting: String? = nil
     ) {
         self.id = id
         self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         self.title = title
         self.subtitle = subtitle
         self.triggerDistance = triggerDistance
+        self.eventSting = eventSting
     }
 
     enum CodingKeys: String, CodingKey {
-        case id, title, subtitle, triggerDistance, latitude, longitude
+        case id, title, subtitle, triggerDistance, eventSting, latitude, longitude
     }
 
     init(from decoder: Decoder) throws {
@@ -33,6 +36,7 @@ struct NarrationPoint: Identifiable, Codable {
         title = try container.decode(String.self, forKey: .title)
         subtitle = try container.decode(String.self, forKey: .subtitle)
         triggerDistance = try container.decodeIfPresent(Double.self, forKey: .triggerDistance) ?? 3000
+        eventSting = try container.decodeIfPresent(String.self, forKey: .eventSting)
         let lat = try container.decode(Double.self, forKey: .latitude)
         let lon = try container.decode(Double.self, forKey: .longitude)
         coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
@@ -44,6 +48,7 @@ struct NarrationPoint: Identifiable, Codable {
         try container.encode(title, forKey: .title)
         try container.encode(subtitle, forKey: .subtitle)
         try container.encode(triggerDistance, forKey: .triggerDistance)
+        try container.encodeIfPresent(eventSting, forKey: .eventSting)
         try container.encode(coordinate.latitude, forKey: .latitude)
         try container.encode(coordinate.longitude, forKey: .longitude)
     }

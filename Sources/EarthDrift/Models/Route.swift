@@ -62,6 +62,22 @@ enum RouteCategory: String, Codable, CaseIterable {
         case .deserts, .polar, .cities: return "wind_ambient"
         }
     }
+
+    var narrationEventSting: String? {
+        switch self {
+        case .volcanoes: return "volcano"
+        case .mountains: return "cinematic_swell"
+        case .ancient: return "temple_bell"
+        case .islandHopping, .coastlines: return "waterfall"
+        case .rivers: return "waterfall"
+        case .railways: return "cinematic_swell"
+        case .flights: return "cinematic_swell"
+        case .deserts: return "wind_chime"
+        case .polar: return "wind_chime"
+        case .cities: return "monument"
+        case .trails: return "wind_chime"
+        }
+    }
 }
 
 struct RouteSegment: Identifiable {
