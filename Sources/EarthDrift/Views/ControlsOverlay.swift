@@ -14,17 +14,22 @@ struct ControlsOverlay: View {
         VStack {
             HStack {
                 Spacer()
-                tappableView(systemName: "dice.fill", size: 13, action: { engine.feelingLucky() })
-                tappableView(systemName: "gearshape.fill", size: 13,
-                    active: showSettings,
-                    action: { withAnimation(.easeInOut(duration: 0.2)) { showSettings.toggle() } })
-                tappableView(systemName: isMaximized
-                    ? "arrow.down.right.and.arrow.up.left"
-                    : "arrow.up.left.and.arrow.down.right", size: 13,
-                    action: { isMaximized.toggle(); AppDelegate.toggleMaximize() })
+                HStack(spacing: 6) {
+                    tappableView(systemName: "dice.fill", size: 13, action: { engine.feelingLucky() })
+                    tappableView(systemName: "gearshape.fill", size: 13,
+                        active: showSettings,
+                        action: { withAnimation(.easeInOut(duration: 0.2)) { showSettings.toggle() } })
+                    tappableView(systemName: isMaximized
+                        ? "arrow.down.right.and.arrow.up.left"
+                        : "arrow.up.left.and.arrow.down.right", size: 13,
+                        action: { isMaximized.toggle(); AppDelegate.toggleMaximize() })
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 6)
+                .background(Capsule().fill(.regularMaterial).shadow(color: .black.opacity(0.4), radius: 4, y: 2))
             }
-            .padding(.trailing, 16)
-            .padding(.top, 16)
+            .padding(.trailing, 10)
+            .padding(.top, 10)
 
             Spacer()
 
