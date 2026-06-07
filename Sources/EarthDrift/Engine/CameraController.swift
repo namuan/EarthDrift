@@ -54,11 +54,11 @@ final class CameraController {
             lookingAtCenter: currentCoordinate,
             fromDistance: currentAltitude * altitudeMultiplier,
             pitch: pitch,
-            heading: currentBearing
+            heading: 0
         )
 
         let interpolationMode = route.coordinates.count >= 4 ? "Catmull-Rom spline" : "linear"
-        logInfo("Camera route set: title='\(route.title)' altitude=\(Int(route.altitude))m coordinateCount=\(route.coordinates.count) interpolation=\(interpolationMode) startCoord=(\(String(format: "%.3f", currentCoordinate.latitude)), \(String(format: "%.3f", currentCoordinate.longitude))) startBearing=\(String(format: "%.1f", currentBearing))")
+        logInfo("Camera route set: title='\(route.title)' altitude=\(Int(route.altitude))m coordinateCount=\(route.coordinates.count) interpolation=\(interpolationMode) startCoord=(\(String(format: "%.3f", currentCoordinate.latitude)), \(String(format: "%.3f", currentCoordinate.longitude)))")
     }
 
     func update(progress: Double, deltaTime: TimeInterval) {
@@ -82,7 +82,7 @@ final class CameraController {
             lookingAtCenter: currentCoordinate,
             fromDistance: currentAltitude * altitudeMultiplier,
             pitch: pitch,
-            heading: currentBearing
+            heading: 0
         )
 
         let distanceMoved = prevCoordinate.distance(to: currentCoordinate)
