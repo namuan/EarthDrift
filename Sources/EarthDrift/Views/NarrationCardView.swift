@@ -4,29 +4,24 @@ struct NarrationCardView: View {
     let point: NarrationPoint?
 
     var body: some View {
-        VStack {
-            Spacer()
-            if let point {
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(point.title)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white)
-                        Text(point.subtitle)
-                            .font(.subheadline)
-                            .foregroundStyle(.white.opacity(0.7))
-                    }
-                    Spacer()
+        if let point {
+            HStack {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("Now passing")
+                        .font(.caption2)
+                        .fontWeight(.regular)
+                        .foregroundStyle(.white.opacity(0.35))
+                    Text(point.title)
+                        .font(.callout)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.white.opacity(0.8))
                 }
-                .padding(.horizontal, 24)
-                .padding(.vertical, 16)
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
-                .padding(.horizontal, 32)
-                .padding(.bottom, 120)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
+                Spacer()
             }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(.ultraThinMaterial.opacity(0.5), in: RoundedRectangle(cornerRadius: 8))
+            .transition(.opacity)
         }
-        .animation(.easeInOut(duration: 0.8), value: point?.id)
     }
 }

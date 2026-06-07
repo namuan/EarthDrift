@@ -11,21 +11,24 @@ struct ContentView: View {
         ZStack {
             MapPlayerView(controller: engine.cameraController)
 
-            NarrationCardView(point: engine.activeNarration)
-
             if !showingArtMode {
                 VStack {
                     HStack {
-                        EarthInsetView(coordinate: engine.cameraController.currentCoordinate)
-                            .frame(width: 150, height: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .shadow(color: .white.opacity(0.25), radius: 10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(.white.opacity(0.2), lineWidth: 1)
-                            )
-                            .padding(.leading, 16)
-                            .padding(.top, 16)
+                        VStack(alignment: .leading, spacing: 6) {
+                            EarthInsetView(coordinate: engine.cameraController.currentCoordinate)
+                                .frame(width: 150, height: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .shadow(color: .white.opacity(0.25), radius: 10)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(.white.opacity(0.2), lineWidth: 1)
+                                )
+
+                            NarrationCardView(point: engine.activeNarration)
+                                .frame(maxWidth: 180)
+                        }
+                        .padding(.leading, 16)
+                        .padding(.top, 16)
                         Spacer()
                     }
                     Spacer()

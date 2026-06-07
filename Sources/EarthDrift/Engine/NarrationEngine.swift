@@ -19,21 +19,20 @@ struct NarrationEngine {
         guard let route else { return nil }
 
         var nearest: (point: NarrationPoint, distance: Double)? = nil
-        var triggered: NarrationPoint? = nil
 
         for point in route.narrationPoints {
-            guard !triggeredIDs.contains(point.id) else { continue }
             let distance = coordinate.distance(to: point.coordinate)
-            if distance <= point.triggerDistance {
+
+            if distance <= point.triggerDistance, !triggeredIDs.contains(point.id) {
                 triggeredIDs.insert(point.id)
-                triggered = point
                 logInfo("Narration fired: title='\(point.title)' distance=\(Int(distance))m triggerRadius=\(Int(point.triggerDistance))m progress=\(String(format: "%.3f", progress))")
             }
+
             if nearest == nil || distance < nearest!.distance {
                 nearest = (point, distance)
             }
         }
 
-        return triggered
+        return nearest?.point
     }
 }
