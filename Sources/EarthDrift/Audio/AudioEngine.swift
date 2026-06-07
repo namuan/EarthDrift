@@ -275,6 +275,9 @@ final class AudioEngine: ObservableObject, @unchecked Sendable {
             player.volume = volume * (currentVolumes[key] ?? 0)
         }
         channelPlayer?.volume = volume * (currentVolumes["__channel__"] ?? 0)
+        for player in pendingEventPlayers {
+            player.volume = volume * 0.8
+        }
     }
 
     private func audioURL(for fileName: String, subdirectory: String) -> URL? {

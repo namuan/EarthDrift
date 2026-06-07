@@ -21,12 +21,8 @@ struct ControlsOverlay: View {
                         active: isMuted,
                         action: {
                             isMuted.toggle()
-                            if isMuted {
-                                engine.audioEngine.isEnabled = false
-                                engine.audioEngine.stopAll()
-                            } else {
-                                engine.audioEngine.isEnabled = true
-                            }
+                            engine.audioEngine.isEnabled = !isMuted
+                            engine.audioEngine.volume = isMuted ? 0 : 0.3
                         })
                     tappableView(systemName: "dice.fill", size: 13, action: { engine.feelingLucky() })
                     tappableView(systemName: "gearshape.fill", size: 13,
