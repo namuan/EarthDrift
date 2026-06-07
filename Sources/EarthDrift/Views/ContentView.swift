@@ -5,6 +5,7 @@ struct ContentView: View {
     @State private var scheduler = ChannelScheduler()
     @State private var showingBrowser = false
     @State private var showingArtMode = false
+    @AppStorage("alwaysOnTop") private var alwaysOnTop = false
 
     var body: some View {
         ZStack {
@@ -39,6 +40,7 @@ struct ContentView: View {
                 .transition(.opacity)
             }
         }
+        .ignoresSafeArea(edges: alwaysOnTop ? .all : [])
         .onAppear {
             logInfo("ContentView appeared: loading default channels")
             scheduler.channels = RouteData.defaultChannels

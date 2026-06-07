@@ -32,9 +32,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if enabled {
             window.level = .floating
             window.collectionBehavior.insert(.canJoinAllSpaces)
+            window.standardWindowButton(.closeButton)?.isHidden = true
+            window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+            window.standardWindowButton(.zoomButton)?.isHidden = true
+            window.titleVisibility = .hidden
         } else {
             window.level = .normal
             window.collectionBehavior.remove(.canJoinAllSpaces)
+            window.standardWindowButton(.closeButton)?.isHidden = false
+            window.standardWindowButton(.miniaturizeButton)?.isHidden = false
+            window.standardWindowButton(.zoomButton)?.isHidden = false
+            window.titleVisibility = .visible
         }
     }
 
@@ -64,6 +72,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             if AppDelegate.isAlwaysOnTop {
                 window.level = .floating
                 window.collectionBehavior.insert(.canJoinAllSpaces)
+                window.standardWindowButton(.closeButton)?.isHidden = true
+                window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+                window.standardWindowButton(.zoomButton)?.isHidden = true
+                window.titleVisibility = .hidden
             }
             logDebug("Window configured: titlebarAppearsTransparent movementByBackground fullScreenPrimary")
         } else {
