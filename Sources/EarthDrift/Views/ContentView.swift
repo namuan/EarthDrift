@@ -46,6 +46,10 @@ struct ContentView: View {
         .ignoresSafeArea(edges: alwaysOnTop ? .all : [])
         .onAppear {
             logInfo("ContentView appeared: loading default channels")
+            if UserDefaults.standard.bool(forKey: "audioMuted") {
+                engine.audioEngine.isEnabled = false
+                engine.audioEngine.volume = 0
+            }
             scheduler.channels = RouteData.defaultChannels
             scheduler.restoreLastSession()
             startCurrentRoute()

@@ -10,7 +10,9 @@ struct ControlsOverlay: View {
     @State private var isMaximized = false
     @State private var showSettings = false
     @State private var alwaysOnTop = AppDelegate.isAlwaysOnTop
-    @State private var isMuted = false
+    @State private var isMuted = UserDefaults.standard.bool(forKey: "audioMuted") {
+        didSet { UserDefaults.standard.set(isMuted, forKey: "audioMuted") }
+    }
 
     var body: some View {
         VStack {
