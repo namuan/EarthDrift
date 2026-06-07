@@ -8,9 +8,8 @@ private enum PlaybackKeys {
     static let isReversed = "isReversed"
 }
 
-@MainActor
 @Observable
-final class PlaybackEngine {
+final class PlaybackEngine: @unchecked Sendable {
     var isPlaying = false
     var progress: Double = 0
     var currentRoute: Route?
@@ -51,7 +50,7 @@ final class PlaybackEngine {
     private var lastUpdateTime: Date = .now
     private var tickCount: Int = 0
     private var logThrottle: Int = 0
-    private static var resourcesVerified = false
+    private nonisolated(unsafe) static var resourcesVerified = false
 
     func startPlayback(route: Route, channel: Channel) {
         isFeelingLucky = false
@@ -78,9 +77,7 @@ final class PlaybackEngine {
 
         displayLink?.invalidate()
         displayLink = Timer.scheduledTimer(withTimeInterval: frameRate, repeats: true) { [weak self] _ in
-            Task { @MainActor in
-                self?.tick()
-            }
+            self?.tick()
         }
 
         logDebug("DisplayLink scheduled at \(String(format: "%.0f", 1.0 / frameRate))fps")
@@ -99,9 +96,7 @@ final class PlaybackEngine {
             updateSoundscape()
             displayLink?.invalidate()
             displayLink = Timer.scheduledTimer(withTimeInterval: frameRate, repeats: true) { [weak self] _ in
-                Task { @MainActor in
-                    self?.tick()
-                }
+                self?.tick()
             }
         } else {
             logInfo("Playback paused: route='\(currentRoute?.title ?? "?")' progress=\(String(format: "%.3f", progress)) ticks=\(tickCount)")

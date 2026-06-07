@@ -7,9 +7,8 @@ struct ContentView: View {
     @State private var showingArtMode = false
 
     var body: some View {
-        let _ = logDebug("ContentView body re-evaluated")
         ZStack {
-            MapPlayerView(camera: engine.cameraController.camera, controller: engine.cameraController)
+            MapPlayerView(controller: engine.cameraController)
 
             NarrationCardView(point: engine.activeNarration)
 

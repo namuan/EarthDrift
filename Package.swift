@@ -11,7 +11,8 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "EarthDrift",
-            resources: [.process("Resources")]
+            resources: [.process("Resources")],
+            swiftSettings: [.unsafeFlags(["-swift-version", "5"])]
         )
     ]
 )

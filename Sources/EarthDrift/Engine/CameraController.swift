@@ -7,11 +7,16 @@ private enum CameraKeys {
     static let altitudeMultiplier = "cameraAltitudeMultiplier"
 }
 
-@MainActor
 @Observable
 final class CameraController {
-    var camera: MKMapCamera = MKMapCamera() {
+    var camera: MKMapCamera = MKMapCamera(
+        lookingAtCenter: CLLocationCoordinate2D(latitude: 51.5, longitude: -0.1),
+        fromDistance: 10000,
+        pitch: 0,
+        heading: 0
+    ) {
         didSet {
+            guard Thread.isMainThread else { return }
             mainMapView?.camera = camera
         }
     }

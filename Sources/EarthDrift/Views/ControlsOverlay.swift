@@ -9,58 +9,20 @@ struct ControlsOverlay: View {
     @State private var fadeTask: Task<Void, Never>?
     @State private var isMaximized = false
     @State private var showSettings = false
-    @FocusState private var focusedButton: FocusButton?
-
-    private enum FocusButton: Hashable {
-        case lucky, settings, maximize, previous, playPause, next, channels
-    }
 
     var body: some View {
         VStack {
             HStack {
                 Spacer()
                 directionButton
-                Button(action: { engine.feelingLucky() }) {
-                    Image(systemName: "dice.fill")
-                        .font(.system(size: 13))
-                        .foregroundStyle(focusedButton == .lucky ? .white : .white.opacity(0.7))
-                        .frame(width: 28, height: 28)
-                        .background(Circle().fill(focusedButton == .lucky ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
-                }
-                .buttonStyle(.plain)
-                .focusEffectDisabled()
-                .focused($focusedButton, equals: .lucky)
-                Button(action: {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        showSettings.toggle()
-                    }
-                }) {
-                    Image(systemName: "gearshape.fill")
-                        .font(.system(size: 13))
-                        .foregroundStyle(showSettings ? .white : focusedButton == .settings ? .white : .white.opacity(0.7))
-                        .frame(width: 28, height: 28)
-                        .background(Circle().fill(
-                            showSettings ? .white.opacity(0.25) : focusedButton == .settings ? .white.opacity(0.3) : .white.opacity(0.15)
-                        ).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
-                }
-                .buttonStyle(.plain)
-                .focusEffectDisabled()
-                .focused($focusedButton, equals: .settings)
-                Button(action: {
-                    isMaximized.toggle()
-                    AppDelegate.toggleMaximize()
-                }) {
-                    Image(systemName: isMaximized
-                        ? "arrow.down.right.and.arrow.up.left"
-                        : "arrow.up.left.and.arrow.down.right")
-                        .font(.system(size: 13))
-                        .foregroundStyle(focusedButton == .maximize ? .white : .white.opacity(0.7))
-                        .frame(width: 28, height: 28)
-                        .background(Circle().fill(focusedButton == .maximize ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
-                }
-                .buttonStyle(.plain)
-                .focusEffectDisabled()
-                .focused($focusedButton, equals: .maximize)
+                tappableView(systemName: "dice.fill", size: 13, action: { engine.feelingLucky() })
+                tappableView(systemName: "gearshape.fill", size: 13,
+                    active: showSettings,
+                    action: { withAnimation(.easeInOut(duration: 0.2)) { showSettings.toggle() } })
+                tappableView(systemName: isMaximized
+                    ? "arrow.down.right.and.arrow.up.left"
+                    : "arrow.up.left.and.arrow.down.right", size: 13,
+                    action: { isMaximized.toggle(); AppDelegate.toggleMaximize() })
             }
             .padding(.trailing, 16)
             .padding(.top, 16)
@@ -68,17 +30,18 @@ struct ControlsOverlay: View {
             Spacer()
 
             HStack {
-                previousButton
+                tappableIcon(icon: "backward.fill", size: 20, action: { scheduler.previousChannel() })
                 Spacer()
-                playPauseButton
+                tappableIcon(icon: engine.isPlaying ? "pause.fill" : "play.fill", size: 28, large: true,
+                    action: { engine.togglePlayPause() })
                 Spacer()
-                nextButton
+                tappableIcon(icon: "forward.fill", size: 20, action: { scheduler.nextChannel() })
             }
             .padding(.horizontal, 60)
             .padding(.bottom, 40)
 
             HStack {
-                channelButton
+                tappableChannel(action: { onShowBrowser() })
                 Spacer()
                 if let route = engine.currentRoute {
                     VStack(alignment: .center, spacing: 2) {
@@ -127,94 +90,69 @@ struct ControlsOverlay: View {
 
     private var directionButton: some View {
         HStack(spacing: 4) {
-            Button(action: { engine.cameraController.bearingOffset += 90 }) {
-                Image(systemName: "arrowshape.right.circle.fill")
-                    .font(.system(size: 18))
-                    .foregroundStyle(.white.opacity(0.7))
-                    .frame(width: 28, height: 28)
-            }
-            .buttonStyle(.plain)
-            .focusEffectDisabled()
-            .help("Rotate view 90° clockwise")
+            Image(systemName: "arrowshape.right.circle.fill")
+                .font(.system(size: 18))
+                .foregroundStyle(.white.opacity(0.7))
+                .frame(width: 28, height: 28)
+                .contentShape(Rectangle())
+                .onTapGesture { engine.cameraController.bearingOffset += 90 }
+                .help("Rotate view 90° clockwise")
 
-            Button(action: { engine.isReversed.toggle() }) {
+            HStack(spacing: 0) {
                 Image(systemName: engine.isReversed ? "backward.end.fill" : "forward.end.fill")
                     .font(.system(size: 13))
                     .foregroundStyle(engine.isReversed ? .white : .white.opacity(0.7))
                     .frame(width: 28, height: 28)
                     .background(Circle().fill(engine.isReversed ? .white.opacity(0.25) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
             }
-            .buttonStyle(.plain)
-            .focusEffectDisabled()
+            .contentShape(Rectangle())
+            .onTapGesture { engine.isReversed.toggle() }
             .help(engine.isReversed ? "Reverse travel direction" : "Forward travel direction")
 
-            Button(action: { engine.cameraController.bearingOffset -= 90 }) {
-                Image(systemName: "arrowshape.left.circle.fill")
-                    .font(.system(size: 18))
-                    .foregroundStyle(.white.opacity(0.7))
-                    .frame(width: 28, height: 28)
-            }
-            .buttonStyle(.plain)
-            .focusEffectDisabled()
-            .help("Rotate view 90° counter-clockwise")
+            Image(systemName: "arrowshape.left.circle.fill")
+                .font(.system(size: 18))
+                .foregroundStyle(.white.opacity(0.7))
+                .frame(width: 28, height: 28)
+                .contentShape(Rectangle())
+                .onTapGesture { engine.cameraController.bearingOffset -= 90 }
+                .help("Rotate view 90° counter-clockwise")
         }
     }
 
-    private var playPauseButton: some View {
-        Button(action: { engine.togglePlayPause() }) {
-            Image(systemName: engine.isPlaying ? "pause.fill" : "play.fill")
-                .font(.system(size: 28))
-                .foregroundStyle(.white)
-                .frame(width: 56, height: 56)
-                .background(Circle().fill(focusedButton == .playPause ? .white.opacity(0.35) : .white.opacity(0.2)).shadow(color: .black.opacity(0.4), radius: 4, y: 2))
-        }
-        .buttonStyle(.plain)
-        .focusEffectDisabled()
-        .focused($focusedButton, equals: .playPause)
+    private func tappableView(systemName: String, size: CGFloat, active: Bool = false, action: @escaping () -> Void) -> some View {
+        Image(systemName: systemName)
+            .font(.system(size: size))
+            .foregroundStyle(active ? .white : .white.opacity(0.7))
+            .frame(width: 28, height: 28)
+            .background(Circle().fill(active ? .white.opacity(0.25) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
+            .contentShape(Rectangle())
+            .onTapGesture { action() }
     }
 
-    private var previousButton: some View {
-        Button(action: { scheduler.previousChannel() }) {
-            Image(systemName: "backward.fill")
-                .font(.system(size: 20))
-                .foregroundStyle(focusedButton == .previous ? .white : .white.opacity(0.8))
-                .frame(width: 44, height: 44)
-                .background(Circle().fill(focusedButton == .previous ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
-        }
-        .buttonStyle(.plain)
-        .focusEffectDisabled()
-        .focused($focusedButton, equals: .previous)
+    private func tappableIcon(icon: String, size: CGFloat, large: Bool = false, action: @escaping () -> Void) -> some View {
+        let baseSize: CGFloat = large ? 56 : 44
+        return Image(systemName: icon)
+            .font(.system(size: size))
+            .foregroundStyle(.white)
+            .frame(width: baseSize, height: baseSize)
+            .background(Circle().fill(.white.opacity(large ? 0.2 : 0.15)).shadow(color: .black.opacity(0.4), radius: large ? 4 : 3, y: large ? 2 : 1))
+            .contentShape(Rectangle())
+            .onTapGesture { action() }
     }
 
-    private var nextButton: some View {
-        Button(action: { scheduler.nextChannel() }) {
-            Image(systemName: "forward.fill")
-                .font(.system(size: 20))
-                .foregroundStyle(focusedButton == .next ? .white : .white.opacity(0.8))
-                .frame(width: 44, height: 44)
-                .background(Circle().fill(focusedButton == .next ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
+    private func tappableChannel(action: @escaping () -> Void) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: "tv")
+                .font(.system(size: 14))
+            Text("Channels")
+                .font(.subheadline)
         }
-        .buttonStyle(.plain)
-        .focusEffectDisabled()
-        .focused($focusedButton, equals: .next)
-    }
-
-    private var channelButton: some View {
-        Button(action: { onShowBrowser() }) {
-            HStack(spacing: 6) {
-                Image(systemName: "tv")
-                    .font(.system(size: 14))
-                Text("Channels")
-                    .font(.subheadline)
-            }
-            .foregroundStyle(focusedButton == .channels ? .white : .white.opacity(0.8))
-            .padding(.horizontal, 14)
-            .padding(.vertical, 8)
-            .background(Capsule().fill(focusedButton == .channels ? .white.opacity(0.3) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
-        }
-        .buttonStyle(.plain)
-        .focusEffectDisabled()
-        .focused($focusedButton, equals: .channels)
+        .foregroundStyle(.white.opacity(0.8))
+        .padding(.horizontal, 14)
+        .padding(.vertical, 8)
+        .background(Capsule().fill(.white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
+        .contentShape(Rectangle())
+        .onTapGesture { action() }
     }
 
     private var settingsBackdrop: some View {

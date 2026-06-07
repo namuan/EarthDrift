@@ -5,7 +5,6 @@ private enum StorageKeys {
     static let lastRouteIndex = "lastRouteIndex"
 }
 
-@MainActor
 @Observable
 final class ChannelScheduler {
     var channels: [Channel] = [] {

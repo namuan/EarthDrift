@@ -34,10 +34,6 @@ struct NarrationEngine {
             }
         }
 
-        if triggered == nil, let nearest, nearest.distance < 10000 {
-            logDebug("Narration check: nearest='\(nearest.point.title)' distance=\(Int(nearest.distance))m (not triggered yet, need \(Int(nearest.point.triggerDistance))m)")
-        }
-
         return triggered
     }
 }

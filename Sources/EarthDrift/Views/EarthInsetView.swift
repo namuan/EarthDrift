@@ -4,7 +4,7 @@ import MapKit
 struct EarthInsetView: NSViewRepresentable {
     let coordinate: CLLocationCoordinate2D
 
-    private static let fullEarthDistance: CLLocationDistance = 20_000_000
+    private static let fullEarthDistance: CLLocationDistance = 5_000_000
 
     func makeNSView(context: Context) -> MKMapView {
         let mapView = MKMapView()
@@ -19,7 +19,7 @@ struct EarthInsetView: NSViewRepresentable {
         mapView.delegate = context.coordinator
 
         let camera = MKMapCamera(
-            lookingAtCenter: CLLocationCoordinate2D(latitude: 0, longitude: 0),
+            lookingAtCenter: coordinate,
             fromDistance: Self.fullEarthDistance,
             pitch: 0,
             heading: 0
@@ -38,13 +38,7 @@ struct EarthInsetView: NSViewRepresentable {
 
     func updateNSView(_ mapView: MKMapView, context: Context) {
         context.coordinator.annotation?.coordinate = coordinate
-        let insetCamera = MKMapCamera(
-            lookingAtCenter: coordinate,
-            fromDistance: Self.fullEarthDistance,
-            pitch: 0,
-            heading: 0
-        )
-        mapView.camera = insetCamera
+        mapView.setCenter(coordinate, animated: false)
     }
 
     func makeCoordinator() -> Coordinator {

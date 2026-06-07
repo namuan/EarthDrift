@@ -46,15 +46,13 @@ final class AudioEngine: ObservableObject, @unchecked Sendable {
             engine.connect(player, to: engine.mainMixerNode, format: file.processingFormat)
             player.volume = volume * 0.8
 
-            Task { @MainActor in
-                await player.scheduleFile(file, at: nil)
-                player.play()
-            }
+            player.scheduleFile(file, at: nil)
+            player.play()
 
             pendingEventPlayers.insert(player)
 
             let fadeStart = fileDuration - 0.5
-            Task { @MainActor [weak self, weak player] in
+            Task { [weak self, weak player] in
                 try? await Task.sleep(nanoseconds: UInt64(max(0, fadeStart) * 1_000_000_000))
                 self?.fadeOutAndRemove(player: player)
             }
@@ -208,7 +206,7 @@ final class AudioEngine: ObservableObject, @unchecked Sendable {
 
     private func startCrossfade() {
         guard crossfadeTask == nil, !isShuttingDown else { return }
-        crossfadeTask = Task { @MainActor [weak self] in
+        crossfadeTask = Task { [weak self] in
             guard let self else { return }
             for step in 0..<self.crossfadeSteps {
                 guard !self.isShuttingDown, !Task.isCancelled else { return }
@@ -257,7 +255,7 @@ final class AudioEngine: ObservableObject, @unchecked Sendable {
         let totalDuration = 0.5
         let steps = 10
 
-        Task { @MainActor [weak self, weak player] in
+        Task { [weak self, weak player] in
             guard let self, let player else { return }
             for i in 1...steps {
                 guard !self.isShuttingDown else { return }

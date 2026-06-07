@@ -2,7 +2,6 @@ import SwiftUI
 import MapKit
 
 struct MapPlayerView: NSViewRepresentable {
-    let camera: MKMapCamera
     let controller: CameraController
 
     func makeNSView(context: Context) -> MKMapView {
@@ -17,14 +16,12 @@ struct MapPlayerView: NSViewRepresentable {
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false
         mapView.isPitchEnabled = false
-        mapView.camera = camera
         controller.mainMapView = mapView
+        mapView.camera = controller.camera
         logDebug("MapPlayerView.makeNSView: registered mainMapView")
         return mapView
     }
 
     func updateNSView(_ mapView: MKMapView, context: Context) {
-        logDebug("MapPlayerView.updateNSView: camera remote center=(\(String(format: "%.3f", camera.centerCoordinate.latitude)), \(String(format: "%.3f", camera.centerCoordinate.longitude)))")
-        mapView.camera = camera
     }
 }
