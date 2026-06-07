@@ -9,6 +9,7 @@ struct ControlsOverlay: View {
     @State private var fadeTask: Task<Void, Never>?
     @State private var isMaximized = false
     @State private var showSettings = false
+    @State private var alwaysOnTop = AppDelegate.isAlwaysOnTop
 
     var body: some View {
         VStack {
@@ -150,6 +151,9 @@ struct ControlsOverlay: View {
             Divider()
                 .overlay(.white.opacity(0.15))
             luckyDurationSlider
+            Divider()
+                .overlay(.white.opacity(0.15))
+            alwaysOnTopToggle
         }
         .padding(16)
         .frame(width: 200)
@@ -230,6 +234,26 @@ struct ControlsOverlay: View {
             Slider(value: $engine.luckyDuration, in: 10...120, step: 10)
                 .tint(.white.opacity(0.7))
         }
+    }
+
+    private var alwaysOnTopToggle: some View {
+        HStack {
+            Image(systemName: "pin.fill")
+                .font(.system(size: 11))
+            Text("Always on Top")
+                .font(.caption)
+            Spacer()
+            Toggle("", isOn: Binding(
+                get: { alwaysOnTop },
+                set: { value in
+                    alwaysOnTop = value
+                    AppDelegate.isAlwaysOnTop = value
+                }
+            ))
+            .toggleStyle(.switch)
+            .scaleEffect(0.7)
+        }
+        .foregroundStyle(.white.opacity(0.8))
     }
 
     private func showControls() {

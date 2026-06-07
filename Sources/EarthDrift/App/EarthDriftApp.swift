@@ -19,6 +19,25 @@ struct EarthDriftApp: App {
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private static var preMaximizeFrame: NSRect?
 
+    static var isAlwaysOnTop: Bool {
+        get { UserDefaults.standard.bool(forKey: "alwaysOnTop") }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "alwaysOnTop")
+            applyAlwaysOnTop(newValue)
+        }
+    }
+
+    static func applyAlwaysOnTop(_ enabled: Bool) {
+        guard let window = NSApplication.shared.windows.first else { return }
+        if enabled {
+            window.level = .floating
+            window.collectionBehavior.insert(.canJoinAllSpaces)
+        } else {
+            window.level = .normal
+            window.collectionBehavior.remove(.canJoinAllSpaces)
+        }
+    }
+
     static func toggleMaximize() {
         guard let window = NSApplication.shared.windows.first else { return }
         guard let screen = window.screen ?? NSScreen.main else { return }
@@ -42,6 +61,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             window.titlebarAppearsTransparent = true
             window.isMovableByWindowBackground = true
             window.collectionBehavior = [.fullScreenPrimary]
+            if AppDelegate.isAlwaysOnTop {
+                window.level = .floating
+                window.collectionBehavior.insert(.canJoinAllSpaces)
+            }
             logDebug("Window configured: titlebarAppearsTransparent movementByBackground fullScreenPrimary")
         } else {
             logWarning("No window found at launch")
