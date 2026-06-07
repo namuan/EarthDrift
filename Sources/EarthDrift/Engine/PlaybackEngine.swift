@@ -47,10 +47,11 @@ final class PlaybackEngine: @unchecked Sendable {
     }
 
     private var displayLink: Timer?
-    private let frameRate: TimeInterval = 1.0 / 30.0
+    private let frameRate: TimeInterval = 1.0 / 15.0
     private var lastUpdateTime: Date = .now
     private var tickCount: Int = 0
     private var logThrottle: Int = 0
+    private var geocodeThrottle: Int = 0
     private nonisolated(unsafe) static var resourcesVerified = false
 
     func startPlayback(route: Route, channel: Channel) {
@@ -196,35 +197,39 @@ final class PlaybackEngine: @unchecked Sendable {
             activeNarration = narration
         }
 
-        let coord = cameraController.currentCoordinate
-        if let last = lastTickCoord {
-            let tickDist = last.distance(to: coord)
-            let tickSpeed = max(10, tickDist / max(deltaTime, 0.001))
-            movingAverageSpeed = movingAverageSpeed * 0.9 + tickSpeed * 0.1
-        }
-        lastTickCoord = coord
+        geocodeThrottle += 1
+        if geocodeThrottle >= 15 {
+            geocodeThrottle = 0
+            let coord = cameraController.currentCoordinate
+            if let last = lastTickCoord {
+                let tickDist = last.distance(to: coord)
+                let tickSpeed = max(10, tickDist / 1.0)
+                movingAverageSpeed = movingAverageSpeed * 0.9 + tickSpeed * 0.1
+            }
+            lastTickCoord = coord
 
-        let speedFactor = max(0.5, min(5.0, movingAverageSpeed / 100.0))
-        let altitude = cameraController.currentAltitude * cameraController.altitudeMultiplier
-        let altitudeFactor = max(0.5, min(1.5, altitude / 5000.0))
-        reverseGeocoder.throttleDistance = 1000 * speedFactor * altitudeFactor
-        reverseGeocoder.throttleInterval = 1.0 * speedFactor * altitudeFactor
+            let speedFactor = max(0.5, min(5.0, movingAverageSpeed / 100.0))
+            let altitude = cameraController.currentAltitude * cameraController.altitudeMultiplier
+            let altitudeFactor = max(0.5, min(1.5, altitude / 5000.0))
+            reverseGeocoder.throttleDistance = 1000 * speedFactor * altitudeFactor
+            reverseGeocoder.throttleInterval = 1.0 * speedFactor * altitudeFactor
 
-        if geocodeTask == nil, now.timeIntervalSince(lastGeocodeAttempt) >= 1.0 {
-            lastGeocodeAttempt = now
-            logDebug("Geocode: firing dist=\(Int(reverseGeocoder.throttleDistance))m interval=\(String(format: "%.1f", reverseGeocoder.throttleInterval))s speed=\(Int(movingAverageSpeed))m/s alt=\(Int(altitude))m")
-            geocodeTask = Task { @MainActor [weak self] in
-                guard let self else { return }
-                let result = await self.reverseGeocoder.place(for: coord)
-                if let result, !Task.isCancelled {
-                    self.locationLabel = result.label
+            if geocodeTask == nil {
+                lastGeocodeAttempt = now
+                logDebug("Geocode: firing dist=\(Int(reverseGeocoder.throttleDistance))m interval=\(String(format: "%.1f", reverseGeocoder.throttleInterval))s speed=\(Int(movingAverageSpeed))m/s alt=\(Int(altitude))m")
+                geocodeTask = Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    let result = await self.reverseGeocoder.place(for: coord)
+                    if let result, !Task.isCancelled {
+                        self.locationLabel = result.label
+                    }
+                    self.geocodeTask = nil
                 }
-                self.geocodeTask = nil
             }
         }
 
         logThrottle += 1
-        if logThrottle >= 90 {
+        if logThrottle >= 45 {
             logDebug("Tick #\(tickCount): p=\(String(format: "%.4f", progress)) lat=\(String(format: "%.4f", cameraController.currentCoordinate.latitude)) lon=\(String(format: "%.4f", cameraController.currentCoordinate.longitude)) brg=\(String(format: "%.1f", cameraController.currentBearing)) alt=\(String(format: "%.0f", cameraController.currentAltitude))")
             logThrottle = 0
         }
