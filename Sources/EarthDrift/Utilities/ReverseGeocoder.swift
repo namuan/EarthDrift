@@ -1,22 +1,42 @@
 import Foundation
 import CoreLocation
 
+struct GeocodeResult {
+    let locality: String?
+    let country: String?
+    let label: String
+
+    init(placemark: CLPlacemark) {
+        locality = placemark.locality ?? placemark.administrativeArea
+        country = placemark.country ?? placemark.ocean
+        if let locality, let country {
+            label = "\(locality), \(country)"
+        } else if let locality {
+            label = locality
+        } else if let country {
+            label = country
+        } else {
+            label = placemark.ocean ?? "Unknown"
+        }
+    }
+}
+
 final class ReverseGeocoder {
     private let geocoder = CLGeocoder()
     private var lastCoordinate: CLLocationCoordinate2D?
     private var lastRequestTime: Date = .distantPast
     private var lastFailTime: Date = .distantPast
     private var pendingRequest: Task<Void, Never>?
-    private var cache: [String: String] = [:]
+    private var cache: [String: GeocodeResult] = [:]
 
     var throttleDistance: Double = 5000
     var throttleInterval: TimeInterval = 3
 
-    func place(for coordinate: CLLocationCoordinate2D) async -> String? {
+    func place(for coordinate: CLLocationCoordinate2D) async -> GeocodeResult? {
         let coordKey = String(format: "%.2f,%.2f", coordinate.latitude, coordinate.longitude)
 
         if let cached = cache[coordKey] {
-            logDebug("Geocode cache hit: '\(cached)' for \(coordKey)")
+            logDebug("Geocode cache hit: '\(cached.label)' for \(coordKey)")
             return cached
         }
 
@@ -53,12 +73,10 @@ final class ReverseGeocoder {
         do {
             let placemarks = try await geocoder.reverseGeocodeLocation(location)
             if let placemark = placemarks.first {
-                let name = placemark.locality ?? placemark.administrativeArea ?? placemark.country ?? placemark.ocean
-                logDebug("Geocode response: locality='\(placemark.locality ?? "nil")' adminArea='\(placemark.administrativeArea ?? "nil")' country='\(placemark.country ?? "nil")' ocean='\(placemark.ocean ?? "nil")' → resolved='\(name ?? "nil")'")
-                if let name {
-                    cache[coordKey] = name
-                    return name
-                }
+                let result = GeocodeResult(placemark: placemark)
+                logDebug("Geocode response: locality='\(placemark.locality ?? "nil")' adminArea='\(placemark.administrativeArea ?? "nil")' country='\(placemark.country ?? "nil")' ocean='\(placemark.ocean ?? "nil")' → '\(result.label)'")
+                cache[coordKey] = result
+                return result
             } else {
                 logDebug("Geocode response: no placemarks returned")
             }

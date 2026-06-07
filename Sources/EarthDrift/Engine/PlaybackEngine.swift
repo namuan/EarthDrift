@@ -215,9 +215,9 @@ final class PlaybackEngine: @unchecked Sendable {
             logDebug("Geocode: firing dist=\(Int(reverseGeocoder.throttleDistance))m interval=\(String(format: "%.1f", reverseGeocoder.throttleInterval))s speed=\(Int(movingAverageSpeed))m/s alt=\(Int(altitude))m")
             geocodeTask = Task { @MainActor [weak self] in
                 guard let self else { return }
-                let name = await self.reverseGeocoder.place(for: coord)
-                if let name, !Task.isCancelled {
-                    self.locationLabel = name
+                let result = await self.reverseGeocoder.place(for: coord)
+                if let result, !Task.isCancelled {
+                    self.locationLabel = result.label
                 }
                 self.geocodeTask = nil
             }
