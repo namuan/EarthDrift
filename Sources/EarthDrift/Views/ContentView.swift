@@ -24,7 +24,7 @@ struct ContentView: View {
                                         .stroke(.white.opacity(0.2), lineWidth: 1)
                                 )
 
-                            NarrationCardView(point: engine.activeNarration)
+                            NarrationCardView(label: engine.locationLabel)
                                 .frame(width: 150)
                         }
                         .padding(.leading, 16)

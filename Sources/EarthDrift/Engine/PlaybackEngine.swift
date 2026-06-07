@@ -20,11 +20,17 @@ final class PlaybackEngine: @unchecked Sendable {
     var audioEngine = AudioEngine()
     var routeCompletionCount = 0
     var isFeelingLucky = false
+    var locationLabel: String = ""
 
     private let biomeClassifier = BiomeClassifier()
     private var previousNarrationID: UUID?
     private var lastSoundscapeUpdate: Date = .now
     private let soundscapeUpdateInterval: TimeInterval = 1.0
+    private let reverseGeocoder = ReverseGeocoder()
+    private var geocodeTask: Task<Void, Never>?
+    private var lastGeocodeAttempt: Date = .distantPast
+    private var lastTickCoord: CLLocationCoordinate2D?
+    private var movingAverageSpeed: Double = 100
 
     var speedMultiplier: Double = {
         let saved = UserDefaults.standard.double(forKey: PlaybackKeys.speedMultiplier)
@@ -62,6 +68,7 @@ final class PlaybackEngine: @unchecked Sendable {
 
         cameraController.setRoute(route)
         narrationEngine.setRoute(route)
+        locationLabel = route.title
 
         if !Self.resourcesVerified {
             audioEngine.verifyResources()
@@ -189,9 +196,36 @@ final class PlaybackEngine: @unchecked Sendable {
             activeNarration = narration
         }
 
+        let coord = cameraController.currentCoordinate
+        if let last = lastTickCoord {
+            let tickDist = last.distance(to: coord)
+            let tickSpeed = max(10, tickDist / max(deltaTime, 0.001))
+            movingAverageSpeed = movingAverageSpeed * 0.9 + tickSpeed * 0.1
+        }
+        lastTickCoord = coord
+
+        let speedFactor = max(0.5, min(5.0, movingAverageSpeed / 100.0))
+        let altitude = cameraController.currentAltitude * cameraController.altitudeMultiplier
+        let altitudeFactor = max(0.5, min(1.5, altitude / 5000.0))
+        reverseGeocoder.throttleDistance = 1000 * speedFactor * altitudeFactor
+        reverseGeocoder.throttleInterval = 1.0 * speedFactor * altitudeFactor
+
+        if geocodeTask == nil, now.timeIntervalSince(lastGeocodeAttempt) >= 1.0 {
+            lastGeocodeAttempt = now
+            logDebug("Geocode: firing dist=\(Int(reverseGeocoder.throttleDistance))m interval=\(String(format: "%.1f", reverseGeocoder.throttleInterval))s speed=\(Int(movingAverageSpeed))m/s alt=\(Int(altitude))m")
+            geocodeTask = Task { @MainActor [weak self] in
+                guard let self else { return }
+                let name = await self.reverseGeocoder.place(for: coord)
+                if let name, !Task.isCancelled {
+                    self.locationLabel = name
+                }
+                self.geocodeTask = nil
+            }
+        }
+
         logThrottle += 1
         if logThrottle >= 90 {
-            logDebug("Tick #\(tickCount): progress=\(String(format: "%.4f", progress)) coords=(\(String(format: "%.4f", cameraController.currentCoordinate.latitude)),\(String(format: "%.4f", cameraController.currentCoordinate.longitude))) bearing=\(String(format: "%.1f", cameraController.currentBearing)) altitude=\(String(format: "%.0f", cameraController.currentAltitude))")
+            logDebug("Tick #\(tickCount): p=\(String(format: "%.4f", progress)) lat=\(String(format: "%.4f", cameraController.currentCoordinate.latitude)) lon=\(String(format: "%.4f", cameraController.currentCoordinate.longitude)) brg=\(String(format: "%.1f", cameraController.currentBearing)) alt=\(String(format: "%.0f", cameraController.currentAltitude))")
             logThrottle = 0
         }
     }
