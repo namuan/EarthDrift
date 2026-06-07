@@ -14,7 +14,6 @@ struct ControlsOverlay: View {
         VStack {
             HStack {
                 Spacer()
-                directionButton
                 tappableView(systemName: "dice.fill", size: 13, action: { engine.feelingLucky() })
                 tappableView(systemName: "gearshape.fill", size: 13,
                     active: showSettings,
@@ -85,37 +84,6 @@ struct ControlsOverlay: View {
                 return .handled
             }
             return .ignored
-        }
-    }
-
-    private var directionButton: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "arrowshape.right.circle.fill")
-                .font(.system(size: 18))
-                .foregroundStyle(.white.opacity(0.7))
-                .frame(width: 28, height: 28)
-                .contentShape(Rectangle())
-                .onTapGesture { engine.cameraController.bearingOffset += 90 }
-                .help("Rotate view 90° clockwise")
-
-            HStack(spacing: 0) {
-                Image(systemName: engine.isReversed ? "backward.end.fill" : "forward.end.fill")
-                    .font(.system(size: 13))
-                    .foregroundStyle(engine.isReversed ? .white : .white.opacity(0.7))
-                    .frame(width: 28, height: 28)
-                    .background(Circle().fill(engine.isReversed ? .white.opacity(0.25) : .white.opacity(0.15)).shadow(color: .black.opacity(0.4), radius: 3, y: 1))
-            }
-            .contentShape(Rectangle())
-            .onTapGesture { engine.isReversed.toggle() }
-            .help(engine.isReversed ? "Reverse travel direction" : "Forward travel direction")
-
-            Image(systemName: "arrowshape.left.circle.fill")
-                .font(.system(size: 18))
-                .foregroundStyle(.white.opacity(0.7))
-                .frame(width: 28, height: 28)
-                .contentShape(Rectangle())
-                .onTapGesture { engine.cameraController.bearingOffset -= 90 }
-                .help("Rotate view 90° counter-clockwise")
         }
     }
 
