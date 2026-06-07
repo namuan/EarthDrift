@@ -10,12 +10,24 @@ struct ControlsOverlay: View {
     @State private var isMaximized = false
     @State private var showSettings = false
     @State private var alwaysOnTop = AppDelegate.isAlwaysOnTop
+    @State private var isMuted = false
 
     var body: some View {
         VStack {
             HStack {
                 Spacer()
                 HStack(spacing: 6) {
+                    tappableView(systemName: isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill", size: 13,
+                        active: isMuted,
+                        action: {
+                            isMuted.toggle()
+                            if isMuted {
+                                engine.audioEngine.isEnabled = false
+                                engine.audioEngine.stopAll()
+                            } else {
+                                engine.audioEngine.isEnabled = true
+                            }
+                        })
                     tappableView(systemName: "dice.fill", size: 13, action: { engine.feelingLucky() })
                     tappableView(systemName: "gearshape.fill", size: 13,
                         active: showSettings,
