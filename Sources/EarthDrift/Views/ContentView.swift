@@ -25,7 +25,7 @@ struct ContentView: View {
                                 )
 
                             NarrationCardView(point: engine.activeNarration)
-                                .frame(maxWidth: 180)
+                                .frame(width: 150)
                         }
                         .padding(.leading, 16)
                         .padding(.top, 16)
