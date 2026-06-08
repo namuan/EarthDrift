@@ -318,6 +318,197 @@ enum RouteData {
         altitude: 6000
     )
 
+    static let teaHorseRoad = Route(
+        title: "Tea Horse Road",
+        subtitle: "Caravans through the Himalayan gorges",
+        category: .ancient,
+        coordinates: [
+            .init(latitude: 25.04, longitude: 102.68),
+            .init(latitude: 25.61, longitude: 100.27),
+            .init(latitude: 26.87, longitude: 100.23),
+            .init(latitude: 27.83, longitude: 99.70),
+            .init(latitude: 29.1, longitude: 97.2),
+            .init(latitude: 29.68, longitude: 94.36),
+            .init(latitude: 29.65, longitude: 91.13),
+        ],
+        duration: 3000,
+        narrationPoints: [
+            NarrationPoint(latitude: 25.04, longitude: 102.68, title: "Kunming", subtitle: "The City of Eternal Spring, starting point of the Tea Horse Road."),
+            NarrationPoint(latitude: 25.61, longitude: 100.27, title: "Dali", subtitle: "Ancient walled city between Erhai Lake and the Cangshan mountains."),
+            NarrationPoint(latitude: 26.87, longitude: 100.23, title: "Lijiang", subtitle: "UNESCO old town at the edge of the Tibetan Plateau."),
+            NarrationPoint(latitude: 27.83, longitude: 99.70, title: "Shangri-La", subtitle: "Gateway to the high Himalayas."),
+            NarrationPoint(latitude: 29.1, longitude: 97.2, title: "Mekong Gorge", subtitle: "Where three great rivers cut the deepest gorges on Earth."),
+            NarrationPoint(latitude: 29.68, longitude: 94.36, title: "Nyingchi", subtitle: "The Switzerland of Tibet, forests below snow peaks."),
+            NarrationPoint(latitude: 29.65, longitude: 91.13, title: "Lhasa", subtitle: "The roof of the world, the Potala Palace awaits."),
+        ]
+    )
+
+    static let incenseRoute = Route(
+        title: "Incense Route",
+        subtitle: "Frankincense caravans across Arabia",
+        category: .ancient,
+        coordinates: [
+            .init(latitude: 17.02, longitude: 54.09),
+            .init(latitude: 18.25, longitude: 53.98),
+            .init(latitude: 20.5, longitude: 54.5),
+            .init(latitude: 23.0, longitude: 49.0),
+            .init(latitude: 24.71, longitude: 46.68),
+            .init(latitude: 26.0, longitude: 42.0),
+            .init(latitude: 24.52, longitude: 39.57),
+            .init(latitude: 27.0, longitude: 36.0),
+            .init(latitude: 30.33, longitude: 35.44),
+            .init(latitude: 31.50, longitude: 34.47),
+        ],
+        duration: 2400,
+        narrationPoints: [
+            NarrationPoint(latitude: 17.02, longitude: 54.09, title: "Salalah", subtitle: "Where frankincense trees grow on the monsoon-washed coast."),
+            NarrationPoint(latitude: 20.5, longitude: 54.5, title: "Empty Quarter", subtitle: "The Rub' al Khali, largest sand desert on Earth."),
+            NarrationPoint(latitude: 24.71, longitude: 46.68, title: "Riyadh", subtitle: "Oasis crossroads of the central Arabian plateau."),
+            NarrationPoint(latitude: 24.52, longitude: 39.57, title: "Medina", subtitle: "The Prophet's City, a beacon for travellers."),
+            NarrationPoint(latitude: 30.33, longitude: 35.44, title: "Petra", subtitle: "The rose-red city carved from living rock."),
+            NarrationPoint(latitude: 31.50, longitude: 34.47, title: "Gaza", subtitle: "Journey's end at the Mediterranean shore."),
+        ]
+    )
+
+    static let amberRoad = Route(
+        title: "Amber Road",
+        subtitle: "Baltic gold to the Roman Empire",
+        category: .ancient,
+        coordinates: [
+            .init(latitude: 54.35, longitude: 18.65),
+            .init(latitude: 53.01, longitude: 18.62),
+            .init(latitude: 51.11, longitude: 17.03),
+            .init(latitude: 49.20, longitude: 16.61),
+            .init(latitude: 48.21, longitude: 16.37),
+            .init(latitude: 46.06, longitude: 14.51),
+            .init(latitude: 45.77, longitude: 13.37),
+        ],
+        duration: 2000,
+        narrationPoints: [
+            NarrationPoint(latitude: 54.35, longitude: 18.65, title: "Gdańsk", subtitle: "The Baltic shore where amber washes up after storms."),
+            NarrationPoint(latitude: 53.01, longitude: 18.62, title: "Toruń", subtitle: "Amber merchant city on the Vistula River."),
+            NarrationPoint(latitude: 51.11, longitude: 17.03, title: "Wrocław", subtitle: "Crossroads of Silesia, the ancient Amber Road hub."),
+            NarrationPoint(latitude: 49.20, longitude: 16.61, title: "Brno", subtitle: "Moravian gate where trade routes converged."),
+            NarrationPoint(latitude: 48.21, longitude: 16.37, title: "Carnuntum", subtitle: "Roman frontier post on the Danube."),
+            NarrationPoint(latitude: 46.06, longitude: 14.51, title: "Emona", subtitle: "Roman gateway to the Adriatic, today's Ljubljana."),
+            NarrationPoint(latitude: 45.77, longitude: 13.37, title: "Aquileia", subtitle: "The amber route terminus, one of Rome's greatest cities."),
+        ]
+    )
+
+    static let grandTrunkRoad = Route(
+        title: "Grand Trunk Road",
+        subtitle: "Asia's oldest highway across empires",
+        category: .ancient,
+        coordinates: [
+            .init(latitude: 22.57, longitude: 88.36),
+            .init(latitude: 24.0, longitude: 87.0),
+            .init(latitude: 25.32, longitude: 83.01),
+            .init(latitude: 25.44, longitude: 81.84),
+            .init(latitude: 26.8, longitude: 80.9),
+            .init(latitude: 27.18, longitude: 78.02),
+            .init(latitude: 28.61, longitude: 77.23),
+            .init(latitude: 31.55, longitude: 74.34),
+            .init(latitude: 34.02, longitude: 71.56),
+            .init(latitude: 34.53, longitude: 69.17),
+        ],
+        duration: 3000,
+        narrationPoints: [
+            NarrationPoint(latitude: 22.57, longitude: 88.36, title: "Kolkata", subtitle: "Where the Grand Trunk Road begins at the Hooghly River."),
+            NarrationPoint(latitude: 25.32, longitude: 83.01, title: "Varanasi", subtitle: "The eternal city on the sacred Ganges."),
+            NarrationPoint(latitude: 25.44, longitude: 81.84, title: "Prayagraj", subtitle: "Where the Ganges and Yamuna rivers meet."),
+            NarrationPoint(latitude: 27.18, longitude: 78.02, title: "Agra", subtitle: "Home of the Taj Mahal, jewel of Mughal India."),
+            NarrationPoint(latitude: 28.61, longitude: 77.23, title: "Delhi", subtitle: "Capital of empires, old and new."),
+            NarrationPoint(latitude: 31.55, longitude: 74.34, title: "Lahore", subtitle: "The cultural heart of Punjab."),
+            NarrationPoint(latitude: 34.02, longitude: 71.56, title: "Peshawar", subtitle: "Frontier city at the mouth of the Khyber Pass."),
+            NarrationPoint(latitude: 34.53, longitude: 69.17, title: "Kabul", subtitle: "Journey's end in the Hindu Kush."),
+        ]
+    )
+
+    static let kingsHighway = Route(
+        title: "King's Highway",
+        subtitle: "The biblical trade route to Damascus",
+        category: .ancient,
+        coordinates: [
+            .init(latitude: 30.04, longitude: 31.24),
+            .init(latitude: 29.97, longitude: 32.54),
+            .init(latitude: 29.5, longitude: 34.5),
+            .init(latitude: 29.53, longitude: 35.0),
+            .init(latitude: 30.33, longitude: 35.44),
+            .init(latitude: 31.18, longitude: 35.70),
+            .init(latitude: 31.95, longitude: 35.93),
+            .init(latitude: 33.51, longitude: 36.29),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: 30.04, longitude: 31.24, title: "Cairo", subtitle: "Departure beneath the gaze of the Great Pyramids."),
+            NarrationPoint(latitude: 29.97, longitude: 32.54, title: "Suez", subtitle: "Where the Red Sea meets the land of Pharaohs."),
+            NarrationPoint(latitude: 29.5, longitude: 34.5, title: "Sinai", subtitle: "The wilderness where Moses wandered forty years."),
+            NarrationPoint(latitude: 30.33, longitude: 35.44, title: "Petra", subtitle: "The Nabataean wonder hidden in desert canyons."),
+            NarrationPoint(latitude: 31.18, longitude: 35.70, title: "Karak", subtitle: "Crusader fortress overlooking the Dead Sea."),
+            NarrationPoint(latitude: 31.95, longitude: 35.93, title: "Amman", subtitle: "The Philadelphia of the ancient world."),
+            NarrationPoint(latitude: 33.51, longitude: 36.29, title: "Damascus", subtitle: "The oldest continuously inhabited city on Earth."),
+        ]
+    )
+
+    static let incaRoad = Route(
+        title: "Qhapaq Ñan",
+        subtitle: "The Inca imperial highway",
+        category: .ancient,
+        coordinates: [
+            .init(latitude: -0.23, longitude: -78.52),
+            .init(latitude: -2.90, longitude: -79.00),
+            .init(latitude: -6.0, longitude: -79.5),
+            .init(latitude: -7.16, longitude: -78.52),
+            .init(latitude: -10.0, longitude: -76.5),
+            .init(latitude: -13.53, longitude: -71.97),
+            .init(latitude: -15.84, longitude: -69.66),
+            .init(latitude: -18.0, longitude: -68.5),
+            .init(latitude: -22.0, longitude: -66.0),
+            .init(latitude: -24.78, longitude: -65.42),
+            .init(latitude: -28.0, longitude: -67.5),
+            .init(latitude: -32.89, longitude: -68.84),
+            .init(latitude: -33.45, longitude: -70.67),
+        ],
+        duration: 3600,
+        narrationPoints: [
+            NarrationPoint(latitude: -0.23, longitude: -78.52, title: "Quito", subtitle: "The Inca imperial road begins at the equator."),
+            NarrationPoint(latitude: -2.90, longitude: -79.00, title: "Cuenca", subtitle: "Tomebamba, second capital of the Inca empire."),
+            NarrationPoint(latitude: -7.16, longitude: -78.52, title: "Cajamarca", subtitle: "Where Atahualpa met the conquistadors."),
+            NarrationPoint(latitude: -13.53, longitude: -71.97, title: "Cusco", subtitle: "The navel of the Inca world."),
+            NarrationPoint(latitude: -15.84, longitude: -69.66, title: "Lake Titicaca", subtitle: "The highest navigable lake on Earth."),
+            NarrationPoint(latitude: -24.78, longitude: -65.42, title: "Salta", subtitle: "Where the Andes meet the Argentine pampas."),
+            NarrationPoint(latitude: -32.89, longitude: -68.84, title: "Mendoza", subtitle: "Inca frontier outpost beneath Aconcagua."),
+            NarrationPoint(latitude: -33.45, longitude: -70.67, title: "Santiago", subtitle: "Southern terminus of the imperial road."),
+        ],
+        altitude: 8000
+    )
+
+    static let viaAppia = Route(
+        title: "Via Appia",
+        subtitle: "The Queen of Roman Roads",
+        category: .ancient,
+        coordinates: [
+            .init(latitude: 41.90, longitude: 12.49),
+            .init(latitude: 41.73, longitude: 12.66),
+            .init(latitude: 41.59, longitude: 12.89),
+            .init(latitude: 41.29, longitude: 13.25),
+            .init(latitude: 41.11, longitude: 14.21),
+            .init(latitude: 41.13, longitude: 14.78),
+            .init(latitude: 40.47, longitude: 17.24),
+            .init(latitude: 40.64, longitude: 17.95),
+        ],
+        duration: 1200,
+        narrationPoints: [
+            NarrationPoint(latitude: 41.90, longitude: 12.49, title: "Rome", subtitle: "All roads lead to Rome — this one begins at the Forum."),
+            NarrationPoint(latitude: 41.73, longitude: 12.66, title: "Albano", subtitle: "The Appian Way climbs into the Alban Hills."),
+            NarrationPoint(latitude: 41.29, longitude: 13.25, title: "Terracina", subtitle: "Where the road touches the Tyrrhenian Sea."),
+            NarrationPoint(latitude: 41.11, longitude: 14.21, title: "Capua", subtitle: "Where Spartacus began his rebellion."),
+            NarrationPoint(latitude: 40.47, longitude: 17.24, title: "Taranto", subtitle: "Spartan colony on the Ionian Sea."),
+            NarrationPoint(latitude: 40.64, longitude: 17.95, title: "Brindisi", subtitle: "The gateway to the East, where Roman legions embarked."),
+        ],
+        altitude: 4000
+    )
+
     static let pacificCoast = Route(
         title: "Pacific Coast Highway",
         subtitle: "California's coastal masterpiece",
@@ -1541,7 +1732,7 @@ enum RouteData {
         nile, amazon, mississippi, danube,
         transSiberian, californiaZephyr, orientExpress, theGhan, darjeelingHimalayan,
         tokyoLA, londonSingapore, newYorkLondon, sydneyAuckland, losAngelesTokyo,
-        silkRoad, pacificCoast,
+        silkRoad, teaHorseRoad, incenseRoute, amberRoad, grandTrunkRoad, kingsHighway, incaRoad, viaAppia, pacificCoast,
         greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos,
         himalayas, andes, alps, rockies, southernAlps,
         japanVolcanoes, kamchatka, alaskaVolcanoes, cascades, mexicoVolcanoes, andesVolcanoes, newZealandVolcanoes,
@@ -1555,7 +1746,7 @@ enum RouteData {
         Channel(name: "Rivers", icon: "water.waves", routes: [nile, amazon, mississippi, danube]),
         Channel(name: "Railways", icon: "train.side.front.car", routes: [transSiberian, californiaZephyr, orientExpress, theGhan, darjeelingHimalayan]),
         Channel(name: "Flights", icon: "airplane", routes: [tokyoLA, londonSingapore, newYorkLondon, sydneyAuckland, losAngelesTokyo]),
-        Channel(name: "Ancient Routes", icon: "scroll", routes: [silkRoad]),
+        Channel(name: "Ancient Routes", icon: "scroll", routes: [silkRoad, teaHorseRoad, incenseRoute, amberRoad, grandTrunkRoad, kingsHighway, incaRoad, viaAppia]),
         Channel(name: "Coastlines", icon: "beach.umbrella", routes: [pacificCoast]),
         Channel(name: "Mountains", icon: "mountain.2", routes: [himalayas, andes, alps, rockies, southernAlps]),
         Channel(name: "Island Hopping", icon: "ferry", routes: [greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos]),
