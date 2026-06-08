@@ -151,6 +151,77 @@ enum RouteData {
         ]
     )
 
+    static let orientExpress = Route(
+        title: "Orient Express",
+        subtitle: "Paris to Istanbul in grand style",
+        category: .railways,
+        coordinates: [
+            .init(latitude: 48.86, longitude: 2.35),
+            .init(latitude: 48.58, longitude: 7.75),
+            .init(latitude: 48.14, longitude: 11.58),
+            .init(latitude: 48.21, longitude: 16.37),
+            .init(latitude: 47.50, longitude: 19.04),
+            .init(latitude: 44.43, longitude: 26.10),
+            .init(latitude: 42.70, longitude: 23.32),
+            .init(latitude: 41.01, longitude: 28.98),
+        ],
+        duration: 2400,
+        narrationPoints: [
+            NarrationPoint(latitude: 48.86, longitude: 2.35, title: "Paris", subtitle: "Departure from the City of Light."),
+            NarrationPoint(latitude: 48.58, longitude: 7.75, title: "Strasbourg", subtitle: "Crossing into the Rhine Valley."),
+            NarrationPoint(latitude: 48.14, longitude: 11.58, title: "Munich", subtitle: "Bavarian capital, gateway to the Alps."),
+            NarrationPoint(latitude: 48.21, longitude: 16.37, title: "Vienna", subtitle: "The imperial city on the Danube."),
+            NarrationPoint(latitude: 47.50, longitude: 19.04, title: "Budapest", subtitle: "The Pearl of the Danube."),
+            NarrationPoint(latitude: 44.43, longitude: 26.10, title: "Bucharest", subtitle: "The Little Paris of the East."),
+            NarrationPoint(latitude: 41.01, longitude: 28.98, title: "Istanbul", subtitle: "Where two continents embrace."),
+        ]
+    )
+
+    static let theGhan = Route(
+        title: "The Ghan",
+        subtitle: "Across the Australian outback",
+        category: .railways,
+        coordinates: [
+            .init(latitude: -34.93, longitude: 138.60),
+            .init(latitude: -32.49, longitude: 137.77),
+            .init(latitude: -29.01, longitude: 134.75),
+            .init(latitude: -23.70, longitude: 133.88),
+            .init(latitude: -19.65, longitude: 134.19),
+            .init(latitude: -14.47, longitude: 132.26),
+            .init(latitude: -12.46, longitude: 130.84),
+        ],
+        duration: 2400,
+        narrationPoints: [
+            NarrationPoint(latitude: -34.93, longitude: 138.60, title: "Adelaide", subtitle: "Departure from the south coast."),
+            NarrationPoint(latitude: -32.49, longitude: 137.77, title: "Port Augusta", subtitle: "Where the outback begins."),
+            NarrationPoint(latitude: -29.01, longitude: 134.75, title: "Coober Pedy", subtitle: "The opal capital, a town underground."),
+            NarrationPoint(latitude: -23.70, longitude: 133.88, title: "Alice Springs", subtitle: "The Red Centre of Australia."),
+            NarrationPoint(latitude: -14.47, longitude: 132.26, title: "Katherine", subtitle: "Gateway to Nitmiluk Gorge."),
+            NarrationPoint(latitude: -12.46, longitude: 130.84, title: "Darwin", subtitle: "Journey's end on the Timor Sea."),
+        ]
+    )
+
+    static let darjeelingHimalayan = Route(
+        title: "Darjeeling Himalayan Railway",
+        subtitle: "The toy train to the clouds",
+        category: .railways,
+        coordinates: [
+            .init(latitude: 26.68, longitude: 88.44),
+            .init(latitude: 26.72, longitude: 88.42),
+            .init(latitude: 26.88, longitude: 88.28),
+            .init(latitude: 27.01, longitude: 88.25),
+            .init(latitude: 27.04, longitude: 88.26),
+        ],
+        duration: 900,
+        narrationPoints: [
+            NarrationPoint(latitude: 26.68, longitude: 88.44, title: "New Jalpaiguri", subtitle: "The plains of West Bengal."),
+            NarrationPoint(latitude: 26.72, longitude: 88.42, title: "Siliguri", subtitle: "Where the climb begins."),
+            NarrationPoint(latitude: 26.88, longitude: 88.28, title: "Kurseong", subtitle: "Tea gardens blanket the hillsides."),
+            NarrationPoint(latitude: 27.01, longitude: 88.25, title: "Ghum", subtitle: "India's highest railway station."),
+            NarrationPoint(latitude: 27.04, longitude: 88.26, title: "Darjeeling", subtitle: "The Queen of the Hills, with Kanchenjunga rising beyond."),
+        ]
+    )
+
     static let tokyoLA = Route(
         title: "Tokyo → Los Angeles",
         subtitle: "Across the Pacific",
@@ -304,6 +375,88 @@ enum RouteData {
             NarrationPoint(latitude: 20.0, longitude: 75.0, title: "Indian Subcontinent", subtitle: "Over the Bay of Bengal."),
             NarrationPoint(latitude: 5.0, longitude: 95.0, title: "Strait of Malacca", subtitle: "One of the world's busiest shipping lanes."),
             NarrationPoint(latitude: 1.35, longitude: 103.8, title: "Singapore", subtitle: "Welcome to the Lion City."),
+        ],
+        altitude: 15000
+    )
+
+    static let newYorkLondon = Route(
+        title: "New York → London",
+        subtitle: "The quintessential transatlantic crossing",
+        category: .flights,
+        coordinates: [
+            .init(latitude: 40.64, longitude: -73.78),
+            .init(latitude: 42.0, longitude: -70.5),
+            .init(latitude: 44.5, longitude: -63.5),
+            .init(latitude: 47.5, longitude: -53.0),
+            .init(latitude: 50.5, longitude: -40.0),
+            .init(latitude: 52.5, longitude: -30.0),
+            .init(latitude: 53.5, longitude: -20.0),
+            .init(latitude: 53.0, longitude: -10.0),
+            .init(latitude: 51.8, longitude: -5.0),
+            .init(latitude: 51.47, longitude: -0.45),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: 40.64, longitude: -73.78, title: "New York", subtitle: "Departure from JFK, Manhattan glitters below."),
+            NarrationPoint(latitude: 47.5, longitude: -53.0, title: "Newfoundland", subtitle: "North America's easternmost edge."),
+            NarrationPoint(latitude: 50.5, longitude: -40.0, title: "Mid-Atlantic", subtitle: "Nothing but ocean for a thousand miles."),
+            NarrationPoint(latitude: 53.5, longitude: -20.0, title: "Irish Coast", subtitle: "The Emerald Isle emerges from the sea."),
+            NarrationPoint(latitude: 51.47, longitude: -0.45, title: "London", subtitle: "Welcome to Heathrow."),
+        ],
+        altitude: 15000
+    )
+
+    static let sydneyAuckland = Route(
+        title: "Sydney → Auckland",
+        subtitle: "Across the Tasman Sea",
+        category: .flights,
+        coordinates: [
+            .init(latitude: -33.87, longitude: 151.21),
+            .init(latitude: -34.5, longitude: 152.5),
+            .init(latitude: -35.5, longitude: 156.0),
+            .init(latitude: -36.5, longitude: 161.0),
+            .init(latitude: -37.0, longitude: 166.0),
+            .init(latitude: -37.0, longitude: 171.0),
+            .init(latitude: -36.8, longitude: 174.0),
+            .init(latitude: -36.85, longitude: 174.76),
+        ],
+        duration: 1200,
+        narrationPoints: [
+            NarrationPoint(latitude: -33.87, longitude: 151.21, title: "Sydney", subtitle: "Departure over the Harbour Bridge."),
+            NarrationPoint(latitude: -35.5, longitude: 156.0, title: "Tasman Sea", subtitle: "The deep waters between two nations."),
+            NarrationPoint(latitude: -36.5, longitude: 161.0, title: "Lord Howe Rise", subtitle: "A submerged continent beneath the waves."),
+            NarrationPoint(latitude: -37.0, longitude: 171.0, title: "North Island", subtitle: "New Zealand's green shores appear."),
+            NarrationPoint(latitude: -36.85, longitude: 174.76, title: "Auckland", subtitle: "The City of Sails, nestled between two harbours."),
+        ],
+        altitude: 15000
+    )
+
+    static let losAngelesTokyo = Route(
+        title: "Los Angeles → Tokyo",
+        subtitle: "Chasing the sunrise across the Pacific",
+        category: .flights,
+        coordinates: [
+            .init(latitude: 33.95, longitude: -118.4),
+            .init(latitude: 34.5, longitude: -122.0),
+            .init(latitude: 36.0, longitude: -128.0),
+            .init(latitude: 38.0, longitude: -138.0),
+            .init(latitude: 40.0, longitude: -150.0),
+            .init(latitude: 42.0, longitude: -162.0),
+            .init(latitude: 43.0, longitude: -174.0),
+            .init(latitude: 43.5, longitude: -180.0),
+            .init(latitude: 43.5, longitude: 180.0),
+            .init(latitude: 42.0, longitude: 168.0),
+            .init(latitude: 39.0, longitude: 153.0),
+            .init(latitude: 36.5, longitude: 143.0),
+            .init(latitude: 35.68, longitude: 139.76),
+        ],
+        duration: 1800,
+        narrationPoints: [
+            NarrationPoint(latitude: 33.95, longitude: -118.4, title: "Los Angeles", subtitle: "Departure from LAX, the City of Angels."),
+            NarrationPoint(latitude: 38.0, longitude: -138.0, title: "Eastern Pacific", subtitle: "Endless blue stretching to every horizon."),
+            NarrationPoint(latitude: 43.5, longitude: -180.0, title: "International Date Line", subtitle: "A day vanishes in an instant."),
+            NarrationPoint(latitude: 39.0, longitude: 153.0, title: "Kuroshio Current", subtitle: "The warm black stream of the western Pacific."),
+            NarrationPoint(latitude: 35.68, longitude: 139.76, title: "Tokyo", subtitle: "Arrival in the world's largest metropolis."),
         ],
         altitude: 15000
     )
@@ -1386,8 +1539,8 @@ enum RouteData {
 
     static let allRoutes: [Route] = [
         nile, amazon, mississippi, danube,
-        transSiberian, californiaZephyr,
-        tokyoLA, londonSingapore,
+        transSiberian, californiaZephyr, orientExpress, theGhan, darjeelingHimalayan,
+        tokyoLA, londonSingapore, newYorkLondon, sydneyAuckland, losAngelesTokyo,
         silkRoad, pacificCoast,
         greekIslands, hawaiianIslands, indonesianArchipelago, caribbeanChain, galapagos,
         himalayas, andes, alps, rockies, southernAlps,
@@ -1400,8 +1553,8 @@ enum RouteData {
 
     static let defaultChannels: [Channel] = [
         Channel(name: "Rivers", icon: "water.waves", routes: [nile, amazon, mississippi, danube]),
-        Channel(name: "Railways", icon: "train.side.front.car", routes: [transSiberian, californiaZephyr]),
-        Channel(name: "Flights", icon: "airplane", routes: [tokyoLA, londonSingapore]),
+        Channel(name: "Railways", icon: "train.side.front.car", routes: [transSiberian, californiaZephyr, orientExpress, theGhan, darjeelingHimalayan]),
+        Channel(name: "Flights", icon: "airplane", routes: [tokyoLA, londonSingapore, newYorkLondon, sydneyAuckland, losAngelesTokyo]),
         Channel(name: "Ancient Routes", icon: "scroll", routes: [silkRoad]),
         Channel(name: "Coastlines", icon: "beach.umbrella", routes: [pacificCoast]),
         Channel(name: "Mountains", icon: "mountain.2", routes: [himalayas, andes, alps, rockies, southernAlps]),
