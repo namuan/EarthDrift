@@ -78,7 +78,7 @@ struct ContentView: View {
                     scheduler.selectChannelAndRoute(channelIndex: channelIndex, routeIndex: routeIndex)
                 }
             )
-            .frame(minWidth: 640, idealWidth: 800, maxWidth: .infinity, minHeight: 400, idealHeight: 500, maxHeight: .infinity)
+            .frame(minWidth: 900, idealWidth: 1100, maxWidth: .infinity, minHeight: 650, idealHeight: 800, maxHeight: .infinity)
         }
         .onTapGesture(count: 2) {
             withAnimation {
